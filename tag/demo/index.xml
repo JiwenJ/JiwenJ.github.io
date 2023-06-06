@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Demo | Academic</title>
+    <title>Demo | Jiwen Jiang</title>
     <link>https://example.com/tag/demo/</link>
       <atom:link href="https://example.com/tag/demo/index.xml" rel="self" type="application/rss+xml" />
     <description>Demo</description>
@@ -14,9 +14,9 @@
     
     <item>
       <title>External Project</title>
-      <link>https://example.com/project/external-project/</link>
+      <link>https://example.com/unused/project/external-project/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>https://example.com/project/external-project/</guid>
+      <guid>https://example.com/unused/project/external-project/</guid>
       <description></description>
     </item>
     
