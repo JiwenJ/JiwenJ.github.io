@@ -45,7 +45,7 @@
       <link>https://jiwenj.github.io/blog/prompt-engineering/</link>
       <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
       <guid>https://jiwenj.github.io/blog/prompt-engineering/</guid>
-      <description>&lt;h5 id=&#34;ugroup-meeting-pptpptpromptpdfu&#34;&gt;&lt;u&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;u&gt;&lt;/h5&gt;
+      <description>&lt;h5 id=&#34;group-meeting-pptpptpromptpdf&#34;&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;/h5&gt;
 </description>
     </item>
     
@@ -153,7 +153,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-186354972&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-813647592&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -163,7 +163,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-186354972&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-813647592&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
