@@ -2,148 +2,153 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/unused/event/example/</loc>
+    <loc>https://jiwenj.github.io/unused/event/example/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/event/</loc>
+    <loc>https://jiwenj.github.io/unused/event/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/</loc>
+    <loc>https://jiwenj.github.io/unused/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/authors/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/paperreview/</loc>
+    <lastmod>2023-07-17T18:00:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/categories/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/paperreview/1/</loc>
+    <lastmod>2023-07-17T18:00:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/authors/admin/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/authors/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/llm/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/categories/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/category/llm/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/authors/admin/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/blog/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/tag/llm/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/prompt/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/category/llm/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/category/prompt/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/blog/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/blog/prompt-engineering/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/tag/prompt/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tags/</loc>
-    <lastmod>2023-06-05T21:10:00+07:00</lastmod>
+    <loc>https://jiwenj.github.io/category/prompt/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/</loc>
+    <loc>https://jiwenj.github.io/blog/prompt-engineering/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tags/</loc>
+    <lastmod>2023-07-16T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/paper/writing-technical-content/</loc>
+    <loc>https://jiwenj.github.io/unused/paper/writing-technical-content/</loc>
     <lastmod>2019-07-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/publication-type/3/</loc>
+    <loc>https://jiwenj.github.io/publication-type/3/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/publication/preprint/</loc>
+    <loc>https://jiwenj.github.io/unused/publication/preprint/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/publication_types/</loc>
+    <loc>https://jiwenj.github.io/publication_types/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/publication/</loc>
+    <loc>https://jiwenj.github.io/unused/publication/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/source-themes/</loc>
+    <loc>https://jiwenj.github.io/tag/source-themes/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/paper/jupyter/</loc>
+    <loc>https://jiwenj.github.io/unused/paper/jupyter/</loc>
     <lastmod>2019-09-05T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/deep-learning/</loc>
+    <loc>https://jiwenj.github.io/tag/deep-learning/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/demo/</loc>
+    <loc>https://jiwenj.github.io/tag/demo/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/project/example/</loc>
+    <loc>https://jiwenj.github.io/unused/project/example/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/project/external-project/</loc>
+    <loc>https://jiwenj.github.io/unused/project/external-project/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/publication-type/2/</loc>
+    <loc>https://jiwenj.github.io/publication-type/2/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/publication/journal-article/</loc>
+    <loc>https://jiwenj.github.io/unused/publication/journal-article/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/authors/robert-ford/</loc>
+    <loc>https://jiwenj.github.io/authors/robert-ford/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/publication-type/1/</loc>
+    <loc>https://jiwenj.github.io/publication-type/1/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/publication/conference-paper/</loc>
+    <loc>https://jiwenj.github.io/unused/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/admin/</loc>
+    <loc>https://jiwenj.github.io/admin/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/academic/</loc>
+    <loc>https://jiwenj.github.io/tag/academic/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/category/demo/</loc>
+    <loc>https://jiwenj.github.io/category/demo/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/paperreview/</loc>
+    <loc>https://jiwenj.github.io/unused/paper/getting-started/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/unused/paper/getting-started/</loc>
+    <loc>https://jiwenj.github.io/authors/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/authors/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
+    <loc>https://jiwenj.github.io/tag/%E5%BC%80%E6%BA%90/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://example.com/tag/%E5%BC%80%E6%BA%90/</loc>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://example.com/category/%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://jiwenj.github.io/category/%E6%95%99%E7%A8%8B/</loc>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
