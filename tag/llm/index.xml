@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>How to finetune Llama2</title>
+      <link>https://jiwenj.github.io/blog/finetune/</link>
+      <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/finetune/</guid>
+      <description>&lt;h5 id=&#34;group-meeting-pptpptpromptpdf&#34;&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;/h5&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Prompt Engineering for LLMs</title>
       <link>https://jiwenj.github.io/blog/prompt-engineering/</link>
       <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
