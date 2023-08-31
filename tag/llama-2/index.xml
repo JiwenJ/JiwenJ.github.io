@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>LLM | Jiwen Jiang</title>
-    <link>https://jiwenj.github.io/category/llm/</link>
-      <atom:link href="https://jiwenj.github.io/category/llm/index.xml" rel="self" type="application/rss+xml" />
-    <description>LLM</description>
+    <title>Llama 2 | Jiwen Jiang</title>
+    <link>https://jiwenj.github.io/tag/llama-2/</link>
+      <atom:link href="https://jiwenj.github.io/tag/llama-2/index.xml" rel="self" type="application/rss+xml" />
+    <description>Llama 2</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 29 Aug 2023 21:10:00 +0700</lastBuildDate>
     <image>
       <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
-      <title>LLM</title>
-      <link>https://jiwenj.github.io/category/llm/</link>
+      <title>Llama 2</title>
+      <link>https://jiwenj.github.io/tag/llama-2/</link>
     </image>
     
     <item>
@@ -38,23 +38,6 @@
 &lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
 &lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Supervised Pretraining Can Learn In-Context Reinforcement Learning</title>
-      <link>https://jiwenj.github.io/paperreview/1/</link>
-      <pubDate>Mon, 17 Jul 2023 18:00:47 +0800</pubDate>
-      <guid>https://jiwenj.github.io/paperreview/1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prompt Engineering for LLMs</title>
-      <link>https://jiwenj.github.io/blog/prompt-engineering/</link>
-      <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/prompt-engineering/</guid>
-      <description>&lt;h5 id=&#34;group-meeting-pptpptpromptpdf&#34;&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;/h5&gt;
 </description>
     </item>
     

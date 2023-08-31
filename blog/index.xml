@@ -5,7 +5,7 @@
     <link>https://jiwenj.github.io/blog/</link>
       <atom:link href="https://jiwenj.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 05 Jun 2023 21:10:00 +0700</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 29 Aug 2023 21:10:00 +0700</lastBuildDate>
     <image>
       <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
@@ -15,9 +15,29 @@
     <item>
       <title>How to finetune Llama2</title>
       <link>https://jiwenj.github.io/blog/finetune/</link>
-      <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
+      <pubDate>Tue, 29 Aug 2023 21:10:00 +0700</pubDate>
       <guid>https://jiwenj.github.io/blog/finetune/</guid>
-      <description>&lt;h5 id=&#34;group-meeting-pptpptpromptpdf&#34;&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;/h5&gt;
+      <description>&lt;p&gt;Recently, Meta published its latest LLM, Llama2[], and gained tremendous interest in  open source community. Different studies have been undertaken to evaluate Llama2 and therefore utilize Llama2 to improve their own vertical domain LLM that can acquire both domain capability and general LLM skills using both proprietary and public datasets. Before we dive into the tutorial on finetuning Llama2, we have to consider one question: “Why should we finetune Llama2 or must we?”&lt;/p&gt;
+&lt;p&gt;Typically we want to finetune a large language model with such following hope or objective: it might perform better if I feed it with more domain knowledge. Well. that’s true but should be with more tricks and computation.&lt;/p&gt;
+&lt;p&gt;From the course provided by Sharon Zhou[2], we can acquire the reason why we should finetune under some specific circumstances and the common differences between finetuning and prompt. We can conclude the finetuning advantages and disadvantages as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;llama2-info&#34;&gt;Llama2 info&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Parameter 70B&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;llama2-performance&#34;&gt;Llama2 Performance&lt;/h4&gt;
+&lt;p&gt;As it said Llama2 is almost the same powerful as GPT-3.5 except for coding whereas codeLlama can make up the shortage [].&lt;/p&gt;
+&lt;h4 id=&#34;other-llms-based-on-llama-2&#34;&gt;Other LLMs based on Llama 2&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Lemur (Pre-training,100B Token with code and text) &amp;amp; Lemur-Chat (Supervised Fine-tuning with 300K examples)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;computation-estimation&#34;&gt;Computation estimation&lt;/h4&gt;
+&lt;p&gt;With all these above, we perhaps can not hesitate to finetune some open-source LLMs (e.g. Llama 2 and  ChatGLM).&lt;/p&gt;
+&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
+&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

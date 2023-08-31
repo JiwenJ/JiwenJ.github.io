@@ -279,12 +279,12 @@
 
   
 
-<meta name="description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" />
+<meta name="description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/finetune/" />
-<link rel="canonical" href="https://jiwenj.github.io/blog/finetune/" />
+<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/tag/finetune/" />
+<link rel="canonical" href="https://jiwenj.github.io/tag/finetune/" />
 
 
 
@@ -305,30 +305,25 @@
 
 
   
+  
 
 
 
 
 
 
-<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:card" content="summary" />
 
   <meta property="twitter:site" content="@wowchemy" />
   <meta property="twitter:creator" content="@wowchemy" />
-<meta property="twitter:image" content="https://jiwenj.github.io/blog/finetune/featured.jpg" />
+<meta property="twitter:image" content="https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png" />
 <meta property="og:site_name" content="Jiwen Jiang" />
-<meta property="og:url" content="https://jiwenj.github.io/blog/finetune/" />
-<meta property="og:title" content="How to finetune Llama2 | Jiwen Jiang" />
-<meta property="og:description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" /><meta property="og:image" content="https://jiwenj.github.io/blog/finetune/featured.jpg" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://jiwenj.github.io/tag/finetune/" />
+<meta property="og:title" content="Finetune | Jiwen Jiang" />
+<meta property="og:description" content="A highly-customizable Hugo academic resume theme powered by Wowchemy website builder." /><meta property="og:image" content="https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
 
   
-    <meta
-      property="article:published_time"
-      content="2023-08-29T21:10:00&#43;07:00"
-    />
-  
-  
-    <meta property="article:modified_time" content="2023-08-30T21:10:00&#43;07:00">
+    <meta property="og:updated_time" content="2023-08-29T21:10:00&#43;07:00" />
   
 
 
@@ -336,8 +331,6 @@
 
 
 
-
-  
 
 
 
@@ -348,12 +341,14 @@
 
   
   
+    <link rel="alternate" href="/tag/finetune/index.xml" type="application/rss+xml" title="Jiwen Jiang" />
+  
 
   
 
 
   
-  <title>How to finetune Llama2 | Jiwen Jiang</title>
+  <title>Finetune | Jiwen Jiang</title>
 
   
   
@@ -373,7 +368,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="7442bd1c065fb77f40f2b4ffe136df67" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   "  >
 
   
   
@@ -682,18 +677,7 @@
     
     
 
-    <article class="article">
-
-  
-
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -708,17 +692,68 @@
 
 
   
+
+  
+  
+  
+    
+  
+<div class="universal-wrapper pt-3">
+  <h1>Finetune</h1>
+
+  
+
+  
+</div>
+
+
+
+<div class="universal-wrapper">
   
 
 
-<div class="article-container pt-3">
-  <h1>How to finetune Llama2</h1>
-
-  
-  <p class="page-subtitle">Why and how we finetune open source LLMs?</p>
   
 
   
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/blog/finetune/" >How to finetune Llama2</a>
+    </div>
+
+    
+    <a href="/blog/finetune/"  class="summary-link">
+      <div class="article-style">
+        I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
 
 
 <div class="article-metadata">
@@ -766,239 +801,31 @@
 
 </div>
 
-  
-
-
-
-
-
-</div>
-
-
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 405px;">
-  <div style="position: relative">
-    <img src="/blog/finetune/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_720x2500_fit_q75_h2_lanczos.webp" width="720" height="405" alt="" class="featured-image">
-    
-  </div>
-</div>
-
-
-
-  <div class="article-container">
-
-    <div class="article-style">
-      <p>Recently, Meta published its latest LLM, Llama2[], and gained tremendous interest in  open source community. Different studies have been undertaken to evaluate Llama2 and therefore utilize Llama2 to improve their own vertical domain LLM that can acquire both domain capability and general LLM skills using both proprietary and public datasets. Before we dive into the tutorial on finetuning Llama2, we have to consider one question: “Why should we finetune Llama2 or must we?”</p>
-<p>Typically we want to finetune a large language model with such following hope or objective: it might perform better if I feed it with more domain knowledge. Well. that’s true but should be with more tricks and computation.</p>
-<p>From the course provided by Sharon Zhou[2], we can acquire the reason why we should finetune under some specific circumstances and the common differences between finetuning and prompt. We can conclude the finetuning advantages and disadvantages as follows:</p>
-<ul>
-<li></li>
-</ul>
-<h4 id="llama2-info">Llama2 info</h4>
-<ul>
-<li>Parameter 70B</li>
-</ul>
-<h4 id="llama2-performance">Llama2 Performance</h4>
-<p>As it said Llama2 is almost the same powerful as GPT-3.5 except for coding whereas codeLlama can make up the shortage [].</p>
-<h4 id="other-llms-based-on-llama-2">Other LLMs based on Llama 2</h4>
-<ul>
-<li>Lemur (Pre-training,100B Token with code and text) &amp; Lemur-Chat (Supervised Fine-tuning with 300K examples)</li>
-</ul>
-<h4 id="computation-estimation">Computation estimation</h4>
-<p>With all these above, we perhaps can not hesitate to finetune some open-source LLMs (e.g. Llama 2 and  ChatGLM).</p>
-<h5 id="reference">Reference</h5>
-<p>[1] <a href="http://xueshu.baidu.com/" target="_blank" rel="noopener"></a></p>
-<p>[2] <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank" rel="noopener"></a></p>
-
+      
     </div>
 
     
 
-
-
-
-
-<div class="article-tags">
-  
-  <a class="badge badge-light" href="/tag/llm/">LLM</a>
-  
-  <a class="badge badge-light" href="/tag/finetune/">Finetune</a>
-  
-  <a class="badge badge-light" href="/tag/llama-2/">Llama 2</a>
-  
+  </div>
+  <div class="ml-3">
+    
+    
+      
+      <a href="/blog/finetune/" >
+        <img src="/blog/finetune/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_150x0_resize_q75_h2_lanczos.webp" height="84" width="150"
+            alt="How to finetune Llama2" loading="lazy">
+      </a>
+    
+  </div>
 </div>
 
+  
 
+  
 
-<div class="share-box">
-  <ul class="share">
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-      <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F&amp;text=How&#43;to&#43;finetune&#43;Llama2" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-      <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F&amp;t=How&#43;to&#43;finetune&#43;Llama2" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
-          <i class="fab fa-facebook"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-        
-      
-      <li>
-        <a href="mailto:?subject=How%20to%20finetune%20Llama2&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
-          <i class="fas fa-envelope"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-      <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F&amp;title=How&#43;to&#43;finetune&#43;Llama2" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-      <li>
-        <a href="whatsapp://send?text=How&#43;to&#43;finetune&#43;Llama2%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
-          <i class="fab fa-whatsapp"></i>
-        </a>
-      </li>
-    
-      
-      
-      
-        
-      
-      
-      
-      
-      
-      
-      
-      <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Ffinetune%2F&amp;title=How&#43;to&#43;finetune&#43;Llama2" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
-          <i class="fab fa-weibo"></i>
-        </a>
-      </li>
-    
-  </ul>
+  
+
 </div>
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-
-
-
-  
-  
-  
-    
-  
-  
-  
-  <div class="media author-card content-widget-hr">
-    
-      
-      <a href="https://jiwenj.github.io"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu39011fe8fe117461184556e5002291b6_156013_270x270_fill_q75_lanczos_center.jpg" alt="Jiwen Jiang"></a>
-    
-
-    <div class="media-body">
-      <h5 class="card-title"><a href="https://jiwenj.github.io">Jiwen Jiang</a></h5>
-      <h6 class="card-subtitle">Master</h6>
-      <p class="card-text">My research interests include optimization, RL, LLM.</p>
-      <ul class="network-icon" aria-hidden="true">
-  
-</ul>
-
-    </div>
-  </div>
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-</article>
   </div>
 
   <div class="page-footer">
