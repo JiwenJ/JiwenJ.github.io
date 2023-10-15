@@ -22,10 +22,6 @@
     <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://jiwenj.github.io/blog/dataprocess/</loc>
-    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://jiwenj.github.io/tag/finetune/</loc>
     <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -64,14 +60,6 @@
   </url><url>
     <loc>https://jiwenj.github.io/blog/utils/</loc>
     <lastmod>2023-10-14T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/blog/finetune/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/blog/peft/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/paperreview/</loc>
