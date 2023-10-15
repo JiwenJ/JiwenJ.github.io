@@ -24,7 +24,13 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Contents&lt;/strong&gt;
 &lt;ul&gt;
-&lt;li&gt;Humaneval&lt;/li&gt;
+&lt;li&gt;Datasets
+&lt;ul&gt;
+&lt;li&gt;HumanEval&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Models
+&lt;ul&gt;
 &lt;li&gt;CodeLlama&lt;/li&gt;
 &lt;li&gt;Phind&lt;/li&gt;
 &lt;li&gt;CodeGeex&lt;/li&gt;
@@ -34,9 +40,11 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/para&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;humaneval&#34;&gt;Humaneval&lt;/h3&gt;
+&lt;h3 id=&#34;humaneval&#34;&gt;HumanEval&lt;/h3&gt;
 &lt;p&gt;&lt;para&gt;This is an evaluation harness for the HumanEval problem solving dataset described in the paper &lt;a href=&#34;https://arxiv.org/pdf/2107.03374.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Evaluating Large Language Models Trained on Code&amp;rdquo;&lt;/a&gt;. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in &lt;a href=&#34;https://paperswithcode.com/sota/code-generation-on-humaneval&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PapersWithCode&lt;/a&gt;.&lt;/para&gt;
 
 
@@ -91,7 +99,7 @@
 &lt;h3 id=&#34;vscode-plugin-with-llms&#34;&gt;Vscode Plugin with LLMs&lt;/h3&gt;
 &lt;p&gt;&lt;para&gt;We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure.&lt;/para&gt;&lt;/p&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;&lt;para&gt;In the conclusion, I will display the performance of these models on Humaneval dataset so that we can clearly and conveniently see their gap in code generation task. Therefore we can choose the right base model for our further research and production.&lt;/para&gt;&lt;/p&gt;
+&lt;p&gt;&lt;para&gt;In the conclusion, I will display the performance of these models on HumanEval dataset so that we can clearly and conveniently see their gap in code generation task. Therefore we can choose the right base model for our further research and production.&lt;/para&gt;&lt;/p&gt;
 &lt;table align=&#34;center&#34; style=&#34;width:100%;border: solid;border-width:2px 0&#34;&gt;
 &lt;caption&gt;Table 1: Comparable results on code generation task&lt;/caption&gt;
 &lt;thead style=&#34;border-bottom:#000 2px solid;&#34;&gt;
