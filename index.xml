@@ -33,7 +33,7 @@
     </item>
     
     <item>
-      <title>LLMs for Code</title>
+      <title>LLMs for Code (Progressing)</title>
       <link>https://jiwenj.github.io/blog/llm4code/</link>
       <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
       <guid>https://jiwenj.github.io/blog/llm4code/</guid>
@@ -317,7 +317,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-897653142&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-958246317&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -327,7 +327,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-897653142&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-958246317&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
