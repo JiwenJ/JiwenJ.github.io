@@ -15,50 +15,62 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/authors/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/categories/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/dataprocess/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/tag/finetune/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/category/finetune/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/authors/admin/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tag/llama-2/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/category/llama-2/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tag/llm/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/category/llm/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tags/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/utils/</loc>
+    <lastmod>2023-10-14T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/blog/finetune/</loc>
     <lastmod>2023-08-30T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://jiwenj.github.io/authors/admin/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/tag/llama-2/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/category/llama-2/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/tag/llm/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/category/llm/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/blog/</loc>
-    <lastmod>2023-08-30T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/tags/</loc>
+    <loc>https://jiwenj.github.io/blog/peft/</loc>
     <lastmod>2023-08-30T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>

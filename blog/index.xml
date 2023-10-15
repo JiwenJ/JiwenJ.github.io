@@ -5,7 +5,7 @@
     <link>https://jiwenj.github.io/blog/</link>
       <atom:link href="https://jiwenj.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 29 Aug 2023 21:10:00 +0700</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 14 Oct 2023 21:10:00 +0700</lastBuildDate>
     <image>
       <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
@@ -13,10 +13,90 @@
     </image>
     
     <item>
+      <title>Data processing before training</title>
+      <link>https://jiwenj.github.io/blog/dataprocess/</link>
+      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/dataprocess/</guid>
+      <description>&lt;!-- &amp;ensp;
+&amp;emsp;
+&amp;nbsp; --&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Table
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;And a table of contents&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;On   the right&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Use the [TOC]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt; “Garbage in, garbage out” is a classic saying in computing about how problematic input data or instructions will produce problematic outputs.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;para&gt; Before we do any training, the data we are going to feed into the LLM really matter.&lt;/para&gt;&lt;/p&gt;
+&lt;h2 id=&#34;l&#34;&gt;l&lt;/h2&gt;
+&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
+&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: red; font-style:normal; font-family:Georgia; font-weight:normal}
+refer{}
+&lt;/style&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Utility</title>
+      <link>https://jiwenj.github.io/blog/utils/</link>
+      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/utils/</guid>
+      <description>&lt;!-- &amp;ensp;
+&amp;emsp;
+&amp;nbsp; --&gt;
+&lt;h3 id=&#34;website-development&#34;&gt;Website development&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>How to finetune Llama2</title>
       <link>https://jiwenj.github.io/blog/finetune/</link>
       <pubDate>Tue, 29 Aug 2023 21:10:00 +0700</pubDate>
       <guid>https://jiwenj.github.io/blog/finetune/</guid>
+      <description>&lt;p&gt;Recently, Meta published its latest LLM, Llama2[], and gained tremendous interest in  open source community. Different studies have been undertaken to evaluate Llama2 and therefore utilize Llama2 to improve their own vertical domain LLM that can acquire both domain capability and general LLM skills using both proprietary and public datasets. Before we dive into the tutorial on finetuning Llama2, we have to consider one question: “Why should we finetune Llama2 or must we?”&lt;/p&gt;
+&lt;p&gt;Typically we want to finetune a large language model with such following hope or objective: it might perform better if I feed it with more domain knowledge. Well. that’s true but should be with more tricks and computation.&lt;/p&gt;
+&lt;p&gt;From the course provided by Sharon Zhou[2], we can acquire the reason why we should finetune under some specific circumstances and the common differences between finetuning and prompt. We can conclude the finetuning advantages and disadvantages as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;llama2-info&#34;&gt;Llama2 info&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Parameter 70B&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;llama2-performance&#34;&gt;Llama2 Performance&lt;/h4&gt;
+&lt;p&gt;As it said Llama2 is almost the same powerful as GPT-3.5 except for coding whereas codeLlama can make up the shortage [].&lt;/p&gt;
+&lt;h4 id=&#34;other-llms-based-on-llama-2&#34;&gt;Other LLMs based on Llama 2&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Lemur (Pre-training,100B Token with code and text) &amp;amp; Lemur-Chat (Supervised Fine-tuning with 300K examples)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;computation-estimation&#34;&gt;Computation estimation&lt;/h4&gt;
+&lt;p&gt;With all these above, we perhaps can not hesitate to finetune some open-source LLMs (e.g. Llama 2 and  ChatGLM).&lt;/p&gt;
+&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
+&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to finetune Llama2</title>
+      <link>https://jiwenj.github.io/blog/peft/</link>
+      <pubDate>Tue, 29 Aug 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/peft/</guid>
       <description>&lt;p&gt;Recently, Meta published its latest LLM, Llama2[], and gained tremendous interest in  open source community. Different studies have been undertaken to evaluate Llama2 and therefore utilize Llama2 to improve their own vertical domain LLM that can acquire both domain capability and general LLM skills using both proprietary and public datasets. Before we dive into the tutorial on finetuning Llama2, we have to consider one question: “Why should we finetune Llama2 or must we?”&lt;/p&gt;
 &lt;p&gt;Typically we want to finetune a large language model with such following hope or objective: it might perform better if I feed it with more domain knowledge. Well. that’s true but should be with more tricks and computation.&lt;/p&gt;
 &lt;p&gt;From the course provided by Sharon Zhou[2], we can acquire the reason why we should finetune under some specific circumstances and the common differences between finetuning and prompt. We can conclude the finetuning advantages and disadvantages as follows:&lt;/p&gt;
