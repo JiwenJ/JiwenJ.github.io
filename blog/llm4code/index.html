@@ -854,7 +854,8 @@
 </span></span><span class="line"><span class="cl">  }]
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></div><h3 id="codeium">Codeium</h3>
-<h3 id="codegeex">CodeGeex</h3>
+<h3 id="codegeex2">CodeGeeX2</h3>
+<p><para/>CodeGeeX2 是多语言代码生成模型 CodeGeeX (KDD’23) 的第二代模型。不同于一代 CodeGeeX（完全在国产华为昇腾芯片平台训练） ，CodeGeeX2 是基于 ChatGLM2 架构加入代码预训练实现，得益于 ChatGLM2 的更优性能，CodeGeeX2 在多项指标上取得性能提升（+107% &gt; CodeGeeX；仅60亿参数即超过150亿参数的 StarCoder-15B 近10%）</p>
 <h3 id="wizardcode">WizardCode</h3>
 <p><para/>Code Large Language Models (Code LLMs), such as StarCoder, have demonstrated exceptional performance in code-related tasks. However, most existing models are solely pre-trained on extensive raw code data without instruction fine-tuning. In this paper, we introduce WizardCoder, which empowers Code LLMs with complex instruction fine-tuning, by adapting the Evol-Instruct method to the domain of code. Through comprehensive experiments on four prominent code generation benchmarks, namely HumanEval, HumanEval+, MBPP, and DS-1000, we unveil the exceptional capabilities of our model. It surpasses all other open-source Code LLMs by a substantial margin. Moreover, our model even outperforms the largest closed LLMs, Anthropic&rsquo;s Claude and Google&rsquo;s Bard, on HumanEval and HumanEval+.</p>
 <h3 id="phi-1">phi-1</h3>
@@ -865,7 +866,8 @@
 <p><para/>August 28th Update: They&rsquo;ve trained a new model, Phind-CodeLlama-34B-v2, that achieves 73.8% pass@1 on HumanEval. See the <a href="https://www.phind.com/blog/code-llama-beats-gpt4" target="_blank" rel="noopener">blog</a>.</p>
 <p><para/>They have released all models on <a href="https://huggingface.co/Phind" target="_blank" rel="noopener">Huggingface</a> to bolster the open-source community.</p>
 <h3 id="vscode-plugin-with-llms">Vscode Plugin with LLMs</h3>
-<p><para>We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure.</para></p>
+<p><para>We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure. In order to find out the mechanism, we take CodeGeex as an example. First we install the CodeGeex plugin and log in, then we can use <code>developer tool (ctl+shift+I)</code> to ananlyze the network and console output.
+We further go to the directory <code>'~/.vscode/aminer.codegeex-2.1.3'</code> where exists the source code of the plugin and find the post method in line42-64 of <code>'~/.vscode/extensions/aminer.codegeex-2.1.3/out/utils/getCodeCompletions.js'</code>. Besides, with seamless effort we can obtain the api url: <code>'https://tianqi.aminer.cn/api/v2/multilingual_code_generate_adapt'</code>, which you can try with any frontend tools. So far we can get preliminary thought about the mechanism: Frontend + Api calling, so the keys of user experience are still the <code>'clever'</code> model and network.</para></p>
 <h2 id="conclusion">Conclusion</h2>
 <p><para>In the conclusion, I will display the performance of these models on HumanEval dataset so that we can clearly and conveniently see their gap in code generation task. Therefore we can choose the right base model for our further research and production.</para></p>
 <table align="center" style="width:100%;border: solid;border-width:2px 0">

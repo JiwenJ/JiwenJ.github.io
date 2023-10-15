@@ -86,7 +86,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }]
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;codeium&#34;&gt;Codeium&lt;/h3&gt;
-&lt;h3 id=&#34;codegeex&#34;&gt;CodeGeex&lt;/h3&gt;
+&lt;h3 id=&#34;codegeex2&#34;&gt;CodeGeeX2&lt;/h3&gt;
+&lt;p&gt;&lt;para/&gt;CodeGeeX2 是多语言代码生成模型 CodeGeeX (KDD’23) 的第二代模型。不同于一代 CodeGeeX（完全在国产华为昇腾芯片平台训练） ，CodeGeeX2 是基于 ChatGLM2 架构加入代码预训练实现，得益于 ChatGLM2 的更优性能，CodeGeeX2 在多项指标上取得性能提升（+107% &amp;gt; CodeGeeX；仅60亿参数即超过150亿参数的 StarCoder-15B 近10%）&lt;/p&gt;
 &lt;h3 id=&#34;wizardcode&#34;&gt;WizardCode&lt;/h3&gt;
 &lt;p&gt;&lt;para/&gt;Code Large Language Models (Code LLMs), such as StarCoder, have demonstrated exceptional performance in code-related tasks. However, most existing models are solely pre-trained on extensive raw code data without instruction fine-tuning. In this paper, we introduce WizardCoder, which empowers Code LLMs with complex instruction fine-tuning, by adapting the Evol-Instruct method to the domain of code. Through comprehensive experiments on four prominent code generation benchmarks, namely HumanEval, HumanEval+, MBPP, and DS-1000, we unveil the exceptional capabilities of our model. It surpasses all other open-source Code LLMs by a substantial margin. Moreover, our model even outperforms the largest closed LLMs, Anthropic&amp;rsquo;s Claude and Google&amp;rsquo;s Bard, on HumanEval and HumanEval+.&lt;/p&gt;
 &lt;h3 id=&#34;phi-1&#34;&gt;phi-1&lt;/h3&gt;
@@ -97,7 +98,8 @@
 &lt;p&gt;&lt;para/&gt;August 28th Update: They&amp;rsquo;ve trained a new model, Phind-CodeLlama-34B-v2, that achieves 73.8% pass@1 on HumanEval. See the &lt;a href=&#34;https://www.phind.com/blog/code-llama-beats-gpt4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;blog&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;para/&gt;They have released all models on &lt;a href=&#34;https://huggingface.co/Phind&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Huggingface&lt;/a&gt; to bolster the open-source community.&lt;/p&gt;
 &lt;h3 id=&#34;vscode-plugin-with-llms&#34;&gt;Vscode Plugin with LLMs&lt;/h3&gt;
-&lt;p&gt;&lt;para&gt;We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure.&lt;/para&gt;&lt;/p&gt;
+&lt;p&gt;&lt;para&gt;We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure. In order to find out the mechanism, we take CodeGeex as an example. First we install the CodeGeex plugin and log in, then we can use &lt;code&gt;developer tool (ctl+shift+I)&lt;/code&gt; to ananlyze the network and console output.
+We further go to the directory &lt;code&gt;&#39;~/.vscode/aminer.codegeex-2.1.3&#39;&lt;/code&gt; where exists the source code of the plugin and find the post method in line42-64 of &lt;code&gt;&#39;~/.vscode/extensions/aminer.codegeex-2.1.3/out/utils/getCodeCompletions.js&#39;&lt;/code&gt;. Besides, with seamless effort we can obtain the api url: &lt;code&gt;&#39;https://tianqi.aminer.cn/api/v2/multilingual_code_generate_adapt&#39;&lt;/code&gt;, which you can try with any frontend tools. So far we can get preliminary thought about the mechanism: Frontend + Api calling, so the keys of user experience are still the &lt;code&gt;&#39;clever&#39;&lt;/code&gt; model and network.&lt;/para&gt;&lt;/p&gt;
 &lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;&lt;para&gt;In the conclusion, I will display the performance of these models on HumanEval dataset so that we can clearly and conveniently see their gap in code generation task. Therefore we can choose the right base model for our further research and production.&lt;/para&gt;&lt;/p&gt;
 &lt;table align=&#34;center&#34; style=&#34;width:100%;border: solid;border-width:2px 0&#34;&gt;
@@ -163,25 +165,6 @@ th,td {
     font-family:Georgia
 }
 &lt;/style&gt;</description>
-    </item>
-    
-    <item>
-      <title>Utility</title>
-      <link>https://jiwenj.github.io/blog/utils/</link>
-      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/utils/</guid>
-      <description>&lt;!-- &amp;ensp;
-&amp;emsp;
-&amp;nbsp; --&gt;
-&lt;h3 id=&#34;website-development&#34;&gt;Website development&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
     </item>
     
   </channel>
