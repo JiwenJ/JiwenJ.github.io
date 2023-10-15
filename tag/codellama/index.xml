@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>LLM | Jiwen Jiang</title>
-    <link>https://jiwenj.github.io/tag/llm/</link>
-      <atom:link href="https://jiwenj.github.io/tag/llm/index.xml" rel="self" type="application/rss+xml" />
-    <description>LLM</description>
+    <title>CodeLlama | Jiwen Jiang</title>
+    <link>https://jiwenj.github.io/tag/codellama/</link>
+      <atom:link href="https://jiwenj.github.io/tag/codellama/index.xml" rel="self" type="application/rss+xml" />
+    <description>CodeLlama</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 14 Oct 2023 21:10:00 +0700</lastBuildDate>
     <image>
       <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
-      <title>LLM</title>
-      <link>https://jiwenj.github.io/tag/llm/</link>
+      <title>CodeLlama</title>
+      <link>https://jiwenj.github.io/tag/codellama/</link>
     </image>
     
     <item>
@@ -155,42 +155,6 @@ th,td {
     font-family:Georgia
 }
 &lt;/style&gt;</description>
-    </item>
-    
-    <item>
-      <title>Utility</title>
-      <link>https://jiwenj.github.io/blog/utils/</link>
-      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/utils/</guid>
-      <description>&lt;!-- &amp;ensp;
-&amp;emsp;
-&amp;nbsp; --&gt;
-&lt;h3 id=&#34;website-development&#34;&gt;Website development&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Supervised Pretraining Can Learn In-Context Reinforcement Learning</title>
-      <link>https://jiwenj.github.io/paperreview/1/</link>
-      <pubDate>Mon, 17 Jul 2023 18:00:47 +0800</pubDate>
-      <guid>https://jiwenj.github.io/paperreview/1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prompt Engineering for LLMs</title>
-      <link>https://jiwenj.github.io/blog/prompt-engineering/</link>
-      <pubDate>Mon, 05 Jun 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/prompt-engineering/</guid>
-      <description>&lt;h5 id=&#34;group-meeting-pptpptpromptpdf&#34;&gt;&lt;a href=&#34;https://jiwenj.github.io/ppt/prompt.pdf&#34;&gt;Group Meeting PPT&lt;/a&gt;&lt;/h5&gt;
-</description>
     </item>
     
   </channel>

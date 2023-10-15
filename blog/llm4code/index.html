@@ -279,12 +279,12 @@
 
   
 
-<meta name="description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" />
+<meta name="description" content="I have curated some recent LLMs for code generation task." />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/utils/" />
-<link rel="canonical" href="https://jiwenj.github.io/blog/utils/" />
+<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/llm4code/" />
+<link rel="canonical" href="https://jiwenj.github.io/blog/llm4code/" />
 
 
 
@@ -315,11 +315,11 @@
 
   <meta property="twitter:site" content="@wowchemy" />
   <meta property="twitter:creator" content="@wowchemy" />
-<meta property="twitter:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" />
+<meta property="twitter:image" content="https://jiwenj.github.io/blog/llm4code/featured.jpg" />
 <meta property="og:site_name" content="Jiwen Jiang" />
-<meta property="og:url" content="https://jiwenj.github.io/blog/utils/" />
-<meta property="og:title" content="Utility | Jiwen Jiang" />
-<meta property="og:description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" /><meta property="og:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://jiwenj.github.io/blog/llm4code/" />
+<meta property="og:title" content="LLMs for Code | Jiwen Jiang" />
+<meta property="og:description" content="I have curated some recent LLMs for code generation task." /><meta property="og:image" content="https://jiwenj.github.io/blog/llm4code/featured.jpg" /><meta property="og:locale" content="en-us" />
 
   
     <meta
@@ -353,7 +353,7 @@
 
 
   
-  <title>Utility | Jiwen Jiang</title>
+  <title>LLMs for Code | Jiwen Jiang</title>
 
   
   
@@ -373,7 +373,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="8a3943386d7cb04dc20f039e800f0f98" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="202b33df4b32c41aa6f167b7fa44ebf5" >
 
   
   
@@ -712,10 +712,10 @@
 
 
 <div class="article-container pt-3">
-  <h1>Utility</h1>
+  <h1>LLMs for Code</h1>
 
   
-  <p class="page-subtitle">Why and how we finetune open source LLMs?</p>
+  <p class="page-subtitle">LLMs as copilot for coding tasks</p>
   
 
   
@@ -759,7 +759,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/category/llm/">LLM</a>, <a href="/category/finetune/">Finetune</a>, <a href="/category/llama-2/">Llama 2</a></span>
+    <i class="fas fa-folder mr-1"></i><a href="/category/codellama/">CodeLlama</a>, <a href="/category/finetune/">Finetune</a>, <a href="/category/llm/">LLM</a></span>
   
 
 </div>
@@ -773,9 +773,9 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 405px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 370px;">
   <div style="position: relative">
-    <img src="/blog/utils/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_720x2500_fit_q75_h2_lanczos.webp" width="720" height="405" alt="" class="featured-image">
+    <img src="/blog/llm4code/featured_hu1ed11e0dfceca75d0589191d7fbfef57_311184_720x2500_fit_q75_h2_lanczos.webp" width="720" height="370" alt="" class="featured-image">
     
   </div>
 </div>
@@ -785,18 +785,144 @@
   <div class="article-container">
 
     <div class="article-style">
-      <!-- &ensp;
-&emsp;
-&nbsp; -->
-<h3 id="website-development">Website development</h3>
+      <p><para>Large Language Models for Code are flourishing. New and powerful models are released on a weekly basis, demonstrating remarkable performance on the code generation task. In this article, I curate some SOTA models and try to figure out their machanism. Here is the content of table:</para></p>
+<!-- https://analyticsindiamag.com/metas-code-llama-is-here-but-unnaturally/ -->
+<hr>
+<para>
 <ul>
-<li><a href="https://www.googlefonts.cn/?category=Serif,Sans&#43;Serif,Handwriting,Monospace" target="_blank" rel="noopener">Google Fonts</a></li>
-<li><a href="https://google.github.io/styleguide/docguide/" target="_blank" rel="noopener">Google documentation guide</a></li>
-<li><a href="https://google.github.io/styleguide/" target="_blank" rel="noopener">Google Style Guides</a></li>
-<li><a href="https://www.webhek.com/post/html-enerty-code/" target="_blank" rel="noopener">HTML特殊字符符号大全</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border" target="_blank" rel="noopener">MDN</a></li>
+<li><strong>Contents</strong>
+<ul>
+<li>Humaneval</li>
+<li>CodeLlama</li>
+<li>Phind</li>
+<li>CodeGeex</li>
+<li>Codeium</li>
+<li>WizardCode</li>
+<li>phi-1</li>
 </ul>
+</li>
+</ul>
+</para>
+<hr>
+<h3 id="humaneval">Humaneval</h3>
+<p><para>This is an evaluation harness for the HumanEval problem solving dataset described in the paper <a href="https://arxiv.org/pdf/2107.03374.pdf" target="_blank" rel="noopener">&ldquo;Evaluating Large Language Models Trained on Code&rdquo;</a>. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in <a href="https://paperswithcode.com/sota/code-generation-on-humaneval" target="_blank" rel="noopener">PapersWithCode</a>.</para>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  id="figure-an-example-the-white-space-is-the-prompt-or-input-while-the-yellow-space-is-the-model-generated-content">
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./1.jpg" alt="example" loading="lazy" data-zoomable /></div>
+  </div><figcaption>
+      An example: the white space is the prompt or input while the yellow space is the model-generated content
+    </figcaption></figure>
+</p>
+<h3 id="codellama">CodeLlama</h3>
+<p><para>Maybe you haven&rsquo;t excperienced CodeLlama yet, the Huggingface official group has deployed a <a href="https://huggingface.co/chat" target="_blank" rel="noopener">playground</a> for everyone where you can Preliminarily evaluate it in your target task.</para></p>
+<p><para>After you have seen its performance on your task and gain much confidence in CodeLlama, you might want to give it a shot where you can delve deeper into the paper, even deploy and finetune it. The model weights are available in <a href="https://huggingface.co/codellama" target="_blank" rel="noopener">Huggingface</a>. If you go through the <a href="https://arxiv.org/pdf/2308.12950v2.pdf" target="_blank" rel="noopener">paper</a>, you might find a really distinct model named &ldquo;<strong>unnatural CodeLlama</strong>&rdquo; whose performance is nearly the same as GPT-4 under the code scenario.</para></p>
+<h5 id="what-is-unnatural-instruction">What is unnatural instruction</h5>
+<p><para>In December 2022, Meta AI with Tel Aviv University published the paper named <a href="https://arxiv.org/pdf/2212.09689.pdf" target="_blank" rel="noopener">Unnatural Instructions: Tuning Language Models with (Almost) No Human Labor</a>. The paper talks about how Meta created a large dataset of creative and diverse instructions and collected 64,000 examples by prompting a language model. This was then further prompted to create a total of 240,000 examples on inputs and outputs, which contained only a little amount of noise. Unnatural Instructions is a dataset of instructions automatically generated by a Large Language model.</para></p>
+<p><para>An example of <a href="https://github.com/orhonovich/unnatural-instructions" target="_blank" rel="noopener">dataset</a>:</para></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#39;instruction&#39;: &#39;You will be given a series of words. Output these words in reverse order, with each word on its own line.&#39;,
+</span></span><span class="line"><span class="cl">  &#39;instances&#39;:
+</span></span><span class="line"><span class="cl">  [{
+</span></span><span class="line"><span class="cl">    &#39;instruction_with_input&#39;: &#34;You will be given a series of words. Output these words in reverse order, with each word on its own line.\nWords: [&#39;Hello&#39;, &#39;world&#39;].&#34;,
+</span></span><span class="line"><span class="cl">    &#39;input&#39;: &#34;Words: [&#39;Hello&#39;, &#39;world&#39;].&#34;,
+</span></span><span class="line"><span class="cl">    &#39;constraints&#39;: &#39;None.&#39;,
+</span></span><span class="line"><span class="cl">    &#39;output&#39;: &#39;world\nHello&#39;
+</span></span><span class="line"><span class="cl">  }]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="codeium">Codeium</h3>
+<h3 id="codegeex">CodeGeex</h3>
+<h3 id="wizardcode">WizardCode</h3>
+<p><para/>Code Large Language Models (Code LLMs), such as StarCoder, have demonstrated exceptional performance in code-related tasks. However, most existing models are solely pre-trained on extensive raw code data without instruction fine-tuning. In this paper, we introduce WizardCoder, which empowers Code LLMs with complex instruction fine-tuning, by adapting the Evol-Instruct method to the domain of code. Through comprehensive experiments on four prominent code generation benchmarks, namely HumanEval, HumanEval+, MBPP, and DS-1000, we unveil the exceptional capabilities of our model. It surpasses all other open-source Code LLMs by a substantial margin. Moreover, our model even outperforms the largest closed LLMs, Anthropic&rsquo;s Claude and Google&rsquo;s Bard, on HumanEval and HumanEval+.</p>
+<h3 id="phi-1">phi-1</h3>
+<p><para>phi-1 is proposed by teams of Microsoft in the <a href="https://arxiv.org/pdf/2306.11644v2.pdf" target="_blank" rel="noopener">&quot;<em>Textbooks Are All You Need</em>&quot;</a>. phi-1 is a Transformer-based model with 1.3B parameters, trained for 4 days on 8 A100s, using a selection of &ldquo;textbook quality&rdquo; data from the web (6B tokens) and synthetically generated textbooks and exercises with GPT-3.5 (1B tokens). Despite this small scale, phi-1 attains pass@1 accuracy 50.6% on HumanEval and 55.5% on MBPP. It also displays surprising emergent properties compared to phi-1-base, our model before our finetuning stage on a dataset of coding exercises, and phi-1-small, a smaller model with 350M parameters trained with the same pipeline as phi-1 that still achieves 45% on HumanEval.
+</para></p>
+<h3 id="phind">Phind</h3>
+<p><para/><a href="https://www.phind.com/" target="_blank" rel="noopener">Phind</a> is an intelligent search engine and assistant for programmers. With Phind, you&rsquo;ll get the answer you&rsquo;re looking for in seconds instead of hours. It will guide you step-by-step from that idea in your head to a working app. Phind is smart enough to proactively ask you questions to clarify its assumptions and to browse the web (or your codebase) when it needs additional context. With their new VS Code extension, you can now get Phind&rsquo;s help right in your editor.</p>
+<p><para/>August 28th Update: They&rsquo;ve trained a new model, Phind-CodeLlama-34B-v2, that achieves 73.8% pass@1 on HumanEval. See the <a href="https://www.phind.com/blog/code-llama-beats-gpt4" target="_blank" rel="noopener">blog</a>.</p>
+<p><para/>They have released all models on <a href="https://huggingface.co/Phind" target="_blank" rel="noopener">Huggingface</a> to bolster the open-source community.</p>
+<h3 id="vscode-plugin-with-llms">Vscode Plugin with LLMs</h3>
+<p><para>We have mentioned above that most of the models are incorporated into the plugin for the convenience in coding procedure.</para></p>
+<h2 id="conclusion">Conclusion</h2>
+<p><para>In the conclusion, I will display the performance of these models on Humaneval dataset so that we can clearly and conveniently see their gap in code generation task. Therefore we can choose the right base model for our further research and production.</para></p>
+<table align="center" style="width:100%;border: solid;border-width:2px 0">
+<caption>Table 1: Comparable results on code generation task</caption>
+<thead style="border-bottom:#000 2px solid;">
+<tr>
+<th style="border:0">Model</th>
+<td style="border:0">Size</td>
+<td style="border:0">Open source</td>
+<td style="border:0">Techniques</td>
+<td style="border:0">Pass@1</td>
+<td style="border:0">Pass@10</td>
+<td style="border:0">Pass@100</td>
+<td style="border:0">Plugin</td>
+</tr>
+</thead>
+<thead>
+<tr >
+<th style="border:0">CodeLlama</th>
+<td style="border:0">M</td>
+<td style="border:0" >&#10004</td>
+<td style="border:0" >&#10008</td>
+</tr>
+</thead>
+<tr>
+<th style="border:0">WizardCode</th>
+<td style="border:0">F</td>
+<td style="border:0">No</td>
+<td style="border:0">Yes</td>
+</tr>
+<tr>
+<th style="border:0">Phind</th>
+<td style="border:0">M</td>
+<td style="border:0">No</td>
+<td style="border:0">No</td>
+</tr>
+<tr>
+<th style="border:0">Codeium</th>
+<td style="border:0">M</td>
+<td style="border:0">No</td>
+<td style="border:0">No</td>
+</tr>
+<tr>
+<th style="border:0">Phi</th>
+<td style="border:0">M</td>
+<td style="border:0">No</td>
+<td style="border:0">No</td>
+</tr>
+<tr>
+<th style="border:0">CodeGeex</th>
+<td style="border:0">M</td>
+<td style="border:0">No</td>
+<td style="border:0">No</td>
+</tr>
+</table>
+<style>
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+
+th,td {
+    text-align: center;
+    font-family:Georgia
+}
+</style>
     </div>
 
     
@@ -807,11 +933,11 @@
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/llm/">LLM</a>
+  <a class="badge badge-light" href="/tag/codellama/">CodeLlama</a>
   
   <a class="badge badge-light" href="/tag/finetune/">Finetune</a>
   
-  <a class="badge badge-light" href="/tag/llama-2/">Llama 2</a>
+  <a class="badge badge-light" href="/tag/llm/">LLM</a>
   
 </div>
 
@@ -832,7 +958,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;text=Utility" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F&amp;text=LLMs&#43;for&#43;Code" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -849,7 +975,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;t=Utility" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F&amp;t=LLMs&#43;for&#43;Code" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -868,7 +994,7 @@
         
       
       <li>
-        <a href="mailto:?subject=Utility&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=LLMs%20for%20Code&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -885,7 +1011,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F&amp;title=LLMs&#43;for&#43;Code" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -902,7 +1028,7 @@
       
       
       <li>
-        <a href="whatsapp://send?text=Utility%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=LLMs&#43;for&#43;Code%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -919,7 +1045,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fllm4code%2F&amp;title=LLMs&#43;for&#43;Code" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
