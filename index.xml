@@ -33,6 +33,131 @@
     </item>
     
     <item>
+      <title>CUDA Programming</title>
+      <link>https://jiwenj.github.io/blog/gpu/</link>
+      <pubDate>Thu, 19 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/gpu/</guid>
+      <description>&lt;hr&gt;
+&lt;para/&gt;
+&lt;ul&gt;
+&lt;li&gt;Table
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;Books&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Faculty&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Misc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;para&gt;
+&lt;h3 id=&#34;books&#34;&gt;Books&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;对应中文版《GPU高性能编程CUDA实战》《CUDA并行程序设计：GPU编程指南​》《CUDA专家手册 : GPU编程权威指南》《大规模并行处理器编程实战（第2版）​》《CUDA编程指南4.0中文版》&lt;/li&gt;
+&lt;li&gt;CUDA C编程权威指南》 《GPU编程实战（基于Python和CUDA）》书《GPU编程与优化•大众高性能计算》&lt;/li&gt;
+&lt;li&gt;CUDA 编程: 基础与实践 &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[PDF]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Cook, Shane. CUDA 并行程序设计 – GPU 编程指南, 机械工业出版社, 2014.&lt;/li&gt;
+&lt;li&gt;AI 编译器开发指南&lt;/li&gt;
+&lt;li&gt;Programming Massively Parallel Processors: A Hands-on Approach - CUDA by Example: An Introduction to General-Purpose GPU Programming》&lt;/li&gt;
+&lt;li&gt;CUDA by ExampleCUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/li&gt;
+&lt;li&gt;CUDA Programming Guide
+​Programming Massively Parallel Processors: A Hands-on Approach
+《大规模并行处理器编程实战（第2版）​》，英文版已经第4版，在 ScienceDirect 可下载(疫情期间上海高校好像可免费下载)。&lt;/li&gt;
+&lt;li&gt;​CUDA Handbook: A Comprehensive Guide to GPU Programming&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The CUDA HandbookProgramming Massively Parallel Processors 2rd&lt;/li&gt;
+&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming
+Programming Massively Parallel Processors 3th- Nvidia Cuda Programming Guide&lt;/li&gt;
+&lt;li&gt;Programming Massively Parallel Processors&lt;/li&gt;
+&lt;li&gt;Professional CUDA C Programming&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;footnote: Parts of the books can be found &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/tree/main/cuda&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;courses&#34;&gt;Courses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;udacity cs344: intro to parallel programming&lt;/li&gt;
+&lt;li&gt;龚敏敏老师在哔哩哔哩上的《上帝视角看GPU》&lt;/li&gt;
+&lt;li&gt;UIUC的课 Heterogeneous Parallel Programming&lt;/li&gt;
+&lt;li&gt;CS179:GPU Programming&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.udacity.com/course/intro-to-parallel-programming--cs344&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Udacity的《入门并行编程：CUDA》课程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.nvidia.com/cuda/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NVIDIA 官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.nvidia.com/cuda/cuda-c-programming-guide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NVIDIA 官方编程文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;blogs&#34;&gt;Blogs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;高升博客&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;community&#34;&gt;Community&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://devtalk.nvidia.com/default/board/57/cuda-programming-and-performance/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CUDA开发者社区&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;faculty&#34;&gt;Faculty&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;UC Davis John Owens，Billy Dally的学生&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;misc&#34;&gt;Misc&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenGL(ES) OpenCL Vulkan Taichi ROCm&lt;/li&gt;
+&lt;li&gt;产品datasheet各个架构的白皮书&lt;/li&gt;
+&lt;li&gt;cutlass的discussion，&lt;/li&gt;
+&lt;li&gt;tensorcore资料又不是很多（市面上往往还是调用nvcuda::wmma这个封装好的api&lt;/li&gt;
+&lt;li&gt;他们也有discord频道，&lt;/li&gt;
+&lt;li&gt;reduce, &lt;a href=&#34;https://zhuanlan.zhihu.com/p/441146275&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;矩阵乘&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;comment&#34;&gt;Comment:&lt;/h3&gt;
+&lt;p&gt;综上所述，如果只想入门、想了解众核并行、想锻炼C++工程能力，随便找本不错的书读；要是想保持在前沿，看博客、看文章、直接关注做GPU的组，比读几百页书知识还停留在10年前强多了&lt;/p&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/26570985&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.zhihu.com/question/26570985&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;para/&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+&lt;/style&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Inference tools for LLMs</title>
+      <link>https://jiwenj.github.io/blog/inference/</link>
+      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/inference/</guid>
+      <description>&lt;!-- &amp;ensp;
+&amp;emsp;
+&amp;nbsp; --&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Table
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;And a table of contents&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;On   the right&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Use the [TOC]&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt; “Garbage in, garbage out” is a classic saying in computing about how problematic input data or instructions will produce problematic outputs.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;para&gt; Before we do any training, the data we are going to feed into the LLM really matter.&lt;/para&gt;&lt;/p&gt;
+&lt;h2 id=&#34;l&#34;&gt;l&lt;/h2&gt;
+&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
+&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: red; font-style:normal; font-family:Georgia; font-weight:normal}
+refer{}
+&lt;/style&gt;
+</description>
+    </item>
+    
+    <item>
       <title>LLMs for Code (Progressing)</title>
       <link>https://jiwenj.github.io/blog/llm4code/</link>
       <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
@@ -57,6 +182,7 @@
 &lt;li&gt;Codeium&lt;/li&gt;
 &lt;li&gt;WizardCode&lt;/li&gt;
 &lt;li&gt;phi-1&lt;/li&gt;
+&lt;li&gt;CodeFuse&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -64,6 +190,7 @@
 &lt;/ul&gt;
 &lt;/para&gt;
 &lt;hr&gt;
+&lt;p&gt;CodeXGLUE &lt;a href=&#34;https://paperswithcode.com/dataset/codexglue&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://paperswithcode.com/dataset/codexglue&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;humaneval&#34;&gt;HumanEval&lt;/h3&gt;
 &lt;p&gt;&lt;para&gt;This is an evaluation harness for the HumanEval problem solving dataset described in the paper &lt;a href=&#34;https://arxiv.org/pdf/2107.03374.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Evaluating Large Language Models Trained on Code&amp;rdquo;&lt;/a&gt;. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in &lt;a href=&#34;https://paperswithcode.com/sota/code-generation-on-humaneval&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PapersWithCode&lt;/a&gt;.&lt;/para&gt;
 
@@ -203,6 +330,109 @@ th,td {
 &lt;li&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&#34;autodl&#34;&gt;AutoDL&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.autodl.com/docs/network_turbo/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;学术资源加速&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;source /etc/network_turbo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;huggingface&#34;&gt;Huggingface&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Hugging Face Hub 模型下载方案&lt;/li&gt;
+&lt;li&gt;git clone下载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;huggingface-cli login
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;use_auth_token=True
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/THUDM/chatglm-6b
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git lfs pull --include &amp;#34;*bin&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;from huggingface_hub import snapshot_download
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;snapshot_download(repo_id=&amp;#34;bert-base-chinese&amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://huggingface.co/docs/huggingface_hub/v0.18.0.rc0/guides/download
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;书籍查找下载
+&lt;ul&gt;
+&lt;li&gt;GitHub&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jiumodiary.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;jiumodiary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://singlelogin.re/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;z-lib&lt;/a&gt;
+Library Genesis
+论文查找，期刊查询
+Google Scholar
+DBLP
+An organization hosting a database and logic programming bibliography site
+LetPub
+期刊点评与相关信息
+Web of Science
+会伴
+ResearchGate
+Sci-Hub
+Elsevier-ScienceDirect
+Aminer
+Academia.edu
+Microsoft Academic
+Semantic Scholar
+博客、学术网站搭建
+blinkfox
+魔法之书
+文件转换
+Pandoc - index
+软件，AI服务
+ai-lib.club
+mpyit
+Latex
+Online Editor
+Overleaf
+Curriculum Vitae
+canadacast-cv-example
+geekplux/cv_resume: A latex cv/resume template. (github.com)
+dyweb/awesome-resume-for-chinese: 📄 适合中文的简历模板收集（LaTeX，HTML/JS and so on）由 @hoochanlon 维护 (github.com)
+Helpful Documentation
+LaTeX公式手册(全网最全) - 樱花赞 - 博客园 (cnblogs.com)
+lshort-zh-cn
+lnotes
+刘海洋
+LaTeX 工作室 (latexstudio.net)
+Linux
+Linux命令搜索引擎 命令，Linux Linux命令搜索引擎 命令详解：最专业的Linux命令大全，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。 - Linux 命令搜索引擎 (wangchujiang.com)
+Windows
+windows常用命令 - 可可西 - 博客园 (cnblogs.com)
+Manim
+cai-hust/manim-tutorial-CN: manim中文入门教程 (github.com)
+eulertour.com/studio
+论文绘图
+PPT
+Draw.io
+Visio
+R
+Python
+云服务器
+AutoDL
+AWS
+代码，模型社区
+GitHub
+Emoji
+Huggingface
+ApacheCN (github.com)
+前沿消息
+Twitter
+Reddit
+Telegram
+Medium
+信用卡
+visa credit card
+Dupay
+OKX&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Math
+Library Genesis • scientific articles (libgen.rs)
+中文数学 Wiki | Fandom
+Swift
+A Swift Tour | Documentation
+A Swift Tour | Documentation&lt;/p&gt;
 </description>
     </item>
     
@@ -327,7 +557,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-674815329&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-351947286&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -337,7 +567,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-674815329&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-351947286&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();

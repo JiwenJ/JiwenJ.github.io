@@ -37,6 +37,7 @@
 &lt;li&gt;Codeium&lt;/li&gt;
 &lt;li&gt;WizardCode&lt;/li&gt;
 &lt;li&gt;phi-1&lt;/li&gt;
+&lt;li&gt;CodeFuse&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -44,6 +45,7 @@
 &lt;/ul&gt;
 &lt;/para&gt;
 &lt;hr&gt;
+&lt;p&gt;CodeXGLUE &lt;a href=&#34;https://paperswithcode.com/dataset/codexglue&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://paperswithcode.com/dataset/codexglue&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;humaneval&#34;&gt;HumanEval&lt;/h3&gt;
 &lt;p&gt;&lt;para&gt;This is an evaluation harness for the HumanEval problem solving dataset described in the paper &lt;a href=&#34;https://arxiv.org/pdf/2107.03374.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Evaluating Large Language Models Trained on Code&amp;rdquo;&lt;/a&gt;. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in &lt;a href=&#34;https://paperswithcode.com/sota/code-generation-on-humaneval&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PapersWithCode&lt;/a&gt;.&lt;/para&gt;
 

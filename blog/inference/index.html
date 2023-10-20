@@ -279,12 +279,12 @@
 
   
 
-<meta name="description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" />
+<meta name="description" content="I curate some inference tools for your deployment and customed, so stay tuned!" />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/utils/" />
-<link rel="canonical" href="https://jiwenj.github.io/blog/utils/" />
+<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/inference/" />
+<link rel="canonical" href="https://jiwenj.github.io/blog/inference/" />
 
 
 
@@ -315,11 +315,11 @@
 
   <meta property="twitter:site" content="@wowchemy" />
   <meta property="twitter:creator" content="@wowchemy" />
-<meta property="twitter:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" />
+<meta property="twitter:image" content="https://jiwenj.github.io/blog/inference/featured.jpg" />
 <meta property="og:site_name" content="Jiwen Jiang" />
-<meta property="og:url" content="https://jiwenj.github.io/blog/utils/" />
-<meta property="og:title" content="Utility | Jiwen Jiang" />
-<meta property="og:description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" /><meta property="og:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://jiwenj.github.io/blog/inference/" />
+<meta property="og:title" content="Inference tools for LLMs | Jiwen Jiang" />
+<meta property="og:description" content="I curate some inference tools for your deployment and customed, so stay tuned!" /><meta property="og:image" content="https://jiwenj.github.io/blog/inference/featured.jpg" /><meta property="og:locale" content="en-us" />
 
   
     <meta
@@ -353,7 +353,7 @@
 
 
   
-  <title>Utility | Jiwen Jiang</title>
+  <title>Inference tools for LLMs | Jiwen Jiang</title>
 
   
   
@@ -373,7 +373,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="8a3943386d7cb04dc20f039e800f0f98" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="5b8ee2748c79bd0c910c1db61cce232e" >
 
   
   
@@ -712,8 +712,10 @@
 
 
 <div class="article-container pt-3">
-  <h1>Utility</h1>
+  <h1>Inference tools for LLMs</h1>
 
+  
+  <p class="page-subtitle">Wanan a easy way to deploy your models?</p>
   
 
   
@@ -755,6 +757,10 @@
 
   
   
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/llm/">LLM</a>, <a href="/category/finetune/">Finetune</a>, <a href="/category/llama-2/">Llama 2</a></span>
+  
 
 </div>
 
@@ -769,7 +775,7 @@
 
 <div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 405px;">
   <div style="position: relative">
-    <img src="/blog/utils/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_720x2500_fit_q75_h2_lanczos.webp" width="720" height="405" alt="" class="featured-image">
+    <img src="/blog/inference/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_720x2500_fit_q75_h2_lanczos.webp" width="720" height="405" alt="" class="featured-image">
     
   </div>
 </div>
@@ -782,117 +788,29 @@
       <!-- &ensp;
 &emsp;
 &nbsp; -->
-<h3 id="website-development">Website development</h3>
+<hr>
 <ul>
-<li><a href="https://www.googlefonts.cn/?category=Serif,Sans&#43;Serif,Handwriting,Monospace" target="_blank" rel="noopener">Google Fonts</a></li>
-<li><a href="https://google.github.io/styleguide/docguide/" target="_blank" rel="noopener">Google documentation guide</a></li>
-<li><a href="https://google.github.io/styleguide/" target="_blank" rel="noopener">Google Style Guides</a></li>
-<li><a href="https://www.webhek.com/post/html-enerty-code/" target="_blank" rel="noopener">HTML特殊字符符号大全</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border" target="_blank" rel="noopener">MDN</a></li>
-</ul>
-<h3 id="autodl">AutoDL</h3>
+<li>Table
 <ul>
-<li><a href="https://www.autodl.com/docs/network_turbo/" target="_blank" rel="noopener">学术资源加速</a></li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">source /etc/network_turbo
-</span></span></code></pre></div><h3 id="huggingface">Huggingface</h3>
-<ul>
-<li>Hugging Face Hub 模型下载方案</li>
-<li>git clone下载</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">huggingface-cli login
-</span></span><span class="line"><span class="cl">use_auth_token=True
-</span></span><span class="line"><span class="cl">GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/THUDM/chatglm-6b
-</span></span><span class="line"><span class="cl">git lfs pull --include &#34;*bin&#34;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">from huggingface_hub import snapshot_download
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">snapshot_download(repo_id=&#34;bert-base-chinese&#34;)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">https://huggingface.co/docs/huggingface_hub/v0.18.0.rc0/guides/download
-</span></span></code></pre></div><ul>
-<li>书籍查找下载
-<ul>
-<li>GitHub</li>
-<li><a href="https://www.jiumodiary.com/" target="_blank" rel="noopener">jiumodiary</a></li>
-<li><a href="https://singlelogin.re/" target="_blank" rel="noopener">z-lib</a>
-Library Genesis
-论文查找，期刊查询
-Google Scholar
-DBLP
-An organization hosting a database and logic programming bibliography site
-LetPub
-期刊点评与相关信息
-Web of Science
-会伴
-ResearchGate
-Sci-Hub
-Elsevier-ScienceDirect
-Aminer
-Academia.edu
-Microsoft Academic
-Semantic Scholar
-博客、学术网站搭建
-blinkfox
-魔法之书
-文件转换
-Pandoc - index
-软件，AI服务
-ai-lib.club
-mpyit
-Latex
-Online Editor
-Overleaf
-Curriculum Vitae
-canadacast-cv-example
-geekplux/cv_resume: A latex cv/resume template. (github.com)
-dyweb/awesome-resume-for-chinese: 📄 适合中文的简历模板收集（LaTeX，HTML/JS and so on）由 @hoochanlon 维护 (github.com)
-Helpful Documentation
-LaTeX公式手册(全网最全) - 樱花赞 - 博客园 (cnblogs.com)
-lshort-zh-cn
-lnotes
-刘海洋
-LaTeX 工作室 (latexstudio.net)
-Linux
-Linux命令搜索引擎 命令，Linux Linux命令搜索引擎 命令详解：最专业的Linux命令大全，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。 - Linux 命令搜索引擎 (wangchujiang.com)
-Windows
-windows常用命令 - 可可西 - 博客园 (cnblogs.com)
-Manim
-cai-hust/manim-tutorial-CN: manim中文入门教程 (github.com)
-eulertour.com/studio
-论文绘图
-PPT
-Draw.io
-Visio
-R
-Python
-云服务器
-AutoDL
-AWS
-代码，模型社区
-GitHub
-Emoji
-Huggingface
-ApacheCN (github.com)
-前沿消息
-Twitter
-Reddit
-Telegram
-Medium
-信用卡
-visa credit card
-Dupay
-OKX</li>
+<li><a href="#and-a-table-of-contents">And a table of contents</a></li>
+<li><a href="#on-the-right">On   the right</a></li>
+<li><a href="#l">Use the [TOC]</a></li>
 </ul>
 </li>
 </ul>
-<p>Math
-Library Genesis • scientific articles (libgen.rs)
-中文数学 Wiki | Fandom
-Swift
-A Swift Tour | Documentation
-A Swift Tour | Documentation</p>
+<hr>
+<p><em><strong> “Garbage in, garbage out” is a classic saying in computing about how problematic input data or instructions will produce problematic outputs.</strong></em></p>
+<p><para> Before we do any training, the data we are going to feed into the LLM really matter.</para></p>
+<h2 id="l">l</h2>
+<h5 id="reference">Reference</h5>
+<p>[1] <a href="http://xueshu.baidu.com/" target="_blank" rel="noopener"></a></p>
+<p>[2] <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank" rel="noopener"></a></p>
+<style>
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: red; font-style:normal; font-family:Georgia; font-weight:normal}
+refer{}
+</style>
 
     </div>
 
@@ -901,6 +819,16 @@ A Swift Tour | Documentation</p>
 
 
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/llm/">LLM</a>
+  
+  <a class="badge badge-light" href="/tag/finetune/">Finetune</a>
+  
+  <a class="badge badge-light" href="/tag/llama-2/">Llama 2</a>
+  
+</div>
 
 
 
@@ -919,7 +847,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;text=Utility" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F&amp;text=Inference&#43;tools&#43;for&#43;LLMs" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -936,7 +864,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;t=Utility" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F&amp;t=Inference&#43;tools&#43;for&#43;LLMs" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -955,7 +883,7 @@ A Swift Tour | Documentation</p>
         
       
       <li>
-        <a href="mailto:?subject=Utility&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=Inference%20tools%20for%20LLMs&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -972,7 +900,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F&amp;title=Inference&#43;tools&#43;for&#43;LLMs" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -989,7 +917,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="whatsapp://send?text=Utility%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=Inference&#43;tools&#43;for&#43;LLMs%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1006,7 +934,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Finference%2F&amp;title=Inference&#43;tools&#43;for&#43;LLMs" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

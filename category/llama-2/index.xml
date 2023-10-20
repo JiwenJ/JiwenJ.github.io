@@ -5,7 +5,7 @@
     <link>https://jiwenj.github.io/category/llama-2/</link>
       <atom:link href="https://jiwenj.github.io/category/llama-2/index.xml" rel="self" type="application/rss+xml" />
     <description>Llama 2</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 14 Oct 2023 21:10:00 +0700</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 19 Oct 2023 21:10:00 +0700</lastBuildDate>
     <image>
       <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
       <title>Llama 2</title>
@@ -13,21 +13,127 @@
     </image>
     
     <item>
-      <title>Utility</title>
-      <link>https://jiwenj.github.io/blog/utils/</link>
+      <title>CUDA Programming</title>
+      <link>https://jiwenj.github.io/blog/gpu/</link>
+      <pubDate>Thu, 19 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/gpu/</guid>
+      <description>&lt;hr&gt;
+&lt;para/&gt;
+&lt;ul&gt;
+&lt;li&gt;Table
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;Books&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Faculty&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Misc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;para&gt;
+&lt;h3 id=&#34;books&#34;&gt;Books&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;对应中文版《GPU高性能编程CUDA实战》《CUDA并行程序设计：GPU编程指南​》《CUDA专家手册 : GPU编程权威指南》《大规模并行处理器编程实战（第2版）​》《CUDA编程指南4.0中文版》&lt;/li&gt;
+&lt;li&gt;CUDA C编程权威指南》 《GPU编程实战（基于Python和CUDA）》书《GPU编程与优化•大众高性能计算》&lt;/li&gt;
+&lt;li&gt;CUDA 编程: 基础与实践 &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[PDF]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Cook, Shane. CUDA 并行程序设计 – GPU 编程指南, 机械工业出版社, 2014.&lt;/li&gt;
+&lt;li&gt;AI 编译器开发指南&lt;/li&gt;
+&lt;li&gt;Programming Massively Parallel Processors: A Hands-on Approach - CUDA by Example: An Introduction to General-Purpose GPU Programming》&lt;/li&gt;
+&lt;li&gt;CUDA by ExampleCUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/li&gt;
+&lt;li&gt;CUDA Programming Guide
+​Programming Massively Parallel Processors: A Hands-on Approach
+《大规模并行处理器编程实战（第2版）​》，英文版已经第4版，在 ScienceDirect 可下载(疫情期间上海高校好像可免费下载)。&lt;/li&gt;
+&lt;li&gt;​CUDA Handbook: A Comprehensive Guide to GPU Programming&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The CUDA HandbookProgramming Massively Parallel Processors 2rd&lt;/li&gt;
+&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming
+Programming Massively Parallel Processors 3th- Nvidia Cuda Programming Guide&lt;/li&gt;
+&lt;li&gt;Programming Massively Parallel Processors&lt;/li&gt;
+&lt;li&gt;Professional CUDA C Programming&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;footnote: Parts of the books can be found &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/tree/main/cuda&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;courses&#34;&gt;Courses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;udacity cs344: intro to parallel programming&lt;/li&gt;
+&lt;li&gt;龚敏敏老师在哔哩哔哩上的《上帝视角看GPU》&lt;/li&gt;
+&lt;li&gt;UIUC的课 Heterogeneous Parallel Programming&lt;/li&gt;
+&lt;li&gt;CS179:GPU Programming&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.udacity.com/course/intro-to-parallel-programming--cs344&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Udacity的《入门并行编程：CUDA》课程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.nvidia.com/cuda/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NVIDIA 官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.nvidia.com/cuda/cuda-c-programming-guide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NVIDIA 官方编程文档&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;blogs&#34;&gt;Blogs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;高升博客&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;community&#34;&gt;Community&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://devtalk.nvidia.com/default/board/57/cuda-programming-and-performance/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CUDA开发者社区&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;faculty&#34;&gt;Faculty&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;UC Davis John Owens，Billy Dally的学生&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;misc&#34;&gt;Misc&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenGL(ES) OpenCL Vulkan Taichi ROCm&lt;/li&gt;
+&lt;li&gt;产品datasheet各个架构的白皮书&lt;/li&gt;
+&lt;li&gt;cutlass的discussion，&lt;/li&gt;
+&lt;li&gt;tensorcore资料又不是很多（市面上往往还是调用nvcuda::wmma这个封装好的api&lt;/li&gt;
+&lt;li&gt;他们也有discord频道，&lt;/li&gt;
+&lt;li&gt;reduce, &lt;a href=&#34;https://zhuanlan.zhihu.com/p/441146275&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;矩阵乘&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;comment&#34;&gt;Comment:&lt;/h3&gt;
+&lt;p&gt;综上所述，如果只想入门、想了解众核并行、想锻炼C++工程能力，随便找本不错的书读；要是想保持在前沿，看博客、看文章、直接关注做GPU的组，比读几百页书知识还停留在10年前强多了&lt;/p&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/26570985&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.zhihu.com/question/26570985&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;para/&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+&lt;/style&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Inference tools for LLMs</title>
+      <link>https://jiwenj.github.io/blog/inference/</link>
       <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/utils/</guid>
+      <guid>https://jiwenj.github.io/blog/inference/</guid>
       <description>&lt;!-- &amp;ensp;
 &amp;emsp;
 &amp;nbsp; --&gt;
-&lt;h3 id=&#34;website-development&#34;&gt;Website development&lt;/h3&gt;
+&lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Table
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;And a table of contents&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;On   the right&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Use the [TOC]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt; “Garbage in, garbage out” is a classic saying in computing about how problematic input data or instructions will produce problematic outputs.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;para&gt; Before we do any training, the data we are going to feed into the LLM really matter.&lt;/para&gt;&lt;/p&gt;
+&lt;h2 id=&#34;l&#34;&gt;l&lt;/h2&gt;
+&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
+&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: red; font-style:normal; font-family:Georgia; font-weight:normal}
+refer{}
+&lt;/style&gt;
 </description>
     </item>
     

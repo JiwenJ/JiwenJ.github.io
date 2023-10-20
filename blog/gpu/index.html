@@ -279,12 +279,12 @@
 
   
 
-<meta name="description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" />
+<meta name="description" content="I curate some learning materials for CUDA Programming" />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/utils/" />
-<link rel="canonical" href="https://jiwenj.github.io/blog/utils/" />
+<link rel="alternate" hreflang="en-us" href="https://jiwenj.github.io/blog/gpu/" />
+<link rel="canonical" href="https://jiwenj.github.io/blog/gpu/" />
 
 
 
@@ -315,20 +315,20 @@
 
   <meta property="twitter:site" content="@wowchemy" />
   <meta property="twitter:creator" content="@wowchemy" />
-<meta property="twitter:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" />
+<meta property="twitter:image" content="https://jiwenj.github.io/blog/gpu/featured.jpg" />
 <meta property="og:site_name" content="Jiwen Jiang" />
-<meta property="og:url" content="https://jiwenj.github.io/blog/utils/" />
-<meta property="og:title" content="Utility | Jiwen Jiang" />
-<meta property="og:description" content="I summarize the reasons why we should finetune and provide a tutorial for finetuing Llama2. It is continuously updated, so stay tuned!" /><meta property="og:image" content="https://jiwenj.github.io/blog/utils/featured.jpg" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://jiwenj.github.io/blog/gpu/" />
+<meta property="og:title" content="CUDA Programming | Jiwen Jiang" />
+<meta property="og:description" content="I curate some learning materials for CUDA Programming" /><meta property="og:image" content="https://jiwenj.github.io/blog/gpu/featured.jpg" /><meta property="og:locale" content="en-us" />
 
   
     <meta
       property="article:published_time"
-      content="2023-10-14T21:10:00&#43;07:00"
+      content="2023-10-19T21:10:00&#43;07:00"
     />
   
   
-    <meta property="article:modified_time" content="2023-10-14T21:10:00&#43;07:00">
+    <meta property="article:modified_time" content="2023-10-19T21:10:00&#43;07:00">
   
 
 
@@ -353,7 +353,7 @@
 
 
   
-  <title>Utility | Jiwen Jiang</title>
+  <title>CUDA Programming | Jiwen Jiang</title>
 
   
   
@@ -373,7 +373,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="8a3943386d7cb04dc20f039e800f0f98" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="5507271643228f0aedd56675f4cf2914" >
 
   
   
@@ -712,7 +712,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>Utility</h1>
+  <h1>CUDA Programming</h1>
 
   
 
@@ -740,7 +740,7 @@
     
       
     
-    14 Oct 2023
+    19 Oct 2023
   </span>
   
 
@@ -755,6 +755,10 @@
 
   
   
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/llm/">LLM</a>, <a href="/category/finetune/">Finetune</a>, <a href="/category/llama-2/">Llama 2</a></span>
+  
 
 </div>
 
@@ -767,9 +771,9 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 405px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 500px; max-height: 303px;">
   <div style="position: relative">
-    <img src="/blog/utils/featured_hu48a7985e8974d2b4d6ca166a6570488b_123773_720x2500_fit_q75_h2_lanczos.webp" width="720" height="405" alt="" class="featured-image">
+    <img src="/blog/gpu/featured_huf75a07ead65c6e6239cf0dc4e70e451a_25504_720x2500_fit_q75_h2_lanczos.webp" width="500" height="303" alt="" class="featured-image">
     
   </div>
 </div>
@@ -779,120 +783,89 @@
   <div class="article-container">
 
     <div class="article-style">
-      <!-- &ensp;
-&emsp;
-&nbsp; -->
-<h3 id="website-development">Website development</h3>
+      <hr>
+<para/>
 <ul>
-<li><a href="https://www.googlefonts.cn/?category=Serif,Sans&#43;Serif,Handwriting,Monospace" target="_blank" rel="noopener">Google Fonts</a></li>
-<li><a href="https://google.github.io/styleguide/docguide/" target="_blank" rel="noopener">Google documentation guide</a></li>
-<li><a href="https://google.github.io/styleguide/" target="_blank" rel="noopener">Google Style Guides</a></li>
-<li><a href="https://www.webhek.com/post/html-enerty-code/" target="_blank" rel="noopener">HTML特殊字符符号大全</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border" target="_blank" rel="noopener">MDN</a></li>
-</ul>
-<h3 id="autodl">AutoDL</h3>
+<li>Table
 <ul>
-<li><a href="https://www.autodl.com/docs/network_turbo/" target="_blank" rel="noopener">学术资源加速</a></li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">source /etc/network_turbo
-</span></span></code></pre></div><h3 id="huggingface">Huggingface</h3>
-<ul>
-<li>Hugging Face Hub 模型下载方案</li>
-<li>git clone下载</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">huggingface-cli login
-</span></span><span class="line"><span class="cl">use_auth_token=True
-</span></span><span class="line"><span class="cl">GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/THUDM/chatglm-6b
-</span></span><span class="line"><span class="cl">git lfs pull --include &#34;*bin&#34;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">from huggingface_hub import snapshot_download
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">snapshot_download(repo_id=&#34;bert-base-chinese&#34;)
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">https://huggingface.co/docs/huggingface_hub/v0.18.0.rc0/guides/download
-</span></span></code></pre></div><ul>
-<li>书籍查找下载
-<ul>
-<li>GitHub</li>
-<li><a href="https://www.jiumodiary.com/" target="_blank" rel="noopener">jiumodiary</a></li>
-<li><a href="https://singlelogin.re/" target="_blank" rel="noopener">z-lib</a>
-Library Genesis
-论文查找，期刊查询
-Google Scholar
-DBLP
-An organization hosting a database and logic programming bibliography site
-LetPub
-期刊点评与相关信息
-Web of Science
-会伴
-ResearchGate
-Sci-Hub
-Elsevier-ScienceDirect
-Aminer
-Academia.edu
-Microsoft Academic
-Semantic Scholar
-博客、学术网站搭建
-blinkfox
-魔法之书
-文件转换
-Pandoc - index
-软件，AI服务
-ai-lib.club
-mpyit
-Latex
-Online Editor
-Overleaf
-Curriculum Vitae
-canadacast-cv-example
-geekplux/cv_resume: A latex cv/resume template. (github.com)
-dyweb/awesome-resume-for-chinese: 📄 适合中文的简历模板收集（LaTeX，HTML/JS and so on）由 @hoochanlon 维护 (github.com)
-Helpful Documentation
-LaTeX公式手册(全网最全) - 樱花赞 - 博客园 (cnblogs.com)
-lshort-zh-cn
-lnotes
-刘海洋
-LaTeX 工作室 (latexstudio.net)
-Linux
-Linux命令搜索引擎 命令，Linux Linux命令搜索引擎 命令详解：最专业的Linux命令大全，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。 - Linux 命令搜索引擎 (wangchujiang.com)
-Windows
-windows常用命令 - 可可西 - 博客园 (cnblogs.com)
-Manim
-cai-hust/manim-tutorial-CN: manim中文入门教程 (github.com)
-eulertour.com/studio
-论文绘图
-PPT
-Draw.io
-Visio
-R
-Python
-云服务器
-AutoDL
-AWS
-代码，模型社区
-GitHub
-Emoji
-Huggingface
-ApacheCN (github.com)
-前沿消息
-Twitter
-Reddit
-Telegram
-Medium
-信用卡
-visa credit card
-Dupay
-OKX</li>
+<li><a href="#and-a-table-of-contents">Books</a></li>
+<li><a href="#on-the-right">Courses</a></li>
+<li><a href="#l">Documentation</a></li>
+<li><a href="#l">Blogs</a></li>
+<li><a href="#l">Faculty</a></li>
+<li><a href="#l">Misc</a></li>
 </ul>
 </li>
 </ul>
-<p>Math
-Library Genesis • scientific articles (libgen.rs)
-中文数学 Wiki | Fandom
-Swift
-A Swift Tour | Documentation
-A Swift Tour | Documentation</p>
+<hr>
+<para>
+<h3 id="books">Books</h3>
+<ul>
+<li>对应中文版《GPU高性能编程CUDA实战》《CUDA并行程序设计：GPU编程指南​》《CUDA专家手册 : GPU编程权威指南》《大规模并行处理器编程实战（第2版）​》《CUDA编程指南4.0中文版》</li>
+<li>CUDA C编程权威指南》 《GPU编程实战（基于Python和CUDA）》书《GPU编程与优化•大众高性能计算》</li>
+<li>CUDA 编程: 基础与实践 <a href="https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf" target="_blank" rel="noopener">[PDF]</a></li>
+<li>Cook, Shane. CUDA 并行程序设计 – GPU 编程指南, 机械工业出版社, 2014.</li>
+<li>AI 编译器开发指南</li>
+<li>Programming Massively Parallel Processors: A Hands-on Approach - CUDA by Example: An Introduction to General-Purpose GPU Programming》</li>
+<li>CUDA by ExampleCUDA Programming: A Developer&rsquo;s Guide to Parallel Computing with GPUs</li>
+<li>CUDA Programming Guide
+​Programming Massively Parallel Processors: A Hands-on Approach
+《大规模并行处理器编程实战（第2版）​》，英文版已经第4版，在 ScienceDirect 可下载(疫情期间上海高校好像可免费下载)。</li>
+<li>​CUDA Handbook: A Comprehensive Guide to GPU Programming</li>
+<li><a href="https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor" target="_blank" rel="noopener">https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor</a></li>
+<li>The CUDA HandbookProgramming Massively Parallel Processors 2rd</li>
+<li>CUDA by Example: An Introduction to General-Purpose GPU Programming
+Programming Massively Parallel Processors 3th- Nvidia Cuda Programming Guide</li>
+<li>Programming Massively Parallel Processors</li>
+<li>Professional CUDA C Programming</li>
+</ul>
+<p>footnote: Parts of the books can be found <a href="https://github.com/JiwenJ/Public-Books/tree/main/cuda" target="_blank" rel="noopener">here</a>.</p>
+<h3 id="courses">Courses</h3>
+<ul>
+<li>udacity cs344: intro to parallel programming</li>
+<li>龚敏敏老师在哔哩哔哩上的《上帝视角看GPU》</li>
+<li>UIUC的课 Heterogeneous Parallel Programming</li>
+<li>CS179:GPU Programming</li>
+<li><a href="https://www.udacity.com/course/intro-to-parallel-programming--cs344" target="_blank" rel="noopener">Udacity的《入门并行编程：CUDA》课程</a></li>
+</ul>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li><a href="https://docs.nvidia.com/cuda/" target="_blank" rel="noopener">NVIDIA 官方文档</a></li>
+<li><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/" target="_blank" rel="noopener">NVIDIA 官方编程文档</a></li>
+</ul>
+<h3 id="blogs">Blogs</h3>
+<ul>
+<li>高升博客</li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li><a href="https://devtalk.nvidia.com/default/board/57/cuda-programming-and-performance/" target="_blank" rel="noopener">CUDA开发者社区</a></li>
+</ul>
+<h3 id="faculty">Faculty</h3>
+<ul>
+<li>UC Davis John Owens，Billy Dally的学生</li>
+</ul>
+<h3 id="misc">Misc</h3>
+<ul>
+<li>OpenGL(ES) OpenCL Vulkan Taichi ROCm</li>
+<li>产品datasheet各个架构的白皮书</li>
+<li>cutlass的discussion，</li>
+<li>tensorcore资料又不是很多（市面上往往还是调用nvcuda::wmma这个封装好的api</li>
+<li>他们也有discord频道，</li>
+<li>reduce, <a href="https://zhuanlan.zhihu.com/p/441146275" target="_blank" rel="noopener">矩阵乘</a></li>
+</ul>
+<h3 id="comment">Comment:</h3>
+<p>综上所述，如果只想入门、想了解众核并行、想锻炼C++工程能力，随便找本不错的书读；要是想保持在前沿，看博客、看文章、直接关注做GPU的组，比读几百页书知识还停留在10年前强多了</p>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="https://www.zhihu.com/question/26570985" target="_blank" rel="noopener">https://www.zhihu.com/question/26570985</a></li>
+</ul>
+<para/>
+<style>
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+</style>
 
     </div>
 
@@ -901,6 +874,16 @@ A Swift Tour | Documentation</p>
 
 
 
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/llm/">LLM</a>
+  
+  <a class="badge badge-light" href="/tag/finetune/">Finetune</a>
+  
+  <a class="badge badge-light" href="/tag/llama-2/">Llama 2</a>
+  
+</div>
 
 
 
@@ -919,7 +902,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;text=Utility" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F&amp;text=CUDA&#43;Programming" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -936,7 +919,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;t=Utility" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F&amp;t=CUDA&#43;Programming" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -955,7 +938,7 @@ A Swift Tour | Documentation</p>
         
       
       <li>
-        <a href="mailto:?subject=Utility&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=CUDA%20Programming&amp;body=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -972,7 +955,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F&amp;title=CUDA&#43;Programming" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -989,7 +972,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="whatsapp://send?text=Utility%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=CUDA&#43;Programming%20https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1006,7 +989,7 @@ A Swift Tour | Documentation</p>
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Futils%2F&amp;title=Utility" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fjiwenj.github.io%2Fblog%2Fgpu%2F&amp;title=CUDA&#43;Programming" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
