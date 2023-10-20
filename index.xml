@@ -55,21 +55,29 @@
 &lt;para&gt;
 &lt;h3 id=&#34;books&#34;&gt;Books&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;对应中文版《GPU高性能编程CUDA实战》《CUDA并行程序设计：GPU编程指南​》《CUDA专家手册 : GPU编程权威指南》《大规模并行处理器编程实战（第2版）​》《CUDA编程指南4.0中文版》&lt;/li&gt;
-&lt;li&gt;CUDA C编程权威指南》 《GPU编程实战（基于Python和CUDA）》书《GPU编程与优化•大众高性能计算》&lt;/li&gt;
+&lt;li&gt;《GPU高性能编程CUDA实战》&lt;/li&gt;
+&lt;li&gt;《CUDA并行程序设计：GPU编程指南​》&lt;/li&gt;
+&lt;li&gt;《CUDA专家手册 : GPU编程权威指南》&lt;/li&gt;
+&lt;li&gt;《大规模并行处理器编程实战（第2版）​》&lt;/li&gt;
+&lt;li&gt;《CUDA编程指南4.0中文版》&lt;/li&gt;
+&lt;li&gt;《CUDA C编程权威指南》&lt;/li&gt;
+&lt;li&gt;《GPU编程实战（基于Python和CUDA）》&lt;/li&gt;
+&lt;li&gt;《GPU编程与优化•大众高性能计算》&lt;/li&gt;
 &lt;li&gt;CUDA 编程: 基础与实践 &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[PDF]&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Cook, Shane. CUDA 并行程序设计 – GPU 编程指南, 机械工业出版社, 2014.&lt;/li&gt;
 &lt;li&gt;AI 编译器开发指南&lt;/li&gt;
-&lt;li&gt;Programming Massively Parallel Processors: A Hands-on Approach - CUDA by Example: An Introduction to General-Purpose GPU Programming》&lt;/li&gt;
-&lt;li&gt;CUDA by ExampleCUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/li&gt;
-&lt;li&gt;CUDA Programming Guide
-​Programming Massively Parallel Processors: A Hands-on Approach
+&lt;li&gt;Programming Massively Parallel Processors: A Hands-on Approach&lt;/li&gt;
+&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming》&lt;/li&gt;
+&lt;li&gt;CUDA by Example CUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/li&gt;
+&lt;li&gt;CUDA Programming Guide&lt;/li&gt;
+&lt;li&gt;​Programming Massively Parallel Processors: A Hands-on Approach
 《大规模并行处理器编程实战（第2版）​》，英文版已经第4版，在 ScienceDirect 可下载(疫情期间上海高校好像可免费下载)。&lt;/li&gt;
 &lt;li&gt;​CUDA Handbook: A Comprehensive Guide to GPU Programming&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;The CUDA HandbookProgramming Massively Parallel Processors 2rd&lt;/li&gt;
-&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming
-Programming Massively Parallel Processors 3th- Nvidia Cuda Programming Guide&lt;/li&gt;
+&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming&lt;/li&gt;
+&lt;li&gt;Programming Massively Parallel Processors 3th&lt;/li&gt;
+&lt;li&gt;Nvidia Cuda Programming Guide&lt;/li&gt;
 &lt;li&gt;Programming Massively Parallel Processors&lt;/li&gt;
 &lt;li&gt;Professional CUDA C Programming&lt;/li&gt;
 &lt;/ul&gt;
@@ -557,7 +565,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-154789263&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-675214983&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -567,7 +575,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-154789263&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-675214983&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
