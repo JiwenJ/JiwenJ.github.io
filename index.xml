@@ -121,6 +121,7 @@
 &lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/26570985&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.zhihu.com/question/26570985&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.quora.com/What-is-the-best-way-to-learn-CUDA&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.quora.com/What-is-the-best-way-to-learn-CUDA&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;para/&gt;
 &lt;style&gt;
@@ -565,7 +566,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-675214983&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-536842917&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -575,7 +576,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-675214983&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-536842917&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
