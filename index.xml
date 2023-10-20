@@ -42,12 +42,12 @@
 &lt;ul&gt;
 &lt;li&gt;Table
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;Books&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;Courses&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Faculty&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Misc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#books&#34;&gt;Books&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#courses&#34;&gt;Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#documentation&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#blogs&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#faculty&#34;&gt;Faculty&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#misc&#34;&gt;Misc&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -557,7 +557,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-351947286&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-154789263&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -567,7 +567,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-351947286&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-154789263&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
