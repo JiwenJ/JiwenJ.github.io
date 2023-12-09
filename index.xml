@@ -55,24 +55,25 @@
 &lt;para&gt;
 &lt;h3 id=&#34;books&#34;&gt;Books&lt;/h3&gt;
 &lt;ul&gt;
+&lt;li&gt;《通用图形处理器设计》&lt;/li&gt;
+&lt;li&gt;《昇腾AI处理器架构与编程》&lt;/li&gt;
 &lt;li&gt;《GPU高性能编程CUDA实战》&lt;/li&gt;
-&lt;li&gt;《CUDA并行程序设计：GPU编程指南​》&lt;/li&gt;
-&lt;li&gt;《CUDA专家手册 : GPU编程权威指南》&lt;/li&gt;
+&lt;li&gt;《CUDA并行程序设计: GPU编程指南​》&lt;/li&gt;
+&lt;li&gt;《CUDA专家手册: GPU编程权威指南》&lt;/li&gt;
 &lt;li&gt;《大规模并行处理器编程实战（第2版）​》&lt;/li&gt;
 &lt;li&gt;《CUDA编程指南4.0中文版》&lt;/li&gt;
 &lt;li&gt;《CUDA C编程权威指南》&lt;/li&gt;
 &lt;li&gt;《GPU编程实战（基于Python和CUDA）》&lt;/li&gt;
 &lt;li&gt;《GPU编程与优化•大众高性能计算》&lt;/li&gt;
-&lt;li&gt;CUDA 编程: 基础与实践 &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[PDF]&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Cook, Shane. CUDA 并行程序设计 – GPU 编程指南, 机械工业出版社, 2014.&lt;/li&gt;
-&lt;li&gt;AI 编译器开发指南&lt;/li&gt;
-&lt;li&gt;Programming Massively Parallel Processors: A Hands-on Approach &lt;a href=&#34;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[Answer]&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming&lt;/li&gt;
-&lt;li&gt;CUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/li&gt;
-&lt;li&gt;Nvidia CUDA Programming Guide&lt;/li&gt;
-&lt;li&gt;​CUDA Handbook: A Comprehensive Guide to GPU Programming&lt;/li&gt;
-&lt;li&gt;The CUDA Handbook&lt;/li&gt;
-&lt;li&gt;Professional CUDA C Programming&lt;/li&gt;
+&lt;li&gt;《CUDA 编程: 基础与实践》&lt;a href=&#34;https://github.com/JiwenJ/Public-Books/blob/main/cuda/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%AE%9E%E8%B7%B5%20%28%E6%A8%8A%E5%93%B2%E5%8B%87%29%20%28Z-Library%29.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[PDF]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;《AI 编译器开发指南》&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Programming Massively Parallel Processors: A Hands-on Approach&lt;/em&gt; &lt;a href=&#34;https://github.com/piDack/The-ans-for-Programming-Massively-Parallel-Processor&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;[Answer]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;CUDA by Example: An Introduction to General-Purpose GPU Programming&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;CUDA Programming: A Developer&amp;rsquo;s Guide to Parallel Computing with GPUs&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Nvidia CUDA Programming Guide&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;​CUDA Handbook: A Comprehensive Guide to GPU Programming&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The CUDA Handbook&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Professional CUDA C Programming&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;footnote: Parts of the books can be found &lt;a href=&#34;https://github.com/JiwenJ/Public-Books/tree/main/cuda&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;courses&#34;&gt;Courses&lt;/h3&gt;
@@ -123,40 +124,6 @@ para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
     </item>
     
     <item>
-      <title>Inference tools for LLMs</title>
-      <link>https://jiwenj.github.io/blog/inference/</link>
-      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
-      <guid>https://jiwenj.github.io/blog/inference/</guid>
-      <description>&lt;!-- &amp;ensp;
-&amp;emsp;
-&amp;nbsp; --&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;Table
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#and-a-table-of-contents&#34;&gt;And a table of contents&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#on-the-right&#34;&gt;On   the right&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#l&#34;&gt;Use the [TOC]&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt; “Garbage in, garbage out” is a classic saying in computing about how problematic input data or instructions will produce problematic outputs.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;para&gt; Before we do any training, the data we are going to feed into the LLM really matter.&lt;/para&gt;&lt;/p&gt;
-&lt;h2 id=&#34;l&#34;&gt;l&lt;/h2&gt;
-&lt;h5 id=&#34;reference&#34;&gt;Reference&lt;/h5&gt;
-&lt;p&gt;[1] &lt;a href=&#34;http://xueshu.baidu.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[2] &lt;a href=&#34;https://en.wikipedia.org/wiki/Main_Page&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;style&gt;
-red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
-yellow { color: yellow }
-para{ color: red; font-style:normal; font-family:Georgia; font-weight:normal}
-refer{}
-&lt;/style&gt;
-</description>
-    </item>
-    
-    <item>
       <title>LLMs for Code (Progressing)</title>
       <link>https://jiwenj.github.io/blog/llm4code/</link>
       <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
@@ -189,7 +156,6 @@ refer{}
 &lt;/ul&gt;
 &lt;/para&gt;
 &lt;hr&gt;
-&lt;p&gt;CodeXGLUE &lt;a href=&#34;https://paperswithcode.com/dataset/codexglue&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://paperswithcode.com/dataset/codexglue&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;humaneval&#34;&gt;HumanEval&lt;/h3&gt;
 &lt;p&gt;&lt;para&gt;This is an evaluation harness for the HumanEval problem solving dataset described in the paper &lt;a href=&#34;https://arxiv.org/pdf/2107.03374.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Evaluating Large Language Models Trained on Code&amp;rdquo;&lt;/a&gt;. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in &lt;a href=&#34;https://paperswithcode.com/sota/code-generation-on-humaneval&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PapersWithCode&lt;/a&gt;.&lt;/para&gt;
 
@@ -318,120 +284,217 @@ th,td {
       <link>https://jiwenj.github.io/blog/utils/</link>
       <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
       <guid>https://jiwenj.github.io/blog/utils/</guid>
-      <description>&lt;!-- &amp;ensp;
+      <description>&lt;para/&gt;
+&lt;!-- &amp;ensp;
 &amp;emsp;
 &amp;nbsp; --&gt;
-&lt;h3 id=&#34;website-development&#34;&gt;Website development&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Website development&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;autodl&#34;&gt;AutoDL&lt;/h3&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AutoDL&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.autodl.com/docs/network_turbo/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;学术资源加速&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;source /etc/network_turbo
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;huggingface&#34;&gt;Huggingface&lt;/h3&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Huggingface&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Hugging Face Hub 模型下载方案&lt;/li&gt;
-&lt;li&gt;git clone下载&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Hugging Face Hub 模型下载方案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;git clone下载&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;huggingface-cli login
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;use_auth_token=True
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/THUDM/chatglm-6b
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git lfs pull --include &amp;#34;*bin&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;from huggingface_hub import snapshot_download
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;snapshot_download(repo_id=&amp;#34;bert-base-chinese&amp;#34;)
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://huggingface.co/docs/huggingface_hub/v0.18.0.rc0/guides/download
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;书籍查找下载
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;国内模型下载&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mindspore&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hf-mirror.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Huggingface 镜像站&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gitee.com/organizations/modelee/projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;modelee&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.aliendao.cn/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;异型岛&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;书籍查找下载&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;GitHub&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.jiumodiary.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;jiumodiary&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://singlelogin.re/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;z-lib&lt;/a&gt;
-Library Genesis
-论文查找，期刊查询
-Google Scholar
-DBLP
-An organization hosting a database and logic programming bibliography site
-LetPub
-期刊点评与相关信息
-Web of Science
-会伴
-ResearchGate
-Sci-Hub
-Elsevier-ScienceDirect
-Aminer
-Academia.edu
-Microsoft Academic
-Semantic Scholar
-博客、学术网站搭建
-blinkfox
-魔法之书
-文件转换
-Pandoc - index
-软件，AI服务
-ai-lib.club
-mpyit
-Latex
-Online Editor
-Overleaf
-Curriculum Vitae
-canadacast-cv-example
-geekplux/cv_resume: A latex cv/resume template. (github.com)
-dyweb/awesome-resume-for-chinese: 📄 适合中文的简历模板收集（LaTeX，HTML/JS and so on）由 @hoochanlon 维护 (github.com)
-Helpful Documentation
-LaTeX公式手册(全网最全) - 樱花赞 - 博客园 (cnblogs.com)
-lshort-zh-cn
-lnotes
-刘海洋
-LaTeX 工作室 (latexstudio.net)
-Linux
-Linux命令搜索引擎 命令，Linux Linux命令搜索引擎 命令详解：最专业的Linux命令大全，内容包含Linux命令手册、详解、学习，值得收藏的Linux命令速查手册。 - Linux 命令搜索引擎 (wangchujiang.com)
-Windows
-windows常用命令 - 可可西 - 博客园 (cnblogs.com)
-Manim
-cai-hust/manim-tutorial-CN: manim中文入门教程 (github.com)
-eulertour.com/studio
-论文绘图
-PPT
-Draw.io
-Visio
-R
-Python
-云服务器
-AutoDL
-AWS
-代码，模型社区
-GitHub
-Emoji
-Huggingface
-ApacheCN (github.com)
-前沿消息
-Twitter
-Reddit
-Telegram
-Medium
-信用卡
-visa credit card
-Dupay
-OKX&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://singlelogin.re/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Z-Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Library Genesis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;论文查找，期刊查询&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Google Scholar&lt;/li&gt;
+&lt;li&gt;DBLP&lt;/li&gt;
+&lt;li&gt;LetPub&lt;/li&gt;
+&lt;li&gt;Web of Science&lt;/li&gt;
+&lt;li&gt;会伴&lt;/li&gt;
+&lt;li&gt;ResearchGate&lt;/li&gt;
+&lt;li&gt;Sci-Hub&lt;/li&gt;
+&lt;li&gt;Elsevier-ScienceDirect&lt;/li&gt;
+&lt;li&gt;Aminer&lt;/li&gt;
+&lt;li&gt;Academia.edu&lt;/li&gt;
+&lt;li&gt;Microsoft Academic&lt;/li&gt;
+&lt;li&gt;Semantic Scholar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;博客、学术网站搭建&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/blinkfox/hexo-theme-matery/tree/develop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;blinkfox&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.17lai.site/about/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;魔法之书&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;文件转换&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.17lai.site/about/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pandoc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软件，AI服务&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ai-lib.club/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ai-lib.club&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mpyit.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mpyit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Latex&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Online Editor&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Overleaf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Curriculum Vitae&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.overleaf.com/latex/templates/canadacast-cv-example/wtqmwzjbcxqg&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;canadacast-cv-example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/geekplux/cv_resume&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;A latex cv/resume template&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/dyweb/awesome-resume-for-chinese&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;📄 适合中文的简历模板收集&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Helpful Documentation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/1024th/p/11623258.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX公式手册&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;lshort-zh-cn&lt;/li&gt;
+&lt;li&gt;lnotes&lt;/li&gt;
+&lt;li&gt;刘海洋&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.latexstudio.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX 工作室&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Math
-Library Genesis • scientific articles (libgen.rs)
-中文数学 Wiki | Fandom
-Swift
-A Swift Tour | Documentation
-A Swift Tour | Documentation&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Linux&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux命令搜索引擎&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Windows&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;windows常用命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Manim&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/cai-hust/manim-tutorial-CN&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;manim中文入门教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://eulertour.com/studio&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;eulertour.com/studio&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;论文绘图&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PPT&lt;/li&gt;
+&lt;li&gt;Draw.io&lt;/li&gt;
+&lt;li&gt;Visio&lt;/li&gt;
+&lt;li&gt;R&lt;/li&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;云服务器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AutoDL&lt;/li&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码，模型社区&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub&lt;/li&gt;
+&lt;li&gt;Huggingface&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apachecn&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ApacheCN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;前沿消息&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twitter&lt;/li&gt;
+&lt;li&gt;Reddit&lt;/li&gt;
+&lt;li&gt;Telegram&lt;/li&gt;
+&lt;li&gt;Medium&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;信用卡&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;visa credit card&lt;/li&gt;
+&lt;li&gt;Dupay&lt;/li&gt;
+&lt;li&gt;OKX&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Math&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://libgen.rs/scimag/journals/1154&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Library Genesis • scientific articles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://math.fandom.com/zh/wiki/%E4%B8%AD%E6%96%87%E6%95%B0%E5%AD%A6_Wiki:%E4%B8%BB%E9%A1%B5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;中文数学 Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Swift&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;A Swift Tour | Documentation&lt;/a&gt;
+&lt;para/&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+th,td {
+    text-align: center;
+    font-family:Georgia
+}
+&lt;/style&gt;
 </description>
     </item>
     
@@ -556,7 +619,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-215347698&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-374619825&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -566,7 +629,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-215347698&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-374619825&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();

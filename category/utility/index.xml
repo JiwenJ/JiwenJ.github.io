@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Utility | Jiwen Jiang</title>
+    <link>https://jiwenj.github.io/category/utility/</link>
+      <atom:link href="https://jiwenj.github.io/category/utility/index.xml" rel="self" type="application/rss+xml" />
+    <description>Utility</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 14 Oct 2023 21:10:00 +0700</lastBuildDate>
+    <image>
+      <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
+      <title>Utility</title>
+      <link>https://jiwenj.github.io/category/utility/</link>
+    </image>
+    
+    <item>
+      <title>Utility</title>
+      <link>https://jiwenj.github.io/blog/utils/</link>
+      <pubDate>Sat, 14 Oct 2023 21:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/utils/</guid>
+      <description>&lt;para/&gt;
+&lt;!-- &amp;ensp;
+&amp;emsp;
+&amp;nbsp; --&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Website development&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.googlefonts.cn/?category=Serif,Sans&amp;#43;Serif,Handwriting,Monospace&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Fonts&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://google.github.io/styleguide/docguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google documentation guide&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://google.github.io/styleguide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Google Style Guides&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.webhek.com/post/html-enerty-code/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HTML特殊字符符号大全&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/CSS/border&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MDN&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AutoDL&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.autodl.com/docs/network_turbo/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;学术资源加速&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Huggingface&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Hugging Face Hub 模型下载方案&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;git clone下载&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;国内模型下载&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mindspore&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hf-mirror.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Huggingface 镜像站&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gitee.com/organizations/modelee/projects&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;modelee&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.aliendao.cn/#/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;异型岛&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;书籍查找下载&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jiumodiary.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;jiumodiary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://singlelogin.re/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Z-Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Library Genesis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;论文查找，期刊查询&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Google Scholar&lt;/li&gt;
+&lt;li&gt;DBLP&lt;/li&gt;
+&lt;li&gt;LetPub&lt;/li&gt;
+&lt;li&gt;Web of Science&lt;/li&gt;
+&lt;li&gt;会伴&lt;/li&gt;
+&lt;li&gt;ResearchGate&lt;/li&gt;
+&lt;li&gt;Sci-Hub&lt;/li&gt;
+&lt;li&gt;Elsevier-ScienceDirect&lt;/li&gt;
+&lt;li&gt;Aminer&lt;/li&gt;
+&lt;li&gt;Academia.edu&lt;/li&gt;
+&lt;li&gt;Microsoft Academic&lt;/li&gt;
+&lt;li&gt;Semantic Scholar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;博客、学术网站搭建&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/blinkfox/hexo-theme-matery/tree/develop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;blinkfox&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.17lai.site/about/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;魔法之书&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;文件转换&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.17lai.site/about/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pandoc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软件，AI服务&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ai-lib.club/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ai-lib.club&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mpyit.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mpyit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Latex&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Online Editor&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Overleaf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Curriculum Vitae&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.overleaf.com/latex/templates/canadacast-cv-example/wtqmwzjbcxqg&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;canadacast-cv-example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/geekplux/cv_resume&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;A latex cv/resume template&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/dyweb/awesome-resume-for-chinese&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;📄 适合中文的简历模板收集&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Helpful Documentation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/1024th/p/11623258.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX公式手册&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;lshort-zh-cn&lt;/li&gt;
+&lt;li&gt;lnotes&lt;/li&gt;
+&lt;li&gt;刘海洋&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.latexstudio.net/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX 工作室&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Linux&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux命令搜索引擎&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Windows&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;windows常用命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Manim&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/cai-hust/manim-tutorial-CN&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;manim中文入门教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://eulertour.com/studio&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;eulertour.com/studio&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;论文绘图&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PPT&lt;/li&gt;
+&lt;li&gt;Draw.io&lt;/li&gt;
+&lt;li&gt;Visio&lt;/li&gt;
+&lt;li&gt;R&lt;/li&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;云服务器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AutoDL&lt;/li&gt;
+&lt;li&gt;AWS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码，模型社区&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub&lt;/li&gt;
+&lt;li&gt;Huggingface&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/apachecn&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ApacheCN&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;前沿消息&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Twitter&lt;/li&gt;
+&lt;li&gt;Reddit&lt;/li&gt;
+&lt;li&gt;Telegram&lt;/li&gt;
+&lt;li&gt;Medium&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;信用卡&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;visa credit card&lt;/li&gt;
+&lt;li&gt;Dupay&lt;/li&gt;
+&lt;li&gt;OKX&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Math&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://libgen.rs/scimag/journals/1154&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Library Genesis • scientific articles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://math.fandom.com/zh/wiki/%E4%B8%AD%E6%96%87%E6%95%B0%E5%AD%A6_Wiki:%E4%B8%BB%E9%A1%B5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;中文数学 Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Swift&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;A Swift Tour | Documentation&lt;/a&gt;
+&lt;para/&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+th,td {
+    text-align: center;
+    font-family:Georgia
+}
+&lt;/style&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
