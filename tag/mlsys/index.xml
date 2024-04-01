@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MLsys | Jiwen Jiang</title>
+    <link>https://jiwenj.github.io/tag/mlsys/</link>
+      <atom:link href="https://jiwenj.github.io/tag/mlsys/index.xml" rel="self" type="application/rss+xml" />
+    <description>MLsys</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 31 Mar 2024 12:10:00 +0700</lastBuildDate>
+    <image>
+      <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
+      <title>MLsys</title>
+      <link>https://jiwenj.github.io/tag/mlsys/</link>
+    </image>
+    
+    <item>
+      <title>Machine Learning Systems</title>
+      <link>https://jiwenj.github.io/blog/mlsys/</link>
+      <pubDate>Sun, 31 Mar 2024 12:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/mlsys/</guid>
+      <description>&lt;para/&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Table&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#books&#34;&gt;Books&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#courses&#34;&gt;Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#documentation&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#blogs&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#faculty&#34;&gt;Faculty&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#misc&#34;&gt;Misc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;para&gt;
+&lt;h3 id=&#34;books&#34;&gt;Books&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://openmlsys.github.io/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;机器学习系统：设计和实现&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/microsoft/AI-System&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;人工智能系统&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mli/paper-reading&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;深度学习论文精读&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;courses&#34;&gt;Courses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.cmu.edu/~zhihaoj2/15-849/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CMU 15-849 Machine Learning System&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gfxcourses.stanford.edu/cs149/fall23/courseinfo&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CS149 Parallel Computing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dlsyscourse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Deep Learning System: Algorithm and Implementations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tinyml.seas.harvard.edu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TinyML, Harvard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hanlab.mit.edu/courses/2023-fall-65940&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TinyML and Efficient Deep Learning Computing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://catalyst.cs.cmu.edu/15-884-mlsys-sp21/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-884: Machine Learning Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mlc.ai/summer22/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Machine Learning Compilation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mlsyscourse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-442/15-642: Machine Learning Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.cmu.edu/~15418/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-418/15-618: Parallel Computer Architecture and Programming, Fall 2023&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dlsyscourse.org/lectures/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;10-414/714: Deep Learning Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;blogs&#34;&gt;Blogs&lt;/h3&gt;
+&lt;h3 id=&#34;community&#34;&gt;Community&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mlsys.stanford.edu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Stanford MLSys Seminar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://quip.com/MENbAvuQkrb0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TinyML Talks Schedule&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;faculty&#34;&gt;Faculty&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Song Han&lt;/li&gt;
+&lt;li&gt;Tianqi Chen&lt;/li&gt;
+&lt;li&gt;Jeff Dean&lt;/li&gt;
+&lt;li&gt;Dan Alistarh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;large-language-model-training&#34;&gt;Large Language Model Training&lt;/h3&gt;
+&lt;h3 id=&#34;large-language-model-inference&#34;&gt;Large Language Model Inference&lt;/h3&gt;
+&lt;h3 id=&#34;comment&#34;&gt;Comment:&lt;/h3&gt;
+&lt;h3 id=&#34;reference&#34;&gt;Reference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://deconx.cn/blog/2024/01/01/mlsys#cuda&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ML system 入坑指南 &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;para/&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+&lt;/style&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
