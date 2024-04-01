@@ -67,13 +67,11 @@
 &lt;li&gt;&lt;a href=&#34;https://hanlab.mit.edu/courses/2023-fall-65940&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TinyML and Efficient Deep Learning Computing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://catalyst.cs.cmu.edu/15-884-mlsys-sp21/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-884: Machine Learning Systems&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://mlc.ai/summer22/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Machine Learning Compilation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
-&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://mlsyscourse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-442/15-642: Machine Learning Systems&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.cs.cmu.edu/~15418/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;15-418/15-618: Parallel Computer Architecture and Programming, Fall 2023&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://dlsyscourse.org/lectures/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;10-414/714: Deep Learning Systems&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
 &lt;h3 id=&#34;blogs&#34;&gt;Blogs&lt;/h3&gt;
 &lt;h3 id=&#34;community&#34;&gt;Community&lt;/h3&gt;
 &lt;ul&gt;
@@ -746,7 +744,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-789512346&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-987125463&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -756,7 +754,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-789512346&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-987125463&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
