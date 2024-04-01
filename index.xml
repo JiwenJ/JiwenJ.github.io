@@ -81,7 +81,7 @@
 &lt;h3 id=&#34;faculty&#34;&gt;Faculty&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Song Han&lt;/li&gt;
-&lt;li&gt;Tianqi Chen&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tqchen.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tianqi Chen&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Jeff Dean&lt;/li&gt;
 &lt;li&gt;Dan Alistarh&lt;/li&gt;
 &lt;/ul&gt;
@@ -146,9 +146,14 @@ para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/search?q=NJU&amp;#43;dissys&amp;amp;type=repositories&amp;amp;s=updated&amp;amp;o=desc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NJU Dissys Reference in GitHub &lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://mit-public-courses-cn-translatio.gitbook.io/mit6-824&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;mit-public-courses-cn-translation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://csdiy.wiki/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/MIT6.824/#_2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;csdiy&lt;/a&gt;
-&lt;para/&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://csdiy.wiki/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/MIT6.824/#_2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;csdiy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://jackyfkc.github.io/cs/distributed_system/intro.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Intro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dasebigdata.github.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;分布式计算系统&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://w02agegxg3.feishu.cn/docx/Ktp3dBGl9oHdbOxbjUWcGdSnn3g&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;从零实现 KV 存储&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tonixwd.github.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ToniBlog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hexinatgithub/6.824-2022&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Homework Reference 6.824&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;para/&gt;
 &lt;style&gt;
 red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
 yellow { color: yellow }
@@ -744,7 +749,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-987125463&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-678123954&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -754,7 +759,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-987125463&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-678123954&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
