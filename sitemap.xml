@@ -15,15 +15,35 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/authors/</loc>
-    <lastmod>2024-03-31T21:10:00+07:00</lastmod>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/categories/</loc>
-    <lastmod>2024-03-31T21:10:00+07:00</lastmod>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/authors/admin/</loc>
-    <lastmod>2024-03-31T21:10:00+07:00</lastmod>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/moe/</loc>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tag/moe/</loc>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/category/moe/</loc>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/</loc>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/tags/</loc>
+    <lastmod>2024-04-01T09:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/blog/mlsys/</loc>
@@ -36,14 +56,6 @@
   </url><url>
     <loc>https://jiwenj.github.io/category/mlsys/</loc>
     <lastmod>2024-03-31T12:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/blog/</loc>
-    <lastmod>2024-03-31T21:10:00+07:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://jiwenj.github.io/tags/</loc>
-    <lastmod>2024-03-31T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/tag/dissys/</loc>
@@ -63,6 +75,10 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://jiwenj.github.io/category/cuda/</loc>
+    <lastmod>2023-10-19T21:10:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://jiwenj.github.io/blog/distrain/</loc>
     <lastmod>2023-10-19T21:10:00+07:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>

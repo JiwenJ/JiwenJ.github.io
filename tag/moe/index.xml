@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MoE | Jiwen Jiang</title>
+    <link>https://jiwenj.github.io/tag/moe/</link>
+      <atom:link href="https://jiwenj.github.io/tag/moe/index.xml" rel="self" type="application/rss+xml" />
+    <description>MoE</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 01 Apr 2024 09:10:00 +0700</lastBuildDate>
+    <image>
+      <url>https://jiwenj.github.io/media/icon_hu7ee7877cac8e8b3a44b2d944c7dd79b2_197985_512x512_fill_lanczos_center_3.png</url>
+      <title>MoE</title>
+      <link>https://jiwenj.github.io/tag/moe/</link>
+    </image>
+    
+    <item>
+      <title>Mixture of Experts</title>
+      <link>https://jiwenj.github.io/blog/moe/</link>
+      <pubDate>Mon, 01 Apr 2024 09:10:00 +0700</pubDate>
+      <guid>https://jiwenj.github.io/blog/moe/</guid>
+      <description>&lt;hr&gt;
+&lt;para/&gt;
+&lt;para/&gt;
+&lt;style&gt;
+red { color: red; font-style:italic; font-family:Georgia; font-size:10px; font-weight:normal}
+yellow { color: yellow }
+para{ color: black; font-style:normal; font-family:Georgia; font-weight:normal}
+&lt;/style&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
