@@ -1,8 +1,8 @@
 # If your site is in 'https', then make sure your base url isn't written using 'http' otherwise your sitemap would
 # contain http (as opposeed to https) URLs. This would affect Google indexing of your URLs.
-baseURL: "https://rayleizhu.github.io/PaperMod-Academic-patch/"
-title: PaperMod-Academic-demo
-copyright: "© [ZHU Lei](https://github.com/rayleizhu) & Contributors"
+baseURL: "https://JiwenJ.github.io/PaperMod-Academic-patch/"
+title: Jiwen's Website
+copyright: "© [JiwenJ](https://github.com/JiwenJ) & [ZHU Lei](https://github.com/rayleizhu) & Contributors"
 theme: [PaperMod-academic-patch, hugo-PaperMod]
 
 params:
@@ -25,46 +25,34 @@ params:
   ShowPageNums: true
   ShowToc: true
   # comments: false
-  images: ["images/papermod-cover.png"]
+  images: ["images/myself.jpg"]
 
   profileMode:
     enabled: true # Disable profile mode to use academic layout
-    imageUrl: "images/prof_pic.webp"  # Replace with your profile image
+    imageUrl: "images/myself.jpg"  # Replace with your profile image
     imageTitle: "Your Image Name"
     imageWidth: 200
     imageHeight: 200
     #######################
     academic: true
     showToc: false
-    title: "Your Name"
-    nameInPub: "Your Name"
-    subtitle: "Your Profession"
-    affiliation: "Your Affiliation"
-    email: "your.email@example.com"
+    title: "Jiwen Jiang"
+    nameInPub: "Jiwen Jiang"
+    subtitle: "AI Researcher"
+    affiliation: "Institute of Automation, Chinese Academy of Sciences"
+    email: "1546631808@qq.com"
+    education:
+      - period: "2023 -2026"
+        description: "Master, Institute of Automation, Chinese Academy of Sciences, Beijing."
+      - period: "2019 - 2023"
+        description: "Bachelor, Nanjing University, Nanjing."
     experience:
-      - period: "1933 - 1955"
-        description: "Professor, Institute for Advanced Study (Princeton)."
-      - period: "1914 - 1932"
-        description: "Member, Prussian Academy of Sciences; Professor, Humboldt University of Berlin."
-      - period: "1912 - 1914"
-        description: "Professor, ETH Zurich."
-      - period: "1909 - 1911"
-        description: "Professor, University of Zurich."
-      - period: "1902 - 1909"
-        description: "Patent Examiner, Swiss Patent Office (Bern)."
-    awards:
-      - year: "1935"
-        name: "Franklin Medal"
-        organization: "The Franklin Institute"
-      - year: "1925"
-        name: "Copley Medal"
-        organization: "The Royal Society"
-      - year: "1921"
-        name: "Nobel Prize in Physics"
-        organization: "The Royal Swedish Academy of Sciences"
-      - year: "1921"
-        name: "Matteucci Medal"
-        organization: "Accademia Nazionale delle Scienze"
+      - period: "2025-2026"
+        description: "Li Auto, MindGPT & MindVLA"
+      - period: "2025-2026"
+        description: "Meituan, RL Infra & Algorithms"
+      - period: "2025-2026"
+        description: "AMD, LLM & MLLM Inference Acceleration"
     #######################
 
   socialIcons:
@@ -73,22 +61,25 @@ params:
     #   url: "mailto:albert.einstein@example.com"
     - name: github
       title: GitHub
-      url: "https://github.com/einstein"
+      url: "https://github.com/JiwenJ"
     - name: googlescholar
       title: Google Scholar
-      url: "https://scholar.google.com/citations?user=qc6CJjYAAAAJ&hl=en"
+      url: "https://scholar.google.com/citations?user=sW6DeGsAAAAJ&hl=en"
     - name: linkedin
       title: LinkedIn
-      url: "https://www.linkedin.com/in/albert-einstein-b6a6a8396/"
-    - name: orcid
-      title: ORCID
-      url: "https://orcid.org/0000-0000-0000-0000"
-    - name: openreview
-      title: OpenReview
-      url: "https://openreview.net/profile?id=~albert_einstein"
-    - name: dblp
-      title: DBLP
-      url: "https://dblp.org/search?q=Albert+Einstein"
+      url: "https://www.linkedin.com/in/%E7%BA%AA%E6%96%87-%E5%A7%9C-27b28227b/"
+    - name: zhihu
+      title: Zhihu
+      url: "https://www.zhihu.com/people/JiwenJ"
+    # - name: orcid
+    #   title: ORCID
+    #   url: "https://orcid.org/0000-0000-0000-0000"
+    # - name: openreview
+    #   title: OpenReview
+    #   url: "https://openreview.net/profile?id=~albert_einstein"
+    # - name: dblp
+    #   title: DBLP
+    #   url: "https://dblp.org/search?q=Albert+Einstein"
     # - name: cv
     #   title: CV
     #   url: "/cv.pdf"
