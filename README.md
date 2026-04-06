@@ -1,6 +1,8 @@
 
 ## How to Use
 
+> Requires Hugo extended v0.160.0 or newer. Older versions and the non-extended build may fail to build this site.
+
 1. install [Hugo](https://gohugo.io/getting-started/installing/) if you don't have it yet
 2. fork this repo to your own github account with a name like `https://github.com/yourusername/yourusername.github.io`
 3. clone your forked repo to your local machine `git clone --recursive https://github.com/yourusername/yourusername.github.io`
