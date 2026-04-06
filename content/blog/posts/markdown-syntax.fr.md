@@ -144,7 +144,7 @@ This is pre text
 
 #### Gist
 
-{{< gist spf13 7896402 >}}
+<script src="https://gist.github.com/spf13/7896402.js"></script>
 
 ## List Types
 
