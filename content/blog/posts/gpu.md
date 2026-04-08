@@ -8,8 +8,6 @@ summary: "I curate some learning materials for CUDA Programming"
 tags: ["CUDA"]
 categories: ["CUDA"]
 ShowToc: true
-cover:
-  image: "/media/blog/gpu/featured_huf75a07ead65c6e6239cf0dc4e70e451a_25504_720x2500_fit_q75_h2_lanczos.webp"
 ---
 
 <hr>

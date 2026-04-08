@@ -8,8 +8,6 @@ summary: "I have curated some recent LLMs for code generation task."
 tags: ["CodeLlama", "Finetune", "LLM"]
 categories: ["CodeLlama"]
 ShowToc: true
-cover:
-  image: "/media/blog/llm4code/featured_hu1ed11e0dfceca75d0589191d7fbfef57_311184_720x2500_fit_q75_h2_lanczos.webp"
 ---
 
 <p>Large Language Models for Code are flourishing. New and powerful models are released on a weekly basis, demonstrating remarkable performance on the code generation task. In this article, I curate some SOTA models and try to figure out their machanism. Here is the content of table:</p>

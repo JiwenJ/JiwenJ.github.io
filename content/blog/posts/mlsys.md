@@ -8,8 +8,6 @@ summary: "I summarize some self-learning resources for machine learning systems.
 tags: ["MLsys"]
 categories: ["MLsys"]
 ShowToc: true
-cover:
-  image: "/media/blog/mlsys/featured_hue3c876d19d994e703749719076a7cf3b_132087_720x2500_fit_q75_h2_lanczos.webp"
 ---
 
 <ul>

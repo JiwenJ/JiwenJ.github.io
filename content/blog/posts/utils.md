@@ -7,8 +7,6 @@ description: "I summarize some useful utilities for personal usage."
 summary: "I summarize some useful utilities for personal usage."
 tags: ["Tools", "Utility"]
 categories: ["Tools"]
-cover:
-  image: "/media/blog/utils/featured_hu1a9713d83b57ec3b0cb701248a57a480_43056_720x2500_fit_q75_h2_lanczos.webp"
 ---
 
 - **Website development**

@@ -8,8 +8,6 @@ summary: "I summarize some self-learning resources for distributed systems."
 tags: ["Dissys"]
 categories: ["Dissys"]
 ShowToc: true
-cover:
-  image: "/media/blog/dissys/featured_hu4b03cb548a00c9fbaa70ca158bebad12_84696_720x2500_fit_q75_h2_lanczos_3.webp"
 ---
 
 <hr>
