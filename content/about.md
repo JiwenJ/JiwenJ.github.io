@@ -5,7 +5,8 @@ build:
   list: local
 ---
 
-I am a third-year master's student at the Institute of Automation, Chinese Academy of Sciences, under the supervision of [Prof. Haifeng Zhang](https://pkuzhf.github.io/). My research focuses on Hardware Co-design for LLM, Agentic RL with tool use, and efficient LLM inference.
+I am a third-year master's student at the Institute of Automation, Chinese Academy of Sciences, under the supervision of [Prof. Haifeng Zhang](https://pkuzhf.github.io/), collaborated
+ with [Prof. Jun Wang](http://www0.cs.ucl.ac.uk/staff/jun.wang/). My research focuses on Hardware Co-design for LLM, Agentic RL with tool use, and efficient LLM inference.
 
 
 <!-- {{< advertising >}}
