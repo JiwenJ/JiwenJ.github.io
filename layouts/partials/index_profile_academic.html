@@ -48,6 +48,12 @@
         {{- end }}
         {{- partial "social_icons.html" (dict) -}}
       </div>
+
+      <div style="flex: 0 0 320px; max-width: 320px; width: 100%; margin-left: auto;">
+        <a href="https://mapmyvisitors.com/web/1c3sb" title="Visit tracker" target="_blank" rel="noreferrer" style="display: block; line-height: 0;">
+          <img src="https://mapmyvisitors.com/map.png?d=0ubvIyQ3auLfO02AqUG2LJf-lRz5ZhxM-fyfi6-AJcg&cl=ffffff" alt="Visitor map" style="display: block; width: 100%; height: auto; border-radius: 12px;" />
+        </a>
+      </div>
     </div>
     <div class="mobile-social">
       {{- partial "social_icons.html" (dict) -}}
@@ -211,51 +217,6 @@
   {{- end }}
 
   {{/* ===== Visitor Statistics Section ===== */}}
-  <section id="visitor-stats" class="experience-section">
-    <h2>Site Visitors</h2>
-    <div style="padding: 1.3rem 1.3rem 1rem; border: 1px solid #dfdbd2; border-radius: 20px; background: linear-gradient(180deg, #f7f5f1 0%, #f1eee8 100%); box-shadow: 0 1px 2px rgba(26, 26, 23, 0.04), 0 8px 24px rgba(26, 26, 23, 0.05); text-align: center;">
-      {{/* Busuanzi visitor counter */}}
-      <div style="margin-bottom: 0.9rem; font-size: 0.95rem; color: #6f695f; line-height: 1.9;">
-        <span id="busuanzi_container_site_pv" style="display: none; padding: 0.36rem 0.8rem; background: #fbfaf7; border: 1px solid #e5e0d6; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);">
-          Total Visits <strong style="color: #2f2a24; font-weight: 600;"><span id="busuanzi_value_site_pv"></span></strong>
-        </span>
-        <span style="display: inline-block; width: 0.45rem;"></span>
-        <span id="busuanzi_container_site_uv" style="display: none; padding: 0.36rem 0.8rem; background: #fbfaf7; border: 1px solid #e5e0d6; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);">
-          Unique Visitors <strong style="color: #2f2a24; font-weight: 600;"><span id="busuanzi_value_site_uv"></span></strong>
-        </span>
-      </div>
-      <div style="font-size: 0.85rem; color: #8b8478; margin-bottom: 1rem; letter-spacing: 0.01em;">
-        A live view of where visitors come from around the world.
-      </div>
-      {{/* MapMyVisitors Map Widget */}}
-      <div style="display: flex; justify-content: center; overflow: hidden; border-radius: 16px; background: #ede8df; border: 1px solid #e1dbd0; padding: 0.65rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.55); min-height: 220px; align-items: center;">
-        {{- if hugo.IsServer }}
-        <div style="width: 100%; max-width: 560px; height: 200px; border-radius: 12px; background: linear-gradient(180deg, #f6f3ed 0%, #ece6db 100%); border: 1px solid #ddd5c8; position: relative; overflow: hidden;">
-          <div style="position: absolute; inset: 0; opacity: 0.45; background:
-            radial-gradient(circle at 18% 38%, #cfc7b8 0 2px, transparent 3px),
-            radial-gradient(circle at 30% 30%, #cfc7b8 0 2px, transparent 3px),
-            radial-gradient(circle at 49% 45%, #cfc7b8 0 2px, transparent 3px),
-            radial-gradient(circle at 68% 35%, #cfc7b8 0 2px, transparent 3px),
-            radial-gradient(circle at 80% 55%, #cfc7b8 0 2px, transparent 3px),
-            linear-gradient(transparent 49%, rgba(180,170,155,0.15) 50%, transparent 51%),
-            linear-gradient(90deg, transparent 49%, rgba(180,170,155,0.12) 50%, transparent 51%);
-            background-size: auto, auto, auto, auto, auto, 100% 44px, 56px 100%;">
-          </div>
-          <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6e675c; text-align: center; padding: 1rem;">
-            <div style="font-size: 1rem; font-weight: 600; color: #2f2a24; margin-bottom: 0.4rem;">Local Preview</div>
-            <div style="font-size: 0.88rem; max-width: 320px; line-height: 1.6;">
-              The live visitor map appears after deployment, but this placeholder shows the layout in local development.
-            </div>
-          </div>
-        </div>
-        {{- else }}
-        <script type="text/javascript" id="mapmyvisitors"
-          src="//mapmyvisitors.com/map.js?d=sDv9ILotjNEfFcEOFe4igfpL-XbEwa7Cli0t2c1brYk&cl=ffffff&w=a">
-        </script>
-        {{- end }}
-      </div>
-    </div>
-  </section>
 
     </div>
     {{- if site.Params.profileMode.showToc }}
