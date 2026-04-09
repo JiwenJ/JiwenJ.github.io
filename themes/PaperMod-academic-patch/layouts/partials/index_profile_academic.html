@@ -2,7 +2,7 @@
   <div class="profile-section">
     <div class="profile-content">
       {{- if site.Params.profileMode.imageUrl }}
-      <div class="profile-image" style="width: {{ site.Params.profileMode.imageWidth | default 200 }}px; height: {{ site.Params.profileMode.imageWidth | default 200 }}px; border-radius: 50%; overflow: hidden;">
+      <div class="profile-image">
         {{- $img := "" }}
         {{- if not (urls.Parse site.Params.profileMode.imageUrl).IsAbs }}
             {{- $img = resources.Get site.Params.profileMode.imageUrl }}
@@ -14,23 +14,25 @@
             {{- end -}}
             {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
             {{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true)}}
-                {{- if site.Params.profileMode.imageWidth }}
-                    {{- $img = $img.Resize (printf "%dx" (mul site.Params.profileMode.imageWidth 3)) }}
+                {{- if (not (and (not site.Params.profileMode.imageHeight) (not site.Params.profileMode.imageWidth))) }}
+                    {{- $img = $img.Resize (printf "%dx%d" (mul site.Params.profileMode.imageWidth 3) (mul site.Params.profileMode.imageHeight 3)) }}
                 {{- else if site.Params.profileMode.imageHeight }}
                     {{- $img = $img.Resize (printf "x%d" (mul site.Params.profileMode.imageHeight 3)) }}
+                {{ else if site.Params.profileMode.imageWidth }}
+                    {{- $img = $img.Resize (printf "%dx" (mul site.Params.profileMode.imageWidth 3)) }}
                 {{ else }}
-                    {{- $img = $img.Resize "600x" }}
+                    {{- $img = $img.Resize "600x600" }}
                 {{- end }}
             {{- end }}
             <img draggable="false" src="{{ $img.Permalink }}" alt="{{ site.Params.profileMode.imageTitle | default "profile image" }}" title="{{ site.Params.profileMode.imageTitle }}"
-                width="{{ site.Params.profileMode.imageWidth | default 200 }}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block;" />
+                height="{{ site.Params.profileMode.imageHeight | default 200 }}" width="{{ site.Params.profileMode.imageWidth | default 200 }}" />
         {{- else }}
         <img draggable="false" src="{{ site.Params.profileMode.imageUrl | absURL }}" alt="{{ site.Params.profileMode.imageTitle | default "profile image" }}" title="{{ site.Params.profileMode.imageTitle }}"
-            width="{{ site.Params.profileMode.imageWidth | default 200 }}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block;" />
+            height="{{ site.Params.profileMode.imageHeight | default 200 }}" width="{{ site.Params.profileMode.imageWidth | default 200 }}" />
         {{- end }}
       </div>
       {{- end }}
-
+      
       <div class="profile-info">
         <h1 class="profile-name">{{ site.Params.profileMode.title | default site.Title | markdownify }}</h1>
         {{- if site.Params.profileMode.subtitle }}
@@ -45,18 +47,6 @@
         </p>
         {{- end }}
         {{- partial "social_icons.html" (dict) -}}
-      </div>
-
-      <div style="flex: 0 0 280px; max-width: 280px; width: 100%; margin-left: auto;">
-        <div style="display: flex; justify-content: flex-end; gap: 0.4rem; margin-bottom: 0.5rem; font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace; font-size: 11px; color: #6f695f; font-variant-numeric: tabular-nums; line-height: 1;">
-          <span id="busuanzi_container_site_pv" style="display: none; padding: 0.22rem 0.48rem; border-radius: 999px; border: 1px solid rgba(120, 107, 90, 0.14); background: rgba(247, 244, 238, 0.9);">
-            PV <span id="busuanzi_value_site_pv"></span>
-          </span>
-          <span id="busuanzi_container_site_uv" style="display: none; padding: 0.22rem 0.48rem; border-radius: 999px; border: 1px solid rgba(120, 107, 90, 0.14); background: rgba(247, 244, 238, 0.9);">
-            UV <span id="busuanzi_value_site_uv"></span>
-          </span>
-        </div>
-        <div id="visitor-map" style="width: 100%; height: 200px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(120, 107, 90, 0.16); background: linear-gradient(180deg, #f7f4ee 0%, #efe9de 100%); box-shadow: 0 1px 2px rgba(26, 26, 23, 0.04), 0 8px 20px rgba(26, 26, 23, 0.05);"></div>
       </div>
     </div>
     <div class="mobile-social">
@@ -219,8 +209,6 @@
     </div>
   </section>
   {{- end }}
-
-  {{/* ===== Visitor Statistics Section ===== */}}
 
     </div>
     {{- if site.Params.profileMode.showToc }}
