@@ -3,31 +3,8 @@
     <div class="profile-content">
       {{- if site.Params.profileMode.imageUrl }}
       <div class="profile-image" style="width: {{ site.Params.profileMode.imageWidth | default 200 }}px; height: {{ site.Params.profileMode.imageWidth | default 200 }}px; border-radius: 50%; overflow: hidden;">
-        {{- $img := "" }}
-        {{- if not (urls.Parse site.Params.profileMode.imageUrl).IsAbs }}
-            {{- $img = resources.Get site.Params.profileMode.imageUrl }}
-        {{- end }}
-        {{- if $img }}
-            {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
-            {{- if hugo.IsExtended -}}
-                {{- $processableFormats = $processableFormats | append "webp" -}}
-            {{- end -}}
-            {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
-            {{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true)}}
-                {{- if site.Params.profileMode.imageWidth }}
-                    {{- $img = $img.Resize (printf "%dx" (mul site.Params.profileMode.imageWidth 3)) }}
-                {{- else if site.Params.profileMode.imageHeight }}
-                    {{- $img = $img.Resize (printf "x%d" (mul site.Params.profileMode.imageHeight 3)) }}
-                {{ else }}
-                    {{- $img = $img.Resize "600x" }}
-                {{- end }}
-            {{- end }}
-            <img draggable="false" src="{{ $img.Permalink }}" alt="{{ site.Params.profileMode.imageTitle | default "profile image" }}" title="{{ site.Params.profileMode.imageTitle }}"
-                width="{{ site.Params.profileMode.imageWidth | default 200 }}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block;" />
-        {{- else }}
         <img draggable="false" src="{{ site.Params.profileMode.imageUrl | absURL }}" alt="{{ site.Params.profileMode.imageTitle | default "profile image" }}" title="{{ site.Params.profileMode.imageTitle }}"
             width="{{ site.Params.profileMode.imageWidth | default 200 }}" style="width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block;" />
-        {{- end }}
       </div>
       {{- end }}
 
@@ -56,7 +33,7 @@
             UV <span id="busuanzi_value_site_uv"></span>
           </span>
         </div>
-        <div id="visitor-map" style="width: 100%; height: 200px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(120, 107, 90, 0.16); background: linear-gradient(180deg, #f7f4ee 0%, #efe9de 100%); box-shadow: 0 1px 2px rgba(26, 26, 23, 0.04), 0 8px 20px rgba(26, 26, 23, 0.05);"></div>
+        <script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?cl=cc7d5e&w=a&t=tt&d=sDv9ILotjNEfFcEOFe4igfpL-XbEwa7Cli0t2c1brYk&co=f5f5f5&ct=896c6c"></script>
       </div>
     </div>
     <div class="mobile-social">
