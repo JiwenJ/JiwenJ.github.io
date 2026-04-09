@@ -89,9 +89,9 @@ params:
     # https://github.com/adityatelange/hugo-PaperMod/discussions/953#discussioncomment-4491216
     # put your favicon file in 'static/assets/'
     # you can generate favicons using https://favicon.io/favicon-generator/
-    favicon: "assets/favicon_ae/favicon.ico" 
-    favicon16x16:  "assets/favicon_ae/favicon-16x16.png"
-    favicon32x32:  "assets/favicon_ae/favicon-32x32.png"
+    # favicon: "assets/favicon_ae/head.png" 
+    favicon16x16:  "assets/favicon_ae/head.png"
+    # favicon32x32:  "assets/favicon_ae/favicon-32x32.png"
   #     apple_touch_icon: "<link / abs url>"
   #     safari_pinned_tab: "<link / abs url>"
 
