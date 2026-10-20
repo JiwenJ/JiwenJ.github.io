@@ -1,14 +1,14 @@
 # If your site is in 'https', then make sure your base url isn't written using 'http' otherwise your sitemap would
 # contain http (as opposeed to https) URLs. This would affect Google indexing of your URLs.
-baseURL: "https://JiwenJ.github.io/PaperMod-Academic-patch/"
+baseURL: "https://jiwenj.github.io/"
 title: Jiwen's Website
 copyright: "© [JiwenJ](https://github.com/JiwenJ) & Contributors"
 theme: [PaperMod-academic-patch, hugo-PaperMod]
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
-  author: Theme PaperMod
+  description: "Jiwen Jiang's academic homepage: LLM hardware co-design, agentic RL, and efficient LLM inference."
+  author: Jiwen Jiang
   # author: ["Me", "You"] # multiple authors
 
   defaultTheme: auto
@@ -30,7 +30,7 @@ params:
   profileMode:
     enabled: true # Disable profile mode to use academic layout
     imageUrl: "images/myself.jpg"  # Replace with your profile image
-    imageTitle: "Your Image Name"
+    imageTitle: "Jiwen Jiang"
     imageWidth: 200
     imageHeight: 200
     #######################
@@ -42,7 +42,7 @@ params:
     affiliation: "Institute of Automation, Chinese Academy of Sciences"
     email: "1546631808@qq.com"
     education:
-      - period: "2023 -2026"
+      - period: "2023 - 2026"
         description: "Master, Institute of Automation, Chinese Academy of Sciences, Beijing."
       - period: "2019 - 2023"
         description: "Bachelor, Nanjing University, Nanjing."
