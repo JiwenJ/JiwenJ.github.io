@@ -69,7 +69,20 @@
                 removeDuplicateIds(note);
                 note.id = `sidenote-${notes.length + 1}`;
                 note.classList.add("article-sidenote");
-                note.tabIndex = 0;
+                const backlink = note.querySelector("a");
+                const sourceLink = backlink.cloneNode(false);
+                const title = note.querySelector(".reference-title").textContent;
+                sourceLink.className = "reference-source";
+                sourceLink.textContent = "原文 ↗";
+                sourceLink.title = "查看文献原文（新窗口）";
+                sourceLink.setAttribute("aria-label", `查看文献原文：${title}`);
+                note.querySelector(".reference-meta").append(" · ", sourceLink);
+                backlink.classList.add("reference-backlink");
+                backlink.setAttribute("href", `#${anchor.id}`);
+                backlink.removeAttribute("target");
+                backlink.removeAttribute("rel");
+                backlink.setAttribute("aria-label", `回到正文引用 [${anchor.dataset.reference}]：${title}`);
+                note.title = `点击返回正文引用 [${anchor.dataset.reference}]`;
                 anchor.dataset.sidenoteTarget = note.id;
                 notes.push({ anchor, note });
                 anchorNotes.set(anchor, note);
@@ -126,7 +139,7 @@
         }
 
         function updateHighlight() {
-            const next = hoveredNote || focusedNote || clickedNote;
+            const next = clickedNote || hoveredNote || focusedNote;
             if (highlightedNote === next) return;
             if (highlightedNote) {
                 highlightedNote.classList.remove("is-highlighted");
@@ -139,15 +152,30 @@
             }
         }
 
-        // Highlight the nearby note without scrolling either the article or a separate pane.
+        // Each margin reference returns to its own citation, including repeated sources.
         article.addEventListener("click", (event) => {
             if (event.defaultPrevented || event.button !== 0 || event.metaKey ||
                 event.ctrlKey || event.altKey || event.shiftKey) return;
-            if (!(event.target instanceof Element) || !event.target.closest("a[data-sidenote-target]")) return;
+            if (!(event.target instanceof Element)) return;
+            const fromNote = event.target.closest(".article-sidenote");
+            if (!fromNote && !event.target.closest("a[data-sidenote-target]")) return;
+            // The separate source link still opens the paper normally.
+            if (fromNote && event.target.closest("a:not(.reference-backlink)")) return;
             const note = noteFor(event.target);
             if (!note) return;
             event.preventDefault();
             event.stopPropagation();
+            if (fromNote) {
+                const anchor = noteAnchors.get(note);
+                const hash = `#${anchor.id}`;
+                if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+                hoveredNote = null;
+                anchor.focus({ preventScroll: true });
+                anchor.scrollIntoView({
+                    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+                    block: "center"
+                });
+            }
             window.clearTimeout(highlightTimeout);
             clickedNote = note;
             updateHighlight();
@@ -163,7 +191,6 @@
         article.addEventListener("pointerout", (event) => {
             // Descendant links and text belong to the same note; keep their pair lit.
             hoveredNote = noteFor(event.relatedTarget);
-            if (!hoveredNote) clickedNote = null;
             updateHighlight();
         });
         article.addEventListener("focusin", (event) => {
@@ -174,7 +201,6 @@
         article.addEventListener("focusout", (event) => {
             focusedNote = event.relatedTarget instanceof Element && event.relatedTarget.matches(":focus-visible")
                 ? noteFor(event.relatedTarget) : null;
-            clickedNote = null;
             updateHighlight();
         });
 
