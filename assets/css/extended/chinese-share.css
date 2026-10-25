@@ -144,6 +144,29 @@
     line-height: 1.65;
 }
 
+.article-share-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+}
+
+.article-share-platforms button {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--code-bg);
+    color: var(--primary);
+    font: inherit;
+    cursor: pointer;
+}
+
+.article-share-platforms button[aria-pressed="true"] {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--theme);
+}
+
 .article-share-qr {
     width: fit-content;
     max-width: 100%;

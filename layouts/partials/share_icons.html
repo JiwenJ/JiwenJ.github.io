@@ -117,6 +117,13 @@
             <button type="button" class="article-share-close" aria-label="关闭分享窗口">×</button>
         </header>
         <p id="{{ $dialogID }}-description" class="article-share-description"></p>
+        <nav class="article-share-platforms" aria-label="分享方式">
+            {{- range (slice (dict "id" "wechat" "label" "微信") (dict "id" "zhihu" "label" "知乎") (dict "id" "xiaohongshu" "label" "小红书") (dict "id" "native" "label" "链接")) }}
+            {{- if or (eq .id "native") (not $custom) (in $ShareButtons .id) }}
+            <button type="button" data-share-switch data-share-platform="{{ .id }}" aria-pressed="false">{{ .label }}</button>
+            {{- end }}
+            {{- end }}
+        </nav>
         <div class="article-share-qr" hidden>
             {{- with images.QR $pageurl (dict "level" "medium" "scale" 6 "targetDir" "images/share-qr") }}
             <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="用微信扫描二维码打开文章">
@@ -128,6 +135,7 @@
         <textarea class="article-share-text" aria-label="分享内容" rows="5" readonly></textarea>
         <div class="article-share-actions">
             <button type="button" data-share-copy>复制分享内容</button>
+            <button type="button" data-share-native hidden>更多应用</button>
             <a data-share-open href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer" hidden>打开平台</a>
         </div>
         <p class="article-share-status" role="status" aria-live="polite"></p>

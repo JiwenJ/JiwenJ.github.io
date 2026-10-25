@@ -4,7 +4,7 @@
     const platforms = {
         native: {
             title: "分享这篇文章",
-            description: "复制文章标题和链接，粘贴到聊天或动态中分享。",
+            description: "选择下面的分享方式，或复制文章标题和链接发送给朋友。",
             copyLabel: "复制标题和链接",
             copiedMessage: "标题和链接已复制，可以粘贴分享。"
         },
@@ -42,6 +42,8 @@
             const text = dialog.querySelector(".article-share-text");
             const copyButton = dialog.querySelector("[data-share-copy]");
             const openLink = dialog.querySelector("[data-share-open]");
+            const nativeButton = dialog.querySelector("[data-share-native]");
+            const platformButtons = Array.from(dialog.querySelectorAll("[data-share-switch]"));
             const status = dialog.querySelector(".article-share-status");
             const triggers = Array.from(document.querySelectorAll("[data-share-dialog]"))
                 .filter((button) => button.dataset.shareDialog === dialog.id);
@@ -55,7 +57,7 @@
                 session += 1;
                 window.clearTimeout(resetTimer);
                 activePlatform = platform;
-                opener = button;
+                if (!dialog.open) opener = button;
                 heading.textContent = platform.title;
                 description.textContent = platform.description;
                 const isWechat = button.dataset.sharePlatform === "wechat";
@@ -72,37 +74,43 @@
                 copyButton.textContent = copyLabel;
                 status.textContent = "";
                 openLink.hidden = !platform.url;
+                nativeButton.hidden = button.dataset.sharePlatform !== "native" || typeof navigator.share !== "function";
+                platformButtons.forEach((item) => {
+                    item.setAttribute("aria-pressed", String(item.dataset.sharePlatform === button.dataset.sharePlatform));
+                });
                 if (platform.url) {
                     openLink.href = platform.url;
                     openLink.textContent = platform.openLabel;
                 }
-                dialog.showModal();
+                if (!dialog.open) dialog.showModal();
             }
 
             triggers.forEach((button) => {
                 const platform = platforms[button.dataset.sharePlatform];
                 if (!platform) return;
                 button.hidden = false;
-                button.addEventListener("click", async () => {
-                    if (button.dataset.sharePlatform === "native" && typeof navigator.share === "function") {
-                        const shareSession = ++session;
-                        button.disabled = true;
-                        // Invoke directly from the click to preserve the browser's user activation.
-                        try {
-                            await navigator.share({
-                                title: dialog.dataset.shareTitle,
-                                text: dialog.dataset.shareTitle,
-                                url: dialog.dataset.shareUrl
-                            });
-                            return;
-                        } catch (error) {
-                            if (error.name === "AbortError" || shareSession !== session) return;
-                        } finally {
-                            button.disabled = false;
-                        }
+                button.addEventListener("click", () => openDialog(button, platform));
+            });
+            platformButtons.forEach((button) => {
+                button.addEventListener("click", () => openDialog(button, platforms[button.dataset.sharePlatform]));
+            });
+            nativeButton.addEventListener("click", async () => {
+                const shareSession = session;
+                nativeButton.disabled = true;
+                // Invoke directly from the click to preserve the browser's user activation.
+                try {
+                    await navigator.share({
+                        title: dialog.dataset.shareTitle,
+                        text: dialog.dataset.shareTitle,
+                        url: dialog.dataset.shareUrl
+                    });
+                } catch (error) {
+                    if (error.name !== "AbortError" && dialog.open && shareSession === session) {
+                        status.textContent = "无法打开系统分享，请选择上面的分享方式，或复制链接。";
                     }
-                    openDialog(button, platform);
-                });
+                } finally {
+                    nativeButton.disabled = false;
+                }
             });
 
             copyButton.addEventListener("click", async () => {
