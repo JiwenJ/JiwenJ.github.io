@@ -2,8 +2,7 @@
 {{- $pageurl := .Params.shareUrl | default .Params.citationUrl | default (printf "%s%s" $publicBase .RelPermalink) }}
 {{- $title := .Title }}
 {{- $dialogID := printf "article-share-%s" (md5 .RelPermalink) }}
-{{- $summary := .Params.summary | default .Description | plainify }}
-{{- $chineseSharing := or (not (.Param "ShareButtons")) (in (.Param "ShareButtons") "native") (in (.Param "ShareButtons") "wechat") (in (.Param "ShareButtons") "zhihu") (in (.Param "ShareButtons") "xiaohongshu") }}
+{{- $linkSharing := or (not (.Param "ShareButtons")) (in (.Param "ShareButtons") "native") }}
 
 {{- $.Scratch.Set "tags" ""}}
 
@@ -18,15 +17,13 @@
 {{- with $ShareButtons }}{{ $custom = true }}{{ end }}
 
 <ul class="share-buttons">
-    {{- range (slice (dict "id" "native" "label" "分享…" "action" "分享文章链接") (dict "id" "wechat" "label" "微信" "action" "微信扫码分享或复制链接") (dict "id" "zhihu" "label" "知乎" "action" "分享到知乎") (dict "id" "xiaohongshu" "label" "小红书" "action" "分享到小红书")) }}
-    {{- if or (not $custom) (in $ShareButtons .id) }}
+    {{- if $linkSharing }}
     <li>
-        <button type="button" class="share-chinese-trigger" data-share-platform="{{ .id }}" data-share-dialog="{{ $dialogID }}"
-            aria-label="{{ .action }}" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="{{ .action }}" hidden>
-            <span class="share-platform-label">{{ .label }}</span>
+        <button type="button" class="share-chinese-trigger" data-share-dialog="{{ $dialogID }}"
+            aria-label="分享文章链接" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="分享文章链接" hidden>
+            <span class="share-platform-label">分享…</span>
         </button>
     </li>
-    {{- end }}
     {{- end }}
     {{- if (or (cond ($custom) (in $ShareButtons "x") (true)) (cond ($custom) (in $ShareButtons "twitter") (true))) }}
     <li>
@@ -108,35 +105,22 @@
     {{- end }}
 </ul>
 
-{{- if $chineseSharing }}
+{{- if $linkSharing }}
 <dialog id="{{ $dialogID }}" class="article-share-dialog" aria-labelledby="{{ $dialogID }}-title" aria-describedby="{{ $dialogID }}-description"
-    data-share-title="{{ $title }}" data-share-summary="{{ $summary }}" data-share-url="{{ $pageurl }}">
+    data-share-title="{{ $title }}" data-share-url="{{ $pageurl }}">
     <div class="article-share-panel">
         <header>
-            <h2 id="{{ $dialogID }}-title">分享文章</h2>
+            <h2 id="{{ $dialogID }}-title">分享这篇文章</h2>
             <button type="button" class="article-share-close" aria-label="关闭分享窗口">×</button>
         </header>
-        <p id="{{ $dialogID }}-description" class="article-share-description"></p>
-        <nav class="article-share-platforms" aria-label="分享方式">
-            {{- range (slice (dict "id" "wechat" "label" "微信") (dict "id" "zhihu" "label" "知乎") (dict "id" "xiaohongshu" "label" "小红书") (dict "id" "native" "label" "链接")) }}
-            {{- if or (eq .id "native") (not $custom) (in $ShareButtons .id) }}
-            <button type="button" data-share-switch data-share-platform="{{ .id }}" aria-pressed="false">{{ .label }}</button>
-            {{- end }}
-            {{- end }}
-        </nav>
-        <div class="article-share-qr" hidden>
-            {{- with images.QR $pageurl (dict "level" "medium" "scale" 6 "targetDir" "images/share-qr") }}
-            <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="用微信扫描二维码打开文章">
-            {{- end }}
-        </div>
+        <p id="{{ $dialogID }}-description" class="article-share-description">复制文章标题和链接，粘贴到聊天或动态中分享。</p>
         {{- if hugo.IsServer }}
         <p class="article-share-preview-note">本地预览：分享地址指向正式网址，文章发布后可访问。</p>
         {{- end }}
-        <textarea class="article-share-text" aria-label="分享内容" rows="5" readonly></textarea>
+        <textarea class="article-share-text" aria-label="分享内容" rows="4" readonly></textarea>
         <div class="article-share-actions">
-            <button type="button" data-share-copy>复制分享内容</button>
+            <button type="button" data-share-copy>复制标题和链接</button>
             <button type="button" data-share-native hidden>更多应用</button>
-            <a data-share-open href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer" hidden>打开平台</a>
         </div>
         <p class="article-share-status" role="status" aria-live="polite"></p>
     </div>
