@@ -108,16 +108,19 @@
                 return;
             }
             const railTop = rail.getBoundingClientRect().top;
-            const measurements = notes.map(({ anchor, note }) => ({
+            const visibleNotes = notes.filter(({ anchor, note }) => {
+                // Closed details may retain descendant layout boxes in the browser.
+                const visible = !anchor.closest("details:not([open])") && anchor.getClientRects().length > 0;
+                note.hidden = !visible;
+                return visible;
+            });
+            const measurements = visibleNotes.map(({ anchor, note }) => ({
                 note,
-                visible: anchor.getClientRects().length > 0,
                 anchorTop: anchor.getBoundingClientRect().top - railTop - 6,
                 height: note.getBoundingClientRect().height
             }));
             let bottom = 0;
-            for (const { note, visible, anchorTop, height } of measurements) {
-                note.hidden = !visible;
-                if (!visible) continue;
+            for (const { note, anchorTop, height } of measurements) {
                 const top = Math.max(0, anchorTop, bottom);
                 note.style.top = `${Math.round(top)}px`;
                 bottom = top + height + 18;
