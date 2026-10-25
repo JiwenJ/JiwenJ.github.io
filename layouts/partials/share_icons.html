@@ -3,7 +3,7 @@
 {{- $title := .Title }}
 {{- $dialogID := printf "article-share-%s" (md5 .RelPermalink) }}
 {{- $summary := .Params.summary | default .Description | plainify }}
-{{- $chineseSharing := or (not (.Param "ShareButtons")) (in (.Param "ShareButtons") "wechat") (in (.Param "ShareButtons") "zhihu") (in (.Param "ShareButtons") "xiaohongshu") }}
+{{- $chineseSharing := or (not (.Param "ShareButtons")) (in (.Param "ShareButtons") "native") (in (.Param "ShareButtons") "wechat") (in (.Param "ShareButtons") "zhihu") (in (.Param "ShareButtons") "xiaohongshu") }}
 
 {{- $.Scratch.Set "tags" ""}}
 
@@ -18,11 +18,11 @@
 {{- with $ShareButtons }}{{ $custom = true }}{{ end }}
 
 <ul class="share-buttons">
-    {{- range (slice (dict "id" "wechat" "label" "微信") (dict "id" "zhihu" "label" "知乎") (dict "id" "xiaohongshu" "label" "小红书")) }}
+    {{- range (slice (dict "id" "native" "label" "分享…" "action" "分享文章链接") (dict "id" "wechat" "label" "微信" "action" "微信扫码分享或复制链接") (dict "id" "zhihu" "label" "知乎" "action" "分享到知乎") (dict "id" "xiaohongshu" "label" "小红书" "action" "分享到小红书")) }}
     {{- if or (not $custom) (in $ShareButtons .id) }}
     <li>
         <button type="button" class="share-chinese-trigger" data-share-platform="{{ .id }}" data-share-dialog="{{ $dialogID }}"
-            aria-label="分享到{{ .label }}" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="分享到{{ .label }}" hidden>
+            aria-label="{{ .action }}" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="{{ .action }}" hidden>
             <span class="share-platform-label">{{ .label }}</span>
         </button>
     </li>
@@ -86,7 +86,7 @@
     {{- if (cond ($custom) (in $ShareButtons "telegram") (true)) }}
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share {{ $title | plainify }} on telegram"
-            href="https://telegram.me/share/url?text={{ $title }}&amp;url={{ $pageurl }}">
+            href="https://t.me/share/url?text={{ $title }}&amp;url={{ $pageurl }}">
             <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
@@ -109,14 +109,14 @@
 </ul>
 
 {{- if $chineseSharing }}
-<dialog id="{{ $dialogID }}" class="article-share-dialog" aria-labelledby="{{ $dialogID }}-title"
+<dialog id="{{ $dialogID }}" class="article-share-dialog" aria-labelledby="{{ $dialogID }}-title" aria-describedby="{{ $dialogID }}-description"
     data-share-title="{{ $title }}" data-share-summary="{{ $summary }}" data-share-url="{{ $pageurl }}">
     <div class="article-share-panel">
         <header>
             <h2 id="{{ $dialogID }}-title">分享文章</h2>
             <button type="button" class="article-share-close" aria-label="关闭分享窗口">×</button>
         </header>
-        <p class="article-share-description"></p>
+        <p id="{{ $dialogID }}-description" class="article-share-description"></p>
         <div class="article-share-qr" hidden>
             {{- with images.QR $pageurl (dict "level" "medium" "scale" 6 "targetDir" "images/share-qr") }}
             <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="用微信扫描二维码打开文章">
