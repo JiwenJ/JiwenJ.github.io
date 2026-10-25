@@ -1,0 +1,13 @@
+<sup class="citation-group">
+{{- $page := .Page -}}
+{{- $ordinal := .Ordinal -}}
+{{- range .Params -}}
+  {{- $id := int . -}}
+  {{- if not (where $page.Params.references "id" $id) -}}
+    {{- errorf "Unknown reference %d in %s" $id $page.File.Path -}}
+  {{- end -}}
+  {{- range where $page.Params.references "id" $id -}}
+  <a class="citation" id="citation-{{ $ordinal }}-{{ $id }}" href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer" data-reference="{{ $id }}" aria-label="参考文献 {{ $id }}：{{ .title }}">[{{ $id }}]</a>
+  {{- end -}}
+{{- end -}}
+</sup>

@@ -1,0 +1,113 @@
+/* Shared reading and interface type across every page. */
+@font-face {
+    font-family: "Site Source Serif";
+    src: url("/fonts/source-serif-4/SourceSerif4-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Site Source Serif";
+    src: url("/fonts/source-serif-4/SourceSerif4-Italic.ttf") format("truetype");
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Site Source Serif";
+    src: url("/fonts/source-serif-4/SourceSerif4-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Site Source Sans";
+    src: url("/fonts/source-sans-3/SourceSans3VF-Upright.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 200 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Site Source Sans";
+    src: url("/fonts/source-sans-3/SourceSans3VF-Italic.woff2") format("woff2");
+    font-style: italic;
+    font-weight: 200 900;
+    font-display: swap;
+}
+
+:root {
+    --site-serif: "Site Source Serif", "Source Serif 4", Georgia,
+        "Source Han Serif SC", "Noto Serif SC", "Songti SC", "STSong", SimSun, serif;
+    --site-sans: "Site Source Sans", "Source Sans 3", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --site-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas,
+        "Noto Sans Mono CJK SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", monospace;
+    --blog-serif: var(--site-serif);
+    --blog-sans: var(--site-sans);
+    --blog-mono: var(--site-mono);
+    --font-family: var(--site-sans);
+}
+
+body {
+    font-family: var(--site-serif);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.75;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--site-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+}
+
+button, input, select, textarea {
+    font-family: var(--site-sans);
+}
+
+code, pre, kbd, samp {
+    font-family: var(--site-mono);
+    font-variant-ligatures: none;
+}
+
+.header, .footer, .post-meta, .entry-footer, .breadcrumbs,
+.toc, .post-tags, .paginav, .pagination, .terms-tags,
+.archive-meta, .archive-count, .search-results .post-meta {
+    font-family: var(--site-sans);
+}
+
+.logo a {
+    font-family: var(--site-serif);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+}
+
+.academic-home .profile-info h1.profile-name,
+.academic-home section > h2,
+.academic-home .publication-title {
+    font-family: var(--site-serif);
+    font-weight: 500;
+}
+
+.academic-home :is(.profile-position, .profile-affiliation, .profile-email,
+    .news-date, .publication-venue, .publication-links, .publications-legend,
+    .experience-period, .award-date, .full-list-link, .toc-sidebar) {
+    font-family: var(--site-sans);
+}
+
+.publications-page :is(.pub-scholar-link, .pub-contributions, .pub-filters,
+    .pub-year-count, .pub-card-meta, .pub-card-links) {
+    font-family: var(--site-sans);
+}
+
+@media (max-width: 640px) {
+    body {
+        font-size: 16px;
+    }
+}

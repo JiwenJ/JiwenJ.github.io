@@ -1,0 +1,180 @@
+.post-single.blog-post {
+    --footnote-accent: #5c7964;
+}
+
+.dark .post-single.blog-post {
+    --footnote-accent: #a1b8a4;
+}
+
+.post-single.blog-post a.footnote-ref,
+.post-single.blog-post a.footnote-backref {
+    color: var(--footnote-accent);
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.post-single.blog-post a.footnote-ref {
+    padding-inline: 0.08em;
+    font-family: var(--blog-sans, system-ui, sans-serif);
+    font-weight: 500;
+}
+
+.post-single.blog-post a.footnote-ref:hover,
+.post-single.blog-post a.footnote-backref:hover,
+.post-single.blog-post a.footnote-ref:focus-visible,
+.post-single.blog-post a.footnote-backref:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.post-single.blog-post .footnotes {
+    margin-top: 2.75em;
+    padding-top: 1.1em;
+    border-top: 1px solid var(--border);
+    font-family: var(--blog-serif, Georgia, "Songti SC", serif);
+    font-size: 0.88em;
+    line-height: 1.8;
+}
+
+.post-single.blog-post .footnotes > hr {
+    display: none;
+}
+
+.post-single.blog-post .footnotes > ol {
+    padding-inline-start: 1.5em;
+}
+
+.post-single.blog-post .footnotes li {
+    margin-block: 0.65em;
+    padding-inline-start: 0.35em;
+}
+
+.post-single.blog-post .footnotes li::marker {
+    color: var(--secondary);
+    font-family: var(--blog-sans, system-ui, sans-serif);
+    font-size: 0.85em;
+}
+
+.post-single.blog-post .footnotes li > p {
+    margin-block: 0.25em 0.75em;
+}
+
+.post-single.blog-post .footnotes a:not(.footnote-backref) {
+    color: var(--footnote-accent);
+    box-shadow: none;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.post-single.blog-post a.footnote-backref {
+    padding-inline: 0.15em;
+    font-family: var(--blog-sans, system-ui, sans-serif);
+    font-size: 0.88em;
+    white-space: nowrap;
+}
+
+.footnote-preview {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(420px, calc(100vh - 24px));
+    max-height: min(420px, calc(100dvh - 24px));
+    padding: 12px 16px 14px;
+    border: 1px solid var(--border, #d8d7d0);
+    border-radius: 6px;
+    background: var(--theme, #faf9f5);
+    color: var(--content, #383832);
+    box-shadow: 0 5px 20px rgb(0 0 0 / 8%);
+    font-family: var(--site-serif);
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+.footnote-preview[hidden] {
+    display: none;
+}
+
+.footnote-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--secondary, #74746c);
+    font-family: var(--site-sans);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.footnote-preview-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    margin: -4px -8px -4px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.footnote-preview-content {
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.footnote-preview-content p {
+    margin: 0 0 0.65em;
+}
+
+.footnote-preview-content > :last-child {
+    margin-bottom: 0;
+}
+
+.footnote-preview-content :is(ul, ol) {
+    margin-block: 0.5em;
+    padding-inline-start: 1.3em;
+}
+
+.footnote-preview-content a,
+.footnote-preview-jump {
+    color: #5c7964;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.dark .footnote-preview-content a,
+.dark .footnote-preview-jump {
+    color: #a1b8a4;
+}
+
+.footnote-preview-content code {
+    font-family: var(--site-mono);
+    font-size: 0.85em;
+}
+
+.footnote-preview-content :is(img, svg) {
+    max-width: 100%;
+}
+
+.footnote-preview-jump {
+    align-self: flex-start;
+    font-family: var(--site-sans);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.footnote-preview :is(a, button):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}

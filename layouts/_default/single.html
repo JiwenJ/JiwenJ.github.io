@@ -1,0 +1,122 @@
+{{- define "main" }}
+
+{{- $hasSidebars := and (eq .Section "blog") (.Param "ShowToc") }}
+{{- if $hasSidebars }}
+<div class="article-with-references">
+  <aside class="article-toc" aria-label="文章目录">
+    <h2>目录</h2>
+    {{ partial "article_toc.html" . }}
+  </aside>
+{{- end }}
+<article class="post-single{{ if eq .Section "blog" }} blog-post{{ end }}">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title entry-hint-parent">
+      <span class="post-title-text">{{ .Params.mathTitle | default .Title | markdownify }}</span>
+      {{- if .Draft }}
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+      {{- end }}
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Params.mathDescription | default .Description | markdownify }}
+    </div>
+    {{- end }}
+    {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+      {{- if eq .Section "blog" }}
+        {{- $author := "" }}
+        {{- if not (.Param "hideAuthor") }}{{ $author = partial "author.html" . }}{{ end }}
+        {{- with $author }}<span class="post-author">{{ . }}</span>{{ end }}
+        {{- if not .Date.IsZero }}
+          {{- if $author }}<span class="post-meta-separator" aria-hidden="true">·</span>{{ end }}
+          <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date | time.Format (default ":date_long" site.Params.DateFormat) }}</time>
+        {{- end }}
+      {{- else }}
+      {{- partial "post_meta.html" . -}}
+      {{- partial "translation_list.html" . -}}
+      {{- partial "edit_post.html" . -}}
+      {{- partial "post_canonical.html" . -}}
+      {{- end }}
+    </div>
+    {{- end }}
+  </header>
+  {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
+  {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
+  {{- if (.Param "ShowToc") }}
+  {{- partial "toc.html" . }}
+  {{- end }}
+
+  {{- if .Content }}
+  {{- $articleContent := .Content }}
+  {{- if .HasShortcode "cite_article" }}
+    {{- /* Goldmark appends footnotes; place the citation heading and block after them. */}}
+    {{- range findRE `(?s)<h2\b[^>]*>[^<]*</h2>\s*<section class="article-citation".*?</section>` $articleContent 1 }}
+      {{- $articleContent = printf "%s\n%s" (replace $articleContent . "") . }}
+    {{- end }}
+  {{- end }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" $articleContent -}}
+    {{- else }}{{ $articleContent | safeHTML }}{{ end }}
+  </div>
+  {{- end }}
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+    {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+    {{- partial "share_icons.html" . -}}
+    {{- end }}
+  </footer>
+
+  {{- if (.Param "comments") }}
+  {{- partial "comments.html" . }}
+  {{- end }}
+</article>
+
+{{- if $hasSidebars }}
+  {{- with .Params.references }}
+  <aside class="reference-sidebar" aria-labelledby="reference-sidebar-title">
+    <h2 id="reference-sidebar-title">参考文献</h2>
+    <ol>
+      {{- range sort . "id" }}
+      <li id="ref-side-{{ .id }}" data-reference="{{ .id }}">
+        <a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">
+          <span class="reference-number">[{{ .id }}]</span>
+          <span class="reference-title">{{ .title }}</span>
+        </a>
+        <span class="reference-meta">{{ .authors }} · {{ .source }}</span>
+      </li>
+      {{- end }}
+    </ol>
+  </aside>
+  {{- end }}
+</div>
+{{- with resources.Get "js/article-navigation.js" }}
+{{- $navigation := . | resources.Minify | fingerprint }}
+<script defer src="{{ $navigation.RelPermalink }}" integrity="{{ $navigation.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- end }}
+{{- with resources.Get "js/footnote-preview.js" }}
+{{- $footnotes := . | resources.Minify | fingerprint }}
+<script defer src="{{ $footnotes.RelPermalink }}" integrity="{{ $footnotes.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- end }}
+{{- with resources.Get "js/article-citation.js" }}
+{{- $citation := . | resources.Minify | fingerprint }}
+<script defer src="{{ $citation.RelPermalink }}" integrity="{{ $citation.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- end }}
+{{- end }}
+
+{{- end }}{{/* end main */}}

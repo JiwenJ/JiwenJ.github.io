@@ -1,0 +1,8 @@
+{{- if findRE "(?s)<h[23][^>]*>.*?</h[23]>" .Content }}
+<div class="toc">
+  <details{{ if .Param "TocOpen" }} open{{ end }}>
+    <summary accesskey="c" title="(Alt + C)"><span class="details">{{ i18n "toc" | default "Table of Contents" }}</span></summary>
+    <div class="inner">{{ partial "article_toc.html" . }}</div>
+  </details>
+</div>
+{{- end }}

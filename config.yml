@@ -14,6 +14,7 @@ params:
   defaultTheme: auto
   # disableThemeToggle: true
   ShowShareButtons: true
+  shareBaseURL: "https://jiwenj.github.io/"
   ShowReadingTime: true
   # disableSpecial1stPost: true
   displayFullLangName: true
@@ -53,6 +54,10 @@ params:
         description: "Meituan, RL Infra & Algorithms"
       - period: "2025-2026"
         description: "AMD, LLM & MLLM Inference Acceleration"
+      - period: "2025-2026"
+        description: "SJTU, SFT & RL Algorithms, with [Prof. Ying Wen](https://yingwen.io/en/)"
+      - period: "2025-2026"
+        description: "HKUST(GZ), Pretrain & Infra, with [Prof. Lei Chen](https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page/CHEN-Lei/leichen)"
     #######################
 
   socialIcons:
@@ -188,9 +193,9 @@ languages:
         - name: About
           url: /
           weight: 5
-        # - name: Publications
-        #   url: pubs/
-        #   weight: 8
+        - name: Publication
+          url: /pubs/
+          weight: 8
         - name: Blog
           url: blog/
           weight: 10
@@ -203,6 +208,12 @@ outputs:
 
 markup:
   goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [['$$', '$$'], ['\[', '\]']]
+          inline: [['$', '$'], ['\(', '\)']]
     renderer:
       unsafe: true
   highlight:

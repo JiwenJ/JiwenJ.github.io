@@ -1,0 +1,7 @@
+<ol class="bibliography">
+  {{- range sort .Page.Params.references "id" }}
+  <li id="ref-{{ .id }}" data-reference="{{ .id }}">
+    {{ .authors | strings.TrimSuffix "." }}. <a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">{{ .title }}</a>. {{ .source }}.
+  </li>
+  {{- end }}
+</ol>

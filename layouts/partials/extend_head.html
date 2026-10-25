@@ -1,5 +1,40 @@
+<link rel="preload" href="{{ "fonts/source-serif-4/SourceSerif4-Regular.ttf" | relURL }}" as="font" type="font/ttf" crossorigin="anonymous">
+<link rel="preload" href="{{ "fonts/source-sans-3/SourceSans3VF-Upright.woff2" | relURL }}" as="font" type="font/woff2" crossorigin="anonymous">
+
 {{- /* Busuanzi visitor counter script */ -}}
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+{{- if eq .Layout "publications" }}
+  {{- with resources.Get "css/publications.css" }}
+    {{- $styles := . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
+  {{- end }}
+  {{- with resources.Get "js/publications.js" }}
+    {{- $script := . | minify | fingerprint }}
+<script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>
+  {{- end }}
+{{- end }}
+
+{{- /* Listing cards use mathTitle/mathSummary while metadata stays plain text. */ -}}
+{{- $mathEnabled := and .IsPage .Params.math -}}
+{{- if not .IsPage -}}
+  {{- $mathEnabled = gt (len (where site.RegularPages "Params.math" true)) 0 -}}
+{{- end -}}
+{{- if $mathEnabled }}
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+{{- end }}
 
 <style>
   #mapmyvisitors-widget,
@@ -19,7 +54,7 @@
   #mapmyvisitors-widget .mapmyvisitors-date,
   #mapmyvisitors-widget .mapmyvisitors-bottom-text,
   #mapmyvisitors-widget #clstminf {
-    font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace !important;
+    font-family: var(--site-mono) !important;
     letter-spacing: 0.08em !important;
     font-variant-numeric: tabular-nums !important;
     text-transform: uppercase !important;

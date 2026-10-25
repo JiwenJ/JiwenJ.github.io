@@ -1,0 +1,123 @@
+{{- define "main" }}
+{{- $papers := (site.GetPage "pubs").RegularPages }}
+{{- $topics := slice }}
+{{- $years := slice }}
+{{- range $papers }}
+  {{- with .Params.year }}
+    {{- $years = $years | append (int .) }}
+  {{- end }}
+  {{- range .Params.topics }}
+    {{- $topics = $topics | append . }}
+  {{- end }}
+{{- end }}
+{{- $groups := slice }}
+{{- range sort (uniq $years) "value" "desc" }}
+  {{- $groups = $groups | append (dict "label" (string .) "id" (string .) "papers" (where $papers "Params.year" .)) }}
+{{- end }}
+{{- $undatedPapers := where $papers "Params.year" nil }}
+{{- if $undatedPapers }}
+  {{- $groups = $groups | append (dict "label" "Submitted" "id" "submitted" "papers" $undatedPapers) }}
+{{- end }}
+<div class="publications-page">
+  <header class="pub-hero page-header">
+    <div class="pub-heading-row">
+      <h1>{{ .Title }}</h1>
+      {{- range site.Params.socialIcons }}
+        {{- if eq .name "googlescholar" }}
+      <a class="pub-scholar-link" href="{{ .url }}" target="_blank" rel="noopener noreferrer">Google Scholar <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        {{- end }}
+      {{- end }}
+    </div>
+    <p class="pub-intro">Peer-reviewed papers and preprints, organized by year.</p>
+    <p class="pub-contributions">* Equal contribution <span aria-hidden="true">·</span> <sup>✉</sup> Corresponding author</p>
+  </header>
+
+  <nav class="pub-filters" aria-label="Filter publications by topic" hidden>
+    <button class="pub-filter" type="button" data-topic="" aria-pressed="true">All papers <span class="pub-filter-count">{{ len $papers }}</span></button>
+    {{- range sort (uniq $topics) }}
+    <button class="pub-filter" type="button" data-topic="{{ . }}" aria-pressed="false">{{ . }}</button>
+    {{- end }}
+  </nav>
+  <p class="pub-live-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+  <div class="pub-year-groups">
+    {{- range $groups }}
+    {{- $groupPapers := .papers }}
+    <section class="pub-year-group" aria-labelledby="pub-year-{{ .id }}">
+      <div class="pub-year-heading">
+        <h2 id="pub-year-{{ .id }}">{{ .label }}</h2>
+        <span class="pub-year-line" aria-hidden="true"></span>
+        <span class="pub-year-count" data-total="{{ len $groupPapers }}">{{ len $groupPapers }} {{ if eq (len $groupPapers) 1 }}paper{{ else }}papers{{ end }}</span>
+      </div>
+      <div class="pub-cards">
+        {{- range $groupPapers.ByDate.Reverse }}
+        {{- $paperURL := .Params.full_text | default .Params.html }}
+        {{- $isArxiv := false }}
+        {{- $pdfURL := "" }}
+        {{- if $paperURL }}
+          {{- $parsedURL := urls.Parse $paperURL }}
+          {{- if and (eq $parsedURL.Host "arxiv.org") (findRE `^/abs/[0-9]{4}\.[0-9]{4,5}(v[0-9]+)?/?$` $parsedURL.Path) }}
+            {{- $isArxiv = true }}
+            {{- $pdfURL = printf "https://arxiv.org/pdf/%s" (strings.TrimPrefix "/abs/" $parsedURL.Path) }}
+          {{- end }}
+        {{- end }}
+        <article class="pub-card" data-topics="{{ .Params.topics | default slice | jsonify }}">
+          <div class="pub-card-meta">
+            {{- $venueLabel := .Params.publication_venue | default .Params.abbr | default .Params.venue | default "" }}
+            {{- $status := "" }}
+            {{- if eq .Params.publication_kind "preprint" }}
+              {{- $status = .Params.publication_status | default "Preprint" }}
+            {{- end }}
+            <p class="pub-card-venue"><span class="venue-badge{{ if eq .Params.publication_kind "preprint" }} default{{ end }}">{{ if eq $status "Submitted" }}{{ with .Params.year }}{{ . }} {{ end }}{{ end }}{{ $venueLabel }}{{ if eq .Params.publication_kind "published" }}{{ with .Params.year }} {{ . }}{{ end }}{{ end }}</span>{{ if and $status (not (strings.Contains (lower $venueLabel) (lower $status))) }} <span class="pub-venue-status">{{ $status }}</span>{{ end }}</p>
+            <div class="pub-card-topics">
+              {{- range first 1 (.Params.topics | default slice) }}
+              <span class="pub-topic">{{ . }}</span>
+              {{- end }}
+            </div>
+          </div>
+          <h3 class="pub-card-title">
+            {{- if $paperURL }}
+            <a href="{{ $paperURL }}" target="_blank" rel="noopener noreferrer">{{ .Title }}</a>
+            {{- else }}
+            {{ .Title }}
+            {{- end }}
+          </h3>
+          <p class="pub-card-authors">
+            {{- $authors := .Params.publication_authors | default .Params.authors }}
+            {{- $equalContributors := .Params.equal_contributors | default slice }}
+            {{- $correspondingAuthors := .Params.corresponding_authors | default slice }}
+            {{- range $index, $author := $authors }}
+              <span class="pub-author">
+              {{- if eq $author site.Params.profileMode.nameInPub }}<strong>{{ $author }}</strong>{{- else }}{{ $author }}{{- end }}
+              {{- if in $equalContributors $author }}<sup>*</sup>{{ end }}
+              {{- if in $correspondingAuthors $author }}<sup>✉</sup>{{ end -}}
+              </span>
+              {{- if ne (add $index 1) (len $authors) }}, {{ end }}
+            {{- end }}
+          </p>
+          <div class="pub-card-links">
+            {{- if $paperURL }}
+            <a href="{{ $paperURL }}" target="_blank" rel="noopener noreferrer">{{ if $isArxiv }}arXiv{{ else }}Paper{{ end }}</a>
+            {{- end }}
+            {{- if $pdfURL }}
+            <a href="{{ $pdfURL }}" target="_blank" rel="noopener noreferrer">PDF</a>
+            {{- end }}
+            {{- with .Params.code }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">Code</a>
+            {{- end }}
+            {{- with .Params.website }}
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">Website</a>
+            {{- end }}
+            {{- if .Params.bibtex }}
+            <button class="pub-copy-bib" type="button" aria-label="Copy BibTeX citation for {{ .Title }}" hidden><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></svg><span class="pub-copy-label">Copy Bib</span></button>
+            <textarea class="pub-bibtex" aria-label="BibTeX citation for {{ .Title }}" readonly hidden>{{ .Params.bibtex }}</textarea>
+            {{- end }}
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  </div>
+</div>
+{{- end }}

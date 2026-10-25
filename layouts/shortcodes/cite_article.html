@@ -1,0 +1,25 @@
+{{- $author := "Jiwen Jiang" -}}
+{{- with .Page.Params.author -}}
+  {{- if reflect.IsSlice . -}}
+    {{- $author = delimit . " and " -}}
+  {{- else -}}
+    {{- $author = printf "%v" . -}}
+  {{- end -}}
+{{- end -}}
+{{- $title := replace .Page.Title "μP" `{\ensuremath{\mu}P}` -}}
+{{- $title = replace $title "µP" `{\ensuremath{\mu}P}` -}}
+{{- $year := .Page.Date.Format "2006" -}}
+{{- $key := .Page.Params.citationKey | default "jiang2026mup" -}}
+{{- $url := .Page.Params.citationUrl | default "https://jiwenj.github.io/blog/posts/mup/" -}}
+{{- $bibtex := printf "@misc{%s,\n  author = {%s},\n  title = {%s},\n  year = {%s},\n  url = {%s}\n}" $key $author $title $year $url -}}
+<section class="article-citation" aria-label="BibTeX 引用">
+  <div class="article-citation-toolbar">
+    <span class="article-citation-format">bibtex</span>
+    <button class="article-citation-copy" type="button" data-copy-citation aria-label="复制 BibTeX 引用">
+      <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="13" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+      <span data-copy-label>复制</span>
+    </button>
+  </div>
+  <pre><code class="article-citation-code language-bibtex" tabindex="-1">{{ $bibtex }}</code></pre>
+  <p class="article-citation-status" role="status" aria-live="polite" hidden></p>
+</section>

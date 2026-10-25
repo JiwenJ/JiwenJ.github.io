@@ -1,0 +1,197 @@
+/* Article sizes use the shared site-wide font families. */
+.post-single.blog-post .post-header {
+    margin: 24px 0 40px;
+}
+
+.post-single.blog-post .post-header .breadcrumbs {
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.post-single.blog-post .post-header .breadcrumbs a {
+    font-size: inherit;
+}
+
+.post-single.blog-post .post-content {
+    font-family: var(--blog-serif);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.75;
+    font-kerning: normal;
+}
+
+.post-single.blog-post .post-title,
+.post-single.blog-post .post-content :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--blog-serif);
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.post-single.blog-post .post-title {
+    align-items: flex-start;
+    width: 100%;
+    column-gap: 12px;
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.45;
+    text-wrap: balance;
+}
+
+.post-single.blog-post .post-title-text {
+    min-width: 0;
+}
+
+.post-single.blog-post .post-title .entry-hint {
+    flex-shrink: 0;
+    margin-inline-start: 0.35em;
+    margin-top: 10px;
+}
+
+.post-single.blog-post .post-title .entry-hint svg {
+    width: 18px;
+    height: 18px;
+}
+
+.post-single.blog-post .post-description {
+    max-width: 42em;
+    margin: 18px 0 0;
+    color: var(--secondary);
+    font-family: var(--blog-serif);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.9;
+    text-wrap: pretty;
+}
+
+.post-single.blog-post .post-content h1 {
+    font-size: 2em;
+}
+
+.post-single.blog-post .post-content h2 {
+    font-size: 1.4em;
+}
+
+.post-single.blog-post .post-content h3 {
+    font-size: 1.28em;
+}
+
+.post-single.blog-post .post-content h4 {
+    font-size: 1.1em;
+}
+
+.post-single.blog-post .post-content :is(h5, h6) {
+    font-size: 1em;
+}
+
+.post-single.blog-post :is(.post-meta, .breadcrumbs, .toc, .post-footer, button) {
+    font-family: var(--blog-sans);
+}
+
+.post-single.blog-post .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px 9px;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.post-single.blog-post .post-content :is(code, pre, kbd, samp) {
+    font-family: var(--blog-mono);
+}
+
+.post-single.blog-post .post-content code {
+    font-size: 0.82em;
+    line-height: 1.65;
+}
+
+.post-single.blog-post .post-content pre code {
+    font-size: 13px;
+}
+
+.post-single.blog-post .post-content mjx-container[display="true"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.post-single.blog-post .post-content mjx-container[display="true"] > svg {
+    display: block;
+    max-width: none;
+    margin-inline: auto;
+}
+
+.post-single.blog-post .technical-note {
+    margin-block: 1.4em;
+    padding: 10px 14px;
+    border-inline-start: 2px solid var(--border);
+    font-size: 0.94em;
+}
+
+.post-single.blog-post .technical-note > summary {
+    color: var(--secondary);
+    font-family: var(--blog-sans);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.post-entry .entry-title-text {
+    min-width: 0;
+}
+
+.post-entry .entry-header h2 {
+    font-family: var(--blog-serif);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.post-entry .entry-content {
+    font-family: var(--blog-serif);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.post-entry .entry-hint {
+    flex-shrink: 0;
+}
+
+.post-entry .entry-hint svg {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 640px) {
+    .post-single.blog-post .post-header {
+        margin-bottom: 32px;
+    }
+
+    .post-single.blog-post .post-header .breadcrumbs {
+        margin-bottom: 14px;
+    }
+
+    .post-entry .entry-header h2 {
+        font-size: 22px;
+    }
+    .post-single.blog-post .post-content {
+        font-size: 16px;
+    }
+
+    .post-single.blog-post .post-title {
+        font-size: 27px;
+    }
+
+    .post-single.blog-post .post-description {
+        margin-top: 14px;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    .post-single.blog-post .post-meta {
+        margin-top: 18px;
+    }
+}

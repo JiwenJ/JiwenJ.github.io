@@ -1,0 +1,13 @@
+{{- /* Read rendered headings so inline TeX is retained in navigation labels. */ -}}
+{{- $headers := findRE "(?s)<h[23][^>]*>.*?</h[23]>" .Content -}}
+{{- with $headers }}
+<nav class="article-contents">
+  <ul>
+    {{- range . }}
+    {{- $id := replaceRE `(?s)^.*?id="([^"]+)".*$` "$1" . -}}
+    {{- $label := replaceRE "(?s)^<h[23][^>]*>(.*?)</h[23]>$" "$1" . -}}
+    <li{{ if hasPrefix . "<h3" }} class="toc-level-3"{{ end }}><a href="#{{ $id }}">{{ $label | safeHTML }}</a></li>
+    {{- end }}
+  </ul>
+</nav>
+{{- end }}

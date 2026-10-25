@@ -1,0 +1,270 @@
+.share-buttons {
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: visible;
+    gap: 10px;
+}
+
+.share-buttons a:not(:last-of-type) {
+    margin-inline-end: 0;
+}
+
+.share-buttons .share-chinese-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 5px;
+    height: 30px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 5px;
+    background: #202020;
+    color: #fff;
+    font-family: var(--site-sans);
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.share-chinese-trigger svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+    flex: 0 0 auto;
+}
+
+.share-buttons .share-chinese-trigger[hidden],
+.article-share-dialog [hidden] {
+    display: none;
+}
+
+.share-platform-label {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.share-chinese-trigger[data-share-platform="wechat"]:hover {
+    background: #1b873c;
+}
+
+.share-chinese-trigger[data-share-platform="zhihu"]:hover {
+    background: #1765d1;
+}
+
+.share-chinese-trigger[data-share-platform="xiaohongshu"]:hover {
+    background: #d62943;
+}
+
+.share-buttons .share-chinese-trigger:focus-visible,
+.article-share-dialog button:focus-visible,
+.article-share-dialog a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.article-share-dialog {
+    width: min(400px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--theme);
+    color: var(--primary);
+    box-shadow: 0 20px 64px rgb(0 0 0 / 18%);
+    font-family: var(--site-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: start;
+}
+
+.article-share-dialog::backdrop {
+    background: rgb(0 0 0 / 40%);
+    backdrop-filter: blur(3px);
+}
+
+.article-share-panel {
+    padding: 22px;
+}
+
+.article-share-panel header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.article-share-panel h2 {
+    margin: 0;
+    font-family: inherit;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.article-share-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--secondary);
+    font-family: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.article-share-close:hover {
+    background: var(--code-bg);
+    color: var(--primary);
+}
+
+.article-share-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.article-share-description {
+    margin: 0 0 16px;
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.article-share-qr {
+    width: fit-content;
+    max-width: 100%;
+    margin: 18px auto;
+    padding: 14px;
+    border: 1px solid #e9e9e9;
+    border-radius: 10px;
+    background: #fff;
+    color: #111;
+    line-height: 0;
+}
+
+.article-share-qr :is(svg, img) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.article-share-preview-note {
+    margin: 0 0 14px;
+    color: var(--secondary);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.article-share-text {
+    display: block;
+    width: 100%;
+    min-height: 132px;
+    margin: 0 0 14px;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--code-bg);
+    color: var(--primary);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    resize: vertical;
+}
+
+.article-share-text:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+}
+
+.article-share-text.share-link-only {
+    min-height: 64px;
+    resize: none;
+}
+
+.article-share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.article-share-actions button,
+.article-share-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--code-bg);
+    color: var(--primary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.article-share-actions [data-share-copy] {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--theme);
+}
+
+.article-share-actions button:hover,
+.article-share-actions a:hover {
+    filter: brightness(0.92);
+}
+
+.article-share-status {
+    min-height: 1.6em;
+    margin: 10px 0 0;
+    color: var(--secondary);
+    font-size: 12px;
+}
+
+.dark .article-share-dialog {
+    background: var(--entry);
+    border-color: #45454a;
+    box-shadow: 0 20px 64px rgb(0 0 0 / 40%);
+}
+
+.dark .article-share-dialog::backdrop {
+    background: rgb(0 0 0 / 65%);
+}
+
+@media (max-width: 400px) {
+    .article-share-panel {
+        padding: 18px;
+    }
+
+    .article-share-actions > * {
+        flex: 1 1 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .share-buttons .share-chinese-trigger {
+        transition: none;
+    }
+}
