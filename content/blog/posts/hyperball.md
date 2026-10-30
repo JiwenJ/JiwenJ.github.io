@@ -1,10 +1,11 @@
 ---
 title: "Hyperball：权重范数与角向更新"
 date: "2026-10-30"
+lastmod: "2026-10-31"
 author: ["Jiwen Jiang"]
-description: "固定范数的更新规则、球面几何与学习率调度。"
-summary: "从权重衰减的范数动力学解释 Hyperball，推导球面上的实际转角，再看它与 Muon、μP 和学习率调度的关系。"
-mathSummary: '从权重衰减的范数动力学解释 Hyperball，推导球面上的实际转角，再看它与 Muon、$\mu\mathrm{P}$ 和学习率调度的关系。'
+description: "从球面更新到学习率调度、尺度迁移与实现边界。"
+summary: "从权重衰减的范数动力学解释 Hyperball，推导实际转角，再讨论学习率调度、HyperTransfer、HyperP 和独立实验中的适用边界。"
+mathSummary: '从权重衰减的范数动力学解释 Hyperball，推导实际转角，再讨论学习率调度、HyperTransfer、HyperP 和独立实验中的适用边界。'
 tags: ["Hyperball", "Muon", "Optimization"]
 categories: ["Deep Learning"]
 draft: false
@@ -50,6 +51,41 @@ references:
     authors: "NVIDIA"
     source: "Emerging-Optimizers 文档"
     url: "https://docs.nvidia.com/nemo/emerging-optimizers/latest/apidocs/orthogonalized-optimizers.html"
+  - id: 8
+    title: "Rethinking Language Model Scaling under Transferable Hypersphere Optimization"
+    authors: "Liliang Ren, Yang Liu, Yelong Shen, Weizhu Chen"
+    source: "arXiv:2603.28743v2, 2026"
+    url: "https://arxiv.org/abs/2603.28743v2"
+  - id: 9
+    title: "HyperTransfer: Understanding the Equivalence between Base Optimizer and Hyperball"
+    authors: "Jinghui Yuan, Hongtao Zhang, Jade Zou, Tianyu Li, Wenjie Zhou, Tianyu He, Wei Chen"
+    source: "arXiv:2609.07017v1, 2026"
+    url: "https://arxiv.org/abs/2609.07017v1"
+  - id: 10
+    title: "The Best Optimizer Depends on Batch Size"
+    authors: "Xingyu Dang, Kaiyue Wen, Sadhika Malladi"
+    source: "arXiv:2610.08975v2, 2026"
+    url: "https://arxiv.org/abs/2610.08975v2"
+  - id: 11
+    title: "Muon Reduces the Training Cost of Regulatory DNA Transformers"
+    authors: "Viraj Doshi, Malhar Bhide, Akshat Singh, Yash Rathod, Aditya Sivakumar"
+    source: "bioRxiv, 2026"
+    url: "https://doi.org/10.64898/2026.07.17.739267"
+  - id: 12
+    title: "Truncate or Not? A Scaling Study of Looped Transformers with Truncated Backpropagation"
+    authors: "Xuyuan Xiong, Siyu Chen, Zihan Shao, Yue Su, Weiyang Jin, Ping Luo, Zhuoran Yang, Xihui Liu"
+    source: "arXiv:2610.26030v2, 2026"
+    url: "https://arxiv.org/abs/2610.26030v2"
+  - id: 13
+    title: "Demystifying Manifold Constraints in LLM Pre-training"
+    authors: "Kang An, Jiaxiang Li, Donald Goldfarb, Shiqian Ma"
+    source: "arXiv:2605.04418v2, 2026"
+    url: "https://arxiv.org/abs/2605.04418v2"
+  - id: 14
+    title: "Improving Neural Network Training by Decoupling the Magnitude and Direction of Weight Vectors"
+    authors: "Alexander Hägele, Alejandro Hernández-Cano, Atli Kosson, Martin Jaggi"
+    source: "arXiv:2606.25971v2, 2026"
+    url: "https://arxiv.org/abs/2606.25971v2"
 ---
 
 同样的学习率，不一定意味着同样的学习速度。对一个方向比长度更重要的权重矩阵，范数越大，相同的一步更新通常转得越少。权重衰减会改变这个范数，也就间接改变了训练的步幅。
@@ -137,6 +173,26 @@ $$
 
 </details>
 
+<details class="technical-note">
+<summary>保留动量自相关后的平衡半径</summary>
+
+原论文进一步保留了不同时间更新的相关性{{< cite 1 >}}。仍记 $Q=\mathbb E\|U_t\|_F^2$，定义
+
+$$
+a_h=\frac{\mathbb E\langle U_t,U_{t-h}\rangle_F}{Q},
+\qquad C_\alpha=\sum_{h\ge1}\alpha^{h-1}a_h.
+$$
+
+在无限历史的平稳模型中，$\alpha=1-\eta\lambda\in(0,1)$ 时有
+
+$$
+r_*^2=\frac{\eta^2Q(1+2\alpha C_\alpha)}{1-\alpha^2}.
+$$
+
+没有时间相关性时，$C_\alpha=0$，恢复上面的结果。论文在独立各向同性高斯梯度与理想化基础更新下计算这些相关量：理想 Adam 有 $a_h=\beta_1^h$，SVD Muon 则涉及矩阵符号映射的自相关核。因此，动量会改变平衡半径，但不能给不同优化器直接套用同一个修正因子。
+
+</details>
+
 ## 二、Hyperball 的球面更新
 
 ### 固定半径，归一化更新
@@ -161,6 +217,19 @@ $$
 $$
 
 所以典型半径接近 $\sqrt{d_{\rm out}}$，而不是所有矩阵统一设成 1。半径保留了初始化的尺度选择。
+
+<details class="technical-note">
+<summary>固定范数会限制表达能力吗</summary>
+
+原论文给出一个局部的重参数化例子{{< cite 1 >}}。若线性层写成
+
+$$
+f(h;W,\gamma)=W\bigl(\gamma\odot\operatorname{RMSNorm}(h)\bigr),
+$$
+
+其中 $\gamma$ 可训练，那么同时令 $W\mapsto aW$、$\gamma\mapsto\gamma/a$，函数值保持不变。因此，当增益能够独立吸收该矩阵的尺度时，可以固定其范数而保留这部分表达能力。这个结论依赖具体的参数连接：共享增益、固定增益或其他分支可能使补偿不再独立。它也不等同于保持其他参数不变时的 $L(aW)=L(W)$，更不保证训练轨迹相同。
+
+</details>
 
 ### 学习率与实际转角
 
@@ -280,6 +349,8 @@ NVIDIA Emerging-Optimizers 已提供 `MuonHyperball`，采用相同的更新式�
 
 迁移实验则固定每次训练 10B tokens，分别扫描宽度和深度：宽度实验固定 $L=4$、改变 $d\in[128,2048]$；深度实验固定 $d=128$、改变 $L\in[4,512]$。在带 QK-Norm 的混合归一化架构中，Hyperball 变体的最佳学习率漂移约为 $1.4$ 倍{{< cite 1 >}}。这些扫描提供了迁移的经验证据，其范围仍由所测架构、参数块和训练预算限定。
 
+原论文 v2 还报告了长预算实验：对 130M 模型，将训练量从 1B 扩展到 128B tokens，在每个预算下分别扫描学习率，MuonH 的最佳 C4 验证损失在所测范围内均低于 MuonW{{< cite 1 >}}。这里验证的是各预算下调参后的性能；它没有验证只在短预算调一次学习率，就能直接用于所有长预算。论文对损失曲线拟合的渐近值也属于有限数据上的外推。
+
 ### 固定范数以后，日程仍然重要
 
 Hyperball May Not Be a Free Lunch 观察到 MuonH 早期可能落后、后期反超带衰减的 Muon。作者用依赖训练状态的学习率匹配实验，在所测配置中复现了部分这种差异；径向分量对单步角向有效学习率的直接影响较小，单凭它不足以解释整个现象{{< cite 5 >}}。更激进的学习率衰减可以改善 MuonH 的早期损失，却可能损害后期表现。固定半径之后，步长日程仍影响收敛过程。
@@ -298,6 +369,61 @@ $$
 它不是把 Hyperball 的学习率直接除以半径得到的 $\eta_H/R$。这个 ELR 又与本文的相对更新长度 $\rho$ 不同：$\rho$ 还包含更新范数，而精确转角还依赖方向余弦。Hyperball 把投影前的 $\rho$ 设成 $\eta_H$，实际角度仍满足第二部分的公式。
 
 使用同一条名义学习率日程比较 MuonW 与 MuonH，并不保证匹配它们的实际角向更新：前者的范数会演化，后者的半径固定，二者的更新方向也可能随训练分离。是否更快收敛，要由完整训练轨迹回答；固定半径本身并没有决定何时应当减小步幅。
+
+### HyperTransfer：从损失对齐到条件等价
+
+HyperTransfer 进一步构造基础优化器与 Hyperball 之间的逐步映射{{< cite 9 >}}。对严格尺度不变的网络，在相同初始化和 minibatch 序列下，用在线代理范数 $s_t$ 表示对应基础优化器的半径，维持
+
+$$
+W_t^{\rm base}=\frac{s_t}{R}W_t^H.
+$$
+
+由于尺度不变函数的梯度满足 $\nabla L(aW)=\nabla L(W)/a$，映射需要先按 $R/s_t$ 重缩放 Hyperball 梯度，再更新动量或自适应状态，并由 $s_t$ 和更新范数确定学习率。这样才能同步更新方向、保持参数位于同一条射线上。代理范数由递推式在线计算，无须额外跑一遍目标优化器。
+
+这比观测损失曲线近似重合更强，也要求更多条件：只匹配一条标量学习率曲线，通常不足以同步优化器状态。对非尺度不变网络，HyperTransfer+ 需要在重新缩放的代表点 $(s_t/R)W_t^H$ 求梯度，对应的是 $L((s_t/R)W_t^H)$；不能由此推出原始固定半径网络的 $L(W_t^H)$ 与基础优化器相同。有限精度也会使方向逐渐偏离{{< cite 9 >}}。
+
+### 独立比较中的边界
+
+The Best Optimizer Depends on Batch Size 在相同总 token 预算下，对各个 batch size 分别调参，并同时比较权重衰减与 Hyperball 设置{{< cite 10 >}}。在其 Hyperball 实验中，128K tokens/update 时 MuonH 优于 ShampooH，而到 2M 时顺序反转。固定范数没有消除梯度噪声与基础优化器之间的相互作用。论文的调参协议包含重复试验；对于接近持平的端点，仍需要结合重复结果判断差距。
+
+任务也会改变结论。调控 DNA Transformer 研究比较了 AdamW、AdamH、MuonW 和 MuonH；在所测设置中，Muon 配合独立权重衰减的表现优于 Hyperball{{< cite 11 >}}。这说明“Muon 系列提高训练效率”和“给 Muon 加 Hyperball 一定更好”是两个需要分别验证的命题。跨任务应用应重新检查训练预算、调参范围和最终损失。
+
+## 四、HyperP 与尺度迁移
+
+HyperP 将球面上的 MuonH/AdamH 与配套参数化结合，研究宽度、深度、训练 token 数和 MoE 粒度的迁移{{< cite 8 >}}。原论文的有限范围扫描，与一套可用于新尺度的规则，回答的是不同层次的问题。
+
+| 改变的尺度 | HyperP 的规则与适用条件 |
+| --- | --- |
+| 宽度 | 取 $R=C\sqrt{d_{\rm out}}$，其中 $C$ 与宽度无关；在近各向同性、矩阵长宽比同阶等假设下，隐藏矩阵无需额外的宽度学习率倍率。readout 和其他参数组仍需配套处理。 |
+| 深度 | 联合调整残差分支倍率与层学习率。在小步长、局部 Jacobian 有界等假设下，固定范数本身不足以保持函数更新尺度。 |
+| token 预算 | 隐藏矩阵组采用经验拟合的 $T^{-0.32}$ 倍率。$T$ 是整次训练的 token 预算，区别于一次训练内部的学习率衰减。 |
+| MoE 粒度 | 用 SqrtGate 调整专家混合的尺度。改变专家数量或粒度时，还需控制路由、激活与辅助损失。 |
+
+以深度为例，记残差分支倍率为 $a_L$，当权重和更新都归一化时，论文的一阶分析给出
+
+$$
+\eta_{\rm layer}=O\!\left(\frac{1}{L a_L}\right).
+$$
+
+取 $a_L\propto L^{-1/2}$ 时，层学习率也按 $L^{-1/2}$ 缩放。论文的 Transformer 配方采用 $(2L)^{-1/2}$ 残差倍率，其参数表在全局学习率上，为隐藏矩阵组乘 $T^{-0.32}L^{-1/2}$，为 embedding/vector 和 unembedding 组乘 $L^{-1/2}${{< cite 8 >}}。以 $(T_0,L_0)$ 为基准，隐藏矩阵的相对倍率就是 $(T/T_0)^{-0.32}(L/L_0)^{-1/2}$，其余两组为 $(L/L_0)^{-1/2}$。这些参数组规则、初始化和前向倍率共同组成迁移配方。
+
+迁移规则还需要在新架构上校准。后来的 Looped Transformer 研究采用 HyperP 派生的 MuonH 配方，把 token 预算指数从 $0.32$ 重新拟合为 $0.40$，并在其测试设置中发现无需额外深度修正{{< cite 12 >}}。共享层的循环网络与原来的深度分析条件不同，这项结果应理解为特定配方下的验证，不能把其中任一指数或深度规则推广到所有模型。
+
+## 五、实现与延伸阅读
+
+将公式接入训练时，先确定每个逻辑矩阵的半径和归一化轴，再确认基础更新、参数分组与 checkpoint 恢复采用相同约定。下面三个入口适合对照阅读：
+
+| 实现 | 适合查看的内容 |
+| --- | --- |
+| [Marin / Levanter 的 AdamH 与 MuonH](https://github.com/marin-community/marin/tree/de412954e99488cf004b54104a7eeb4b670d10a2/lib/levanter/src/levanter/optim) | 作者关联的 JAX 训练栈，包含基础方向、范数投影和参数路由；链接固定到源码版本 |
+| [Microsoft ArchScale](https://github.com/microsoft/ArchScale) | HyperP 官方代码，将 MuonH、AdamH、SqrtGate 与迁移规则放在同一训练配方中 |
+| [NVIDIA MuonHyperball](https://docs.nvidia.com/nemo/emerging-optimizers/latest/apidocs/orthogonalized-optimizers.html#muonhyperball) | PyTorch 库接口；半径由使用者指定，构造时会检查权重范数是否匹配 |
+
+融合 QKV、堆叠 MoE 专家和分布式分片尤其需要核对：计算方向时逐专家处理，不意味着计算 Frobenius 范数时也逐专家处理。[Marin 的专家分组调查](https://github.com/marin-community/marin/issues/8621)记录了这种区别；不同分组会改变约束对象，复现时应记录到配方中。
+
+相邻方法提供了进一步比较。MACRO 工作比较 Frobenius 与谱球面约束，并通过与相应 MuonH 变体的实验比较分析切空间投影、RMSNorm 和低精度更新的作用{{< cite 13 >}}；Magnitude–Direction Decoupling 则为固定范数的方向引入可学习的行或列增益，并采用不同的更新缩放约定{{< cite 14 >}}。这些工作有助于分辨收益来自哪种约束、参数化或更新规则。
+
+更多论文、作者讲义、应用报告与实现见 [Hyperball 资料库](https://github.com/JiwenJ/Awesome-Initialization/blob/main/docs/hyperball.md)。其中区分了论文、进行中的训练报告和社区实现；阅读应用成绩时，还应确认比较是否同时改变了精度、架构、数据或训练日程。
 
 ## 引用本文
 
