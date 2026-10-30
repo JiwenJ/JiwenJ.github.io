@@ -182,10 +182,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-\eta_t^*&=\frac{D}{G\sqrt T}\left(1-\frac tT\right),\\[6pt]
-\mathbb E[f(\theta_T)-f_*]&\leq\frac{DG}{\sqrt T}.
-\end{aligned}
+\eta_t^*=\frac{D}{G\sqrt T}\left(1-\frac tT\right),\qquad \mathbb E[f(\theta_T)-f_*]\leq\frac{DG}{\sqrt T}.
 }
 $$
 
@@ -209,11 +206,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-w_t^*&=\frac{D}{a_t\sqrt{Q_T}},\\[6pt]
-\eta_t^*&=\frac{D}{a_t\sqrt{Q_T}}
-\left(1-\frac{Q_t}{Q_T}\right).
-\end{aligned}
+w_t^*=\frac{D}{a_t\sqrt{Q_T}},\qquad \eta_t^*=\frac{D}{a_t\sqrt{Q_T}} \left(1-\frac{Q_t}{Q_T}\right).
 }
 $$
 
@@ -344,11 +337,7 @@ $$
 RMSProp 用滑动平均替代累计平方和。Adam 进一步引入一阶动量，其核心状态为
 
 $$
-\begin{aligned}
-m_t&=\beta_1m_{t-1}+(1-\beta_1)g_t,\\
-v_t&=\beta_2v_{t-1}+(1-\beta_2)g_t^{\odot2},\\
-u_t&=\frac{\widehat m_t}{\sqrt{\widehat v_t}+\epsilon}.
-\end{aligned}
+m_t=\beta_1m_{t-1}+(1-\beta_1)g_t,\qquad v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^{\odot2},\qquad u_t=\frac{\widehat m_t}{\sqrt{\widehat v_t}+\epsilon}.
 $$
 
 帽子表示从零初始化时的一阶、二阶矩偏差修正{{< cite 5 >}}。这里有两个不同的问题。
@@ -416,12 +405,7 @@ $$
 其中噪声满足
 
 $$
-\begin{aligned}
-\mathbb E[\Xi_t\mid\mathcal F_{t-1}]&=0,\\
-W_t^\top\Xi_t&=0,\\
-\Xi_t^\top\Xi_t&=\frac{\sigma^2}{k}I_k,
-\qquad \sigma>0.
-\end{aligned}
+\mathbb E[\Xi_t\mid\mathcal F_{t-1}]=0,\qquad W_t^\top\Xi_t=0,\qquad \Xi_t^\top\Xi_t=\frac{\sigma^2}{k}I_k, \qquad \sigma>0.
 $$
 
 这里的噪声与当前参数列空间正交，且 Frobenius 范数固定为 $\sigma$。这样的无偏随机梯度确实可以构造：在 $W_t$ 的正交补中取 $k$ 个正交单位向量组成 $Q_t$，再令 $\Xi_t=\pm\sigma Q_t/\sqrt k$，正负号独立且等概率。条件 $m\geq2k$ 保证有足够的正交补空间。
@@ -438,11 +422,7 @@ $$
 因此精确极分解有显式表达式：
 
 $$
-\begin{aligned}
-U_t&=\operatorname{polar}(G_t)\\
-&=\frac{\sqrt k\,G_t}{\sqrt{h^2r_t+\sigma^2}},
-\qquad U_t^\top U_t=I_k.
-\end{aligned}
+U_t=\operatorname{polar}(G_t) =\frac{\sqrt k\,G_t}{\sqrt{h^2r_t+\sigma^2}}, \qquad U_t^\top U_t=I_k.
 $$
 
 将它代入 $W_{t+1}=W_t-\eta_tU_t$，得到
@@ -468,13 +448,7 @@ $$
 把上面的递推配方：
 
 $$
-\begin{aligned}
-r_{t+1}
-&=\frac{\sigma^2r_t}{h^2r_t+\sigma^2}\\
-&\quad+k\left(
-\eta_t-\frac{hr_t}{\sqrt k\sqrt{h^2r_t+\sigma^2}}
-\right)^2.
-\end{aligned}
+r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +k\left( \eta_t-\frac{hr_t}{\sqrt k\sqrt{h^2r_t+\sigma^2}} \right)^2.
 $$
 
 因此，当前状态下的最优步长是
@@ -521,13 +495,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-\eta_t^*
-&=\frac{\sigma}{h\sqrt k}
-\frac1{\sqrt{(t+c)(t+c+1)}},\\[8pt]
-\mathbb E f(W_N)_{\min}
-&=\frac{\sigma^2}{2h(N+c)}.
-\end{aligned}
+\eta_t^* =\frac{\sigma}{h\sqrt k} \frac1{\sqrt{(t+c)(t+c+1)}},\qquad \mathbb E f(W_N)_{\min} =\frac{\sigma^2}{2h(N+c)}.
 }
 $$
 
@@ -572,11 +540,7 @@ $$
 带动量 Muon 要保留参数与动量两个状态。以固定 $\beta$、矩阵倍率 $s$ 和衰减系数 $\lambda_{\rm wd}$ 为例：
 
 $$
-\begin{aligned}
-M_{t+1}&=\beta M_t+(1-\beta)G(W_t,\xi_t),\\
-W_{t+1}&=(1-\lambda_{\rm wd}\eta_t)W_t
--\eta_t s\Phi(M_{t+1}).
-\end{aligned}
+M_{t+1}=\beta M_t+(1-\beta)G(W_t,\xi_t),\qquad W_{t+1}=(1-\lambda_{\rm wd}\eta_t)W_t -\eta_t s\Phi(M_{t+1}).
 $$
 
 $\Phi$ 可以是精确极分解，也可以是实现中的有限次 Newton–Schulz 变换；使用 Nesterov 时应换成对应的输入矩阵。现在要解的是
@@ -589,10 +553,7 @@ $$
 写 $X_t=(W_t,M_t)$，将完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里 $\xi$ 的分布不依赖学习率；若噪声随参数变化，其依赖须已包含在 $G(W,\xi)$ 中。在可微且可交换求导与期望的条件下，对固定的样本序列反向传播：
 
 $$
-\begin{aligned}
-p_N&=(\nabla f(W_N),0),\\
-p_t&=(D_XF_t)^\top p_{t+1}.
-\end{aligned}
+p_N=(\nabla f(W_N),0),\qquad p_t=(D_XF_t)^\top p_{t+1}.
 $$
 
 于是每一个时刻的学习率梯度为
@@ -642,12 +603,7 @@ $$
 它在前面度量分析中对应的梯度能量是
 
 $$
-\begin{aligned}
-\operatorname{tr}(G_t^\top H_t^\dagger G_t)
-&=\operatorname{tr}(\Sigma_t)\\
-&=\sum_j\sigma_j(G_t)
-=\|G_t\|_*.
-\end{aligned}
+\operatorname{tr}(G_t^\top H_t^\dagger G_t) =\operatorname{tr}(\Sigma_t) =\sum_j\sigma_j(G_t) =\|G_t\|_*.
 $$
 
 这里 $\|\cdot\|_*$ 专指**核范数，即奇异值之和**。SGD 的能量是 $\mathbb E\|g_t\|^2$；理想 Muon 在这个证明里出现的则是 $\mathbb E\|G_t\|_*$。
@@ -700,11 +656,7 @@ $$
 对候选 LR Schedule 采用共同的确定性界
 
 $$
-\begin{aligned}
-R^2\mathbb E\Lambda_T^{\rm Muon}&\leq A,\\
-\mathbb E\|G_t\|_*&\leq a_t,
-\qquad A>0,\ a_t>0.
-\end{aligned}
+R^2\mathbb E\Lambda_T^{\rm Muon}\leq A,\qquad \mathbb E\|G_t\|_*\leq a_t, \qquad A>0,\ a_t>0.
 $$
 
 要最小化的表达式为
@@ -718,12 +670,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-\eta_t^{\rm Muon}
-&=\sqrt{\frac{A}{Q_T}}\frac1{a_t}
-\left(1-\frac{Q_t}{Q_T}\right),\\[6pt]
-\mathcal B_{\min}&=\sqrt{\frac{A}{Q_T}}.
-\end{aligned}
+\eta_t^{\rm Muon} =\sqrt{\frac{A}{Q_T}}\frac1{a_t} \left(1-\frac{Q_t}{Q_T}\right),\qquad \mathcal B_{\min}=\sqrt{\frac{A}{Q_T}}.
 }
 $$
 
@@ -784,11 +731,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-w_t^*&=\frac{\lambda-b_t}{a_t},\\[6pt]
-\eta_t^*&=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*},\\[6pt]
-\mathcal B_{\rm mom,min}&=\lambda.
-\end{aligned}
+w_t^*=\frac{\lambda-b_t}{a_t},\qquad \eta_t^*=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \mathcal B_{\rm mom,min}=\lambda.
 }
 $$
 
@@ -810,10 +753,7 @@ $$
 对于一般方向 $u_t$，可以先解一个较局部的问题。假设 $f$ 的梯度是 $L_s$-Lipschitz，条件在更新前的历史上，定义
 
 $$
-\begin{aligned}
-a_t&=\mathbb E[\langle\nabla f(\theta_t),u_t\rangle\mid\mathcal F_{t-1}],\\
-b_t&=\mathbb E[\|u_t\|^2\mid\mathcal F_{t-1}].
-\end{aligned}
+a_t=\mathbb E[\langle\nabla f(\theta_t),u_t\rangle\mid\mathcal F_{t-1}],\qquad b_t=\mathbb E[\|u_t\|^2\mid\mathcal F_{t-1}].
 $$
 
 光滑性给出
@@ -912,12 +852,7 @@ $$
 对步长配方：
 
 $$
-\begin{aligned}
-r_{t+1}
-={}&\frac{\sigma^2r_t}{h^2r_t+\sigma^2}\\
-&+(h^2r_t+\sigma^2)
-\left(\eta_t-\frac{hr_t}{h^2r_t+\sigma^2}\right)^2.
-\end{aligned}
+r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +(h^2r_t+\sigma^2) \left(\eta_t-\frac{hr_t}{h^2r_t+\sigma^2}\right)^2.
 $$
 
 因此一步最优为 $\eta_t^*=hr_t/(h^2r_t+\sigma^2)$。而最小可达的下一步误差
@@ -938,11 +873,7 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-\eta_t^*&=\frac1{h\left(t+1+\dfrac{\sigma^2}{h^2r_0}\right)},\\[8pt]
-\mathbb E f(x_N)_{\min}
-&=\frac{h\sigma^2r_0}{2(\sigma^2+Nh^2r_0)}.
-\end{aligned}
+\eta_t^*=\frac1{h\left(t+1+\dfrac{\sigma^2}{h^2r_0}\right)},\qquad \mathbb E f(x_N)_{\min} =\frac{h\sigma^2r_0}{2(\sigma^2+Nh^2r_0)}.
 }
 $$
 
