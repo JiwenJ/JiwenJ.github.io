@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "FP64 geometric identities; no training data",
+  "seed": 20261030,
+  "random_matrix_cases": 450,
+  "repeated_steps": 500,
+  "positive_update_scales": [
+    1e-06,
+    0.1,
+    17.0,
+    1000000.0
+  ],
+  "max_errors": {
+    "norm_relative_error": 4.440892098500626e-16,
+    "positive_scale_relative_error": 4.3933249111967286e-16,
+    "angle_absolute_error_rad": 5.997042116713606e-16,
+    "repeated_norm_relative_error": 2.220446049250313e-16
+  },
+  "boundary_checks": [
+    "zero update is a no-op",
+    "nonpositive R rejected",
+    "zero trial rejected",
+    "negative eta rejected",
+    "aligned and orthogonal directions including eta > 1"
+  ],
+  "tangent_comparison": {
+    "eta": 0.5,
+    "c": 0.6,
+    "tangent_renormalized_before_step": false,
+    "hyperball_angle_rad": 0.519146114246523,
+    "tangent_angle_rad": 0.38050637711236485,
+    "endpoint_distance_at_R1": 0.1385287308431774
+  },
+  "csv_rows": 402,
+  "csv_max_angle_error_rad": 2.220446049250313e-16
+}
