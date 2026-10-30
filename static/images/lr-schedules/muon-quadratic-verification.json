@@ -1,0 +1,232 @@
+{
+  "status": "PASS",
+  "seed": 20261101,
+  "tolerances": {
+    "absolute": 3e-12,
+    "relative": 3e-11
+  },
+  "scope": "Exact polar update, no momentum, isotropic tangent-noise matrix quadratic; no neural-network guarantee",
+  "assumptions": [
+    "m>=2k",
+    "h>0",
+    "sigma2>0",
+    "W^T W=(r/k)I",
+    "E[E|W]=0",
+    "W^T E=0",
+    "E^T E=(sigma2/k)I"
+  ],
+  "noise_construction": "Equiprobable +/- orthogonal-complement matrix; both signs explicitly checked",
+  "loss_evaluation": "Exact pathwise scalar recurrence, not Monte Carlo",
+  "matrix_checks": {
+    "shapes": [
+      [
+        2,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        11,
+        4
+      ],
+      [
+        9,
+        2
+      ]
+    ],
+    "paired_noise_cases": 216,
+    "matrix_updates_checked": 2160,
+    "full_svd_trajectories": 36,
+    "updates_per_trajectory": 100,
+    "errors": {
+      "paired_conditional_mean": {
+        "max_absolute_error": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "initial_isotropic_gram": {
+        "max_absolute_error": 1.3322676295501878e-15,
+        "max_scaled_error": 6.661338147750939e-16
+      },
+      "tangent_noise": {
+        "max_absolute_error": 7.771561172376096e-16,
+        "max_scaled_error": 7.771561172376096e-16
+      },
+      "isotropic_noise_gram": {
+        "max_absolute_error": 1.3322676295501878e-15,
+        "max_scaled_error": 8.881784197001252e-16
+      },
+      "gradient_gram": {
+        "max_absolute_error": 1.4210854715202004e-14,
+        "max_scaled_error": 1.0060273362299154e-15
+      },
+      "svd_vs_closed_polar": {
+        "max_absolute_error": 8.881784197001252e-16,
+        "max_scaled_error": 8.881784197001252e-16
+      },
+      "polar_column_orthogonality": {
+        "max_absolute_error": 2.1094237467877974e-15,
+        "max_scaled_error": 2.1094237467877974e-15
+      },
+      "gram_invariance": {
+        "max_absolute_error": 5.329070518200751e-15,
+        "max_scaled_error": 4.218847493575595e-15
+      },
+      "matrix_vs_scalar_recurrence": {
+        "max_absolute_error": 5.773159728050814e-15,
+        "max_scaled_error": 1.5922414002464515e-15
+      },
+      "completed_square_identity": {
+        "max_absolute_error": 6.217248937900877e-15,
+        "max_scaled_error": 2.546574062733953e-15
+      },
+      "both_noise_signs_have_same_loss": {
+        "max_absolute_error": 7.993605777301127e-15,
+        "max_scaled_error": 1.9984014443252818e-15
+      },
+      "trajectory_tangent_noise": {
+        "max_absolute_error": 1.942890293094024e-16,
+        "max_scaled_error": 1.942890293094024e-16
+      },
+      "trajectory_gram_vs_closed_form": {
+        "max_absolute_error": 2.220446049250313e-16,
+        "max_scaled_error": 2.220446049250313e-16
+      },
+      "matrix_trajectory_vs_closed_form": {
+        "max_absolute_error": 2.220446049250313e-16,
+        "max_scaled_error": 2.220446049250313e-16
+      }
+    }
+  },
+  "closed_form_checks": {
+    "parameter_cases": 81,
+    "monotonicity_grid_points": 502,
+    "minimum_map": "g(r)=sigma2*r/(h^2*r+sigma2)",
+    "positive_derivative": "g'(r)=sigma2^2/(h^2*r+sigma2)^2 > 0",
+    "global_optimality_reason": "q(r,eta)>=g(r), g is increasing, and eta_star attains equality",
+    "errors": {
+      "recurrence_vs_closed_second_moment": {
+        "max_absolute_error": 8.881784197001252e-16,
+        "max_scaled_error": 3.885780586188048e-16
+      },
+      "closed_vs_greedy_rate": {
+        "max_absolute_error": 2.220446049250313e-16,
+        "max_scaled_error": 2.220446049250313e-16
+      }
+    }
+  },
+  "comparison": {
+    "parameters": {
+      "h": 1.0,
+      "sigma2": 1.0,
+      "r0": 1.0,
+      "k": 4,
+      "updates": 100,
+      "update_indices": [
+        0,
+        99
+      ]
+    },
+    "amplitude_interval": [
+      0.0,
+      0.5
+    ],
+    "derivative_grids": [
+      32769,
+      65537
+    ],
+    "central_difference_check": {
+      "step": 1e-06,
+      "absolute_tolerance": 2e-08
+    },
+    "tuning_method": "dense derivative scan; bisect all sign changes; compare roots and endpoints",
+    "formal_global_root_certificate": false,
+    "baseline_formulas": {
+      "linear": "alpha*(1-t/N)",
+      "cosine": "alpha*(1+cos(pi*t/N))/2",
+      "constant": "alpha"
+    },
+    "all_baselines_above_exact_at_every_iterate": true,
+    "schedules": {
+      "exact": {
+        "formula": "1/(sqrt(k)*sqrt((t+1)*(t+2)))",
+        "final_loss": 0.004950495049504952,
+        "closed_form_final_loss": 0.0049504950495049506,
+        "ratio_to_exact": 1.0
+      },
+      "linear": {
+        "optimal_alpha": 0.03676020111255962,
+        "final_loss": 0.00642195796790896,
+        "ratio_to_exact": 1.2972355095176096,
+        "stationary_points_found": [
+          0.03676020111255962
+        ],
+        "derivative_at_alpha": 1.365021377180975e-14,
+        "central_difference_at_alpha": -5.93275428784068e-10,
+        "best_dense_grid_loss": 0.0064219579935924035,
+        "endpoint_losses": [
+          0.4999999999999999,
+          0.022533710688323733
+        ]
+      },
+      "cosine": {
+        "optimal_alpha": 0.03668281375353377,
+        "final_loss": 0.007148912101574526,
+        "ratio_to_exact": 1.4440802445180538,
+        "stationary_points_found": [
+          0.03668281375353377
+        ],
+        "derivative_at_alpha": 7.000860293229511e-15,
+        "central_difference_at_alpha": -5.984795992119984e-10,
+        "best_dense_grid_loss": 0.0071489121052609374,
+        "endpoint_losses": [
+          0.4999999999999999,
+          0.01838856881202488
+        ]
+      },
+      "constant": {
+        "optimal_alpha": 0.015872734807167,
+        "final_loss": 0.009229208783749688,
+        "ratio_to_exact": 1.864300174317436,
+        "stationary_points_found": [
+          0.015872734807167
+        ],
+        "derivative_at_alpha": -2.7200464103316335e-15,
+        "central_difference_at_alpha": -1.4156210925708734e-08,
+        "best_dense_grid_loss": 0.009229210134504411,
+        "endpoint_losses": [
+          0.4999999999999999,
+          0.32019410160110384
+        ]
+      }
+    },
+    "errors": {
+      "plotted_exact_closed_form": {
+        "max_absolute_error": 4.163336342344337e-17,
+        "max_scaled_error": 4.163336342344337e-17
+      },
+      "coarse_vs_fine_amplitude": {
+        "max_absolute_error": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "sensitivity_vs_trajectory_loss": {
+        "max_absolute_error": 0.0,
+        "max_scaled_error": 0.0
+      },
+      "stationary_amplitude_derivative": {
+        "max_absolute_error": 1.365021377180975e-14,
+        "max_scaled_error": 1.365021377180975e-14
+      }
+    }
+  },
+  "csv_rows": 404
+}

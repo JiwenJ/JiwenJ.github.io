@@ -1,0 +1,683 @@
+{
+  "status": "PASS",
+  "seed": 20261031,
+  "scope": "FP64 matrix identities and exact optimization of a frozen-profile upper bound",
+  "excluded_claim": "No neural-network experiment or global optimality claim for actual Muon training",
+  "numerical_rank_policy": {
+    "relative_cutoff": 1e-12,
+    "criterion": "retain sigma > relative_cutoff * sigma_max; rank(0)=0",
+    "shared_by": [
+      "H",
+      "H_pseudoinverse",
+      "polar_update"
+    ]
+  },
+  "tolerances": {
+    "absolute": 2e-12,
+    "relative": 2e-11
+  },
+  "matrix_identities": {
+    "matrices": 240,
+    "one_step_identities": 720,
+    "shapes": [
+      [
+        3,
+        5
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        7,
+        1
+      ]
+    ],
+    "ranks_seen": {
+      "zero": 75,
+      "rank_deficient_nonzero": 90,
+      "full_rank": 75
+    },
+    "errors": {
+      "retained_vs_untruncated_root": {
+        "max_absolute_error": 8.881784197001252e-16,
+        "max_scaled_error": 2.7223636085825604e-16
+      },
+      "square_root_identity": {
+        "max_absolute_error": 9.947598300641403e-14,
+        "max_scaled_error": 2.464306426280764e-15
+      },
+      "pseudoinverse_vs_polar_update": {
+        "max_absolute_error": 3.3931191190106347e-15,
+        "max_scaled_error": 3.3931191190106347e-15
+      },
+      "range_reconstruction": {
+        "max_absolute_error": 8.881784197001252e-15,
+        "max_scaled_error": 2.7304804866453083e-15
+      },
+      "metric_times_update": {
+        "max_absolute_error": 1.7763568394002505e-14,
+        "max_scaled_error": 3.693369031313581e-15
+      },
+      "nuclear_energy": {
+        "max_absolute_error": 1.4210854715202004e-14,
+        "max_scaled_error": 1.1626710129585065e-15
+      },
+      "retained_vs_full_nuclear_norm": {
+        "max_absolute_error": 8.881784197001252e-16,
+        "max_scaled_error": 1.967536603345064e-16
+      },
+      "polar_frobenius_square_equals_rank": {
+        "max_absolute_error": 5.329070518200751e-15,
+        "max_scaled_error": 1.3322676295501878e-15
+      },
+      "update_metric_energy": {
+        "max_absolute_error": 2.1316282072803006e-14,
+        "max_scaled_error": 2.0239181588073254e-15
+      },
+      "variable_metric_one_step_identity": {
+        "max_absolute_error": 4.618527782440651e-14,
+        "max_scaled_error": 2.503552920529728e-14
+      }
+    }
+  },
+  "temporal_bound": {
+    "sequences": 90,
+    "horizons": [
+      5,
+      12,
+      29
+    ],
+    "bound": "sum_t(||E_t||^2_Ht-||E_(t+1)||^2_Ht) <= R^2 * Lambda",
+    "R_definition": "max pre-update Frobenius norm; terminal E_(T+1) excluded",
+    "Lambda_definition": "lambda_max(H_1) + sum_(t=2)^T max(lambda_max(H_t-H_(t-1)),0)",
+    "indefinite_metric_changes": 254,
+    "decreasing_metric_changes": 513,
+    "minimum_bound_slack": 7.796877797762066,
+    "maximum_bound_violation": 0.0,
+    "errors": {
+      "telescoping_identity": {
+        "max_absolute_error": 2.4424906541753444e-14,
+        "max_scaled_error": 2.2648549702353193e-14
+      },
+      "summed_variable_metric_identity": {
+        "max_absolute_error": 3.730349362740526e-14,
+        "max_scaled_error": 2.275957200481571e-14
+      }
+    }
+  },
+  "frozen_profile_bound": {
+    "cases": 36,
+    "positive_perturbations": 18432,
+    "minimum_perturbation_gap": 6.97875926542052e-05,
+    "assumptions": "A > 0 and all a_t > 0 fixed independently of the candidate weights",
+    "candidate": "w_t=sqrt(A)/(a_t*sqrt(Q)), Q=sum_t(1/a_t)",
+    "optimal_value": "sqrt(A/Q)",
+    "global_gap_identity": "B(w)-sqrt(A/Q)=sum_t a_t*(w_t-w_t_star)^2/(2*sum_t w_t)",
+    "schedule_indices": "t=1,...,T; eta_T=0 is the formal endpoint",
+    "errors": {
+      "candidate_value_equals_closed_form": {
+        "max_absolute_error": 2.220446049250313e-16,
+        "max_scaled_error": 1.972388516731156e-16
+      },
+      "candidate_gradient_is_zero": {
+        "max_absolute_error": 1.480297366166875e-16,
+        "max_scaled_error": 1.480297366166875e-16
+      },
+      "completed_square_gap_identity": {
+        "max_absolute_error": 1.7763568394002505e-15,
+        "max_scaled_error": 5.604761049413983e-16
+      },
+      "constant_profile_gives_linear_schedule": {
+        "max_absolute_error": 2.7755575615628914e-16,
+        "max_scaled_error": 2.7755575615628914e-16
+      }
+    },
+    "case_results": [
+      {
+        "profile": "constant",
+        "horizon": 3,
+        "A": 0.05,
+        "Q": 1.5,
+        "minimum_bound": 0.18257418583505536,
+        "max_abs_gradient": 9.251858538542968e-17,
+        "smallest_sampled_perturbation_gap": 0.00027470056715006574
+      },
+      {
+        "profile": "constant",
+        "horizon": 3,
+        "A": 1.0,
+        "Q": 1.5,
+        "minimum_bound": 0.816496580927726,
+        "max_abs_gradient": 1.480297366166875e-16,
+        "smallest_sampled_perturbation_gap": 0.0012067751517367276
+      },
+      {
+        "profile": "constant",
+        "horizon": 3,
+        "A": 9.0,
+        "Q": 1.5,
+        "minimum_bound": 2.449489742783178,
+        "max_abs_gradient": 1.3158198810372225e-16,
+        "smallest_sampled_perturbation_gap": 0.001889039673404369
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 3,
+        "A": 0.05,
+        "Q": 4.447619047619048,
+        "minimum_bound": 0.10602815673873274,
+        "max_abs_gradient": 6.240546979959393e-17,
+        "smallest_sampled_perturbation_gap": 0.000252501720615389
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 3,
+        "A": 1.0,
+        "Q": 4.447619047619048,
+        "minimum_bound": 0.47417233199361764,
+        "max_abs_gradient": 4.992437583967515e-17,
+        "smallest_sampled_perturbation_gap": 0.0001146506449742346
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 3,
+        "A": 9.0,
+        "Q": 4.447619047619048,
+        "minimum_bound": 1.4225169959808528,
+        "max_abs_gradient": 4.4377222968600104e-17,
+        "smallest_sampled_perturbation_gap": 0.002419742339278219
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 3,
+        "A": 0.05,
+        "Q": 4.433956350608673,
+        "minimum_bound": 0.10619138752371689,
+        "max_abs_gradient": 6.259776466184375e-17,
+        "smallest_sampled_perturbation_gap": 7.612715524732416e-05
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 3,
+        "A": 1.0,
+        "Q": 4.433956350608673,
+        "minimum_bound": 0.47490232225610807,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.0016223904689926516
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 3,
+        "A": 9.0,
+        "Q": 4.433956350608673,
+        "minimum_bound": 1.424706966768324,
+        "max_abs_gradient": 4.451396598175554e-17,
+        "smallest_sampled_perturbation_gap": 0.00010328620161015323
+      },
+      {
+        "profile": "alternating",
+        "horizon": 3,
+        "A": 0.05,
+        "Q": 7.101449275362319,
+        "minimum_bound": 0.08390957231764808,
+        "max_abs_gradient": 1.95421909946775e-17,
+        "smallest_sampled_perturbation_gap": 6.97875926542052e-05
+      },
+      {
+        "profile": "alternating",
+        "horizon": 3,
+        "A": 1.0,
+        "Q": 7.101449275362319,
+        "minimum_bound": 0.37525501533039135,
+        "max_abs_gradient": 3.1267505591484e-17,
+        "smallest_sampled_perturbation_gap": 0.0008723590976242313
+      },
+      {
+        "profile": "alternating",
+        "horizon": 3,
+        "A": 9.0,
+        "Q": 7.101449275362319,
+        "minimum_bound": 1.1257650459911739,
+        "max_abs_gradient": 2.7793338303541336e-17,
+        "smallest_sampled_perturbation_gap": 0.0015915268685811057
+      },
+      {
+        "profile": "constant",
+        "horizon": 17,
+        "A": 0.05,
+        "Q": 8.5,
+        "minimum_bound": 0.07669649888473705,
+        "max_abs_gradient": 1.632680918566407e-17,
+        "smallest_sampled_perturbation_gap": 0.003973831600114289
+      },
+      {
+        "profile": "constant",
+        "horizon": 17,
+        "A": 1.0,
+        "Q": 8.5,
+        "minimum_bound": 0.3429971702850177,
+        "max_abs_gradient": 1.3061447348531256e-17,
+        "smallest_sampled_perturbation_gap": 0.022892915595321583
+      },
+      {
+        "profile": "constant",
+        "horizon": 17,
+        "A": 9.0,
+        "Q": 8.5,
+        "minimum_bound": 1.0289915108550531,
+        "max_abs_gradient": 2.3220350841833343e-17,
+        "smallest_sampled_perturbation_gap": 0.07464744577338611
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 17,
+        "A": 0.05,
+        "Q": 17.40979607482384,
+        "minimum_bound": 0.05359054331937725,
+        "max_abs_gradient": 7.971252361699403e-18,
+        "smallest_sampled_perturbation_gap": 0.0024966150945121
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 17,
+        "A": 1.0,
+        "Q": 17.40979607482384,
+        "minimum_bound": 0.23966419562654953,
+        "max_abs_gradient": 2.5508007557438083e-17,
+        "smallest_sampled_perturbation_gap": 0.011396706448245447
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 17,
+        "A": 9.0,
+        "Q": 17.40979607482384,
+        "minimum_bound": 0.7189925868796485,
+        "max_abs_gradient": 1.1336892247750262e-17,
+        "smallest_sampled_perturbation_gap": 0.030268977987303103
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 17,
+        "A": 0.05,
+        "Q": 23.542631419283733,
+        "minimum_bound": 0.046084778076329096,
+        "max_abs_gradient": 1.1789495881456296e-17,
+        "smallest_sampled_perturbation_gap": 0.0021753180469679043
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 17,
+        "A": 1.0,
+        "Q": 23.542631419283733,
+        "minimum_bound": 0.2060973930133277,
+        "max_abs_gradient": 9.431596705165038e-18,
+        "smallest_sampled_perturbation_gap": 0.015515177332556529
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 17,
+        "A": 9.0,
+        "Q": 23.542631419283733,
+        "minimum_bound": 0.6182921790399831,
+        "max_abs_gradient": 8.383641515702254e-18,
+        "smallest_sampled_perturbation_gap": 0.029386709659486532
+      },
+      {
+        "profile": "alternating",
+        "horizon": 17,
+        "A": 0.05,
+        "Q": 33.47826086956522,
+        "minimum_bound": 0.0386459117308221,
+        "max_abs_gradient": 4.145313241295228e-18,
+        "smallest_sampled_perturbation_gap": 0.0016372547436259918
+      },
+      {
+        "profile": "alternating",
+        "horizon": 17,
+        "A": 1.0,
+        "Q": 33.47826086956522,
+        "minimum_bound": 0.17282977136514957,
+        "max_abs_gradient": 6.632501186072362e-18,
+        "smallest_sampled_perturbation_gap": 0.012169644846518751
+      },
+      {
+        "profile": "alternating",
+        "horizon": 17,
+        "A": 9.0,
+        "Q": 33.47826086956522,
+        "minimum_bound": 0.5184893140954486,
+        "max_abs_gradient": 5.895556609842101e-18,
+        "smallest_sampled_perturbation_gap": 0.0311709578221131
+      },
+      {
+        "profile": "constant",
+        "horizon": 100,
+        "A": 0.05,
+        "Q": 50.0,
+        "minimum_bound": 0.03162277660168379,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.005098802277286055
+      },
+      {
+        "profile": "constant",
+        "horizon": 100,
+        "A": 1.0,
+        "Q": 50.0,
+        "minimum_bound": 0.1414213562373095,
+        "max_abs_gradient": 6.661338147750944e-18,
+        "smallest_sampled_perturbation_gap": 0.024589135691154868
+      },
+      {
+        "profile": "constant",
+        "horizon": 100,
+        "A": 9.0,
+        "Q": 50.0,
+        "minimum_bound": 0.4242640687119285,
+        "max_abs_gradient": 3.9474596431116685e-18,
+        "smallest_sampled_perturbation_gap": 0.06725509396985402
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 100,
+        "A": 0.05,
+        "Q": 97.29879437267506,
+        "minimum_bound": 0.02266894311615861,
+        "max_abs_gradient": 4.278918736030659e-18,
+        "smallest_sampled_perturbation_gap": 0.004097550089623796
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 100,
+        "A": 1.0,
+        "Q": 97.29879437267506,
+        "minimum_bound": 0.10137859557161312,
+        "max_abs_gradient": 2.2820899925496843e-18,
+        "smallest_sampled_perturbation_gap": 0.015339707342689524
+      },
+      {
+        "profile": "decreasing",
+        "horizon": 100,
+        "A": 9.0,
+        "Q": 97.29879437267506,
+        "minimum_bound": 0.3041357867148394,
+        "max_abs_gradient": 2.028524437821942e-18,
+        "smallest_sampled_perturbation_gap": 0.058748239039143335
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 100,
+        "A": 0.05,
+        "Q": 135.29622923282886,
+        "minimum_bound": 0.019223929086924427,
+        "max_abs_gradient": 2.051467049230532e-18,
+        "smallest_sampled_perturbation_gap": 0.0031025834445225567
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 100,
+        "A": 1.0,
+        "Q": 135.29622923282886,
+        "minimum_bound": 0.08597202446599697,
+        "max_abs_gradient": 1.641173639384426e-18,
+        "smallest_sampled_perturbation_gap": 0.014918654496301448
+      },
+      {
+        "profile": "middle_peak",
+        "horizon": 100,
+        "A": 9.0,
+        "Q": 135.29622923282886,
+        "minimum_bound": 0.25791607339799094,
+        "max_abs_gradient": 2.917642025572312e-18,
+        "smallest_sampled_perturbation_gap": 0.037578172987773995
+      },
+      {
+        "profile": "alternating",
+        "horizon": 100,
+        "A": 0.05,
+        "Q": 188.4057971014493,
+        "minimum_bound": 0.016290629680421054,
+        "max_abs_gradient": 7.365902759532291e-19,
+        "smallest_sampled_perturbation_gap": 0.002507210485079226
+      },
+      {
+        "profile": "alternating",
+        "horizon": 100,
+        "A": 1.0,
+        "Q": 188.4057971014493,
+        "minimum_bound": 0.0728539107233943,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.011123483212554727
+      },
+      {
+        "profile": "alternating",
+        "horizon": 100,
+        "A": 9.0,
+        "Q": 188.4057971014493,
+        "minimum_bound": 0.21856173217018288,
+        "max_abs_gradient": 1.0475950591334815e-18,
+        "smallest_sampled_perturbation_gap": 0.03428338869800185
+      }
+    ]
+  },
+  "fixed_momentum_surrogate": {
+    "cases": 18,
+    "positive_perturbations": 9216,
+    "minimum_perturbation_gap": 0.00045844845496834097,
+    "assumptions": "A > 0, a_t > 0, b_t >= 0 all fixed; lambda > max_t b_t",
+    "objective": "(A+sum_t a_t*w_t^2+2*sum_t b_t*w_t)/(2*sum_t w_t)",
+    "scalar_constraint": "sum_t (lambda-b_t)^2/a_t=A",
+    "candidate": "w_t_star=(lambda-b_t)/a_t",
+    "optimal_value": "lambda",
+    "global_gap_identity": "2*sum_t w_t*(B_b(w)-lambda)=sum_t a_t*(w_t-w_t_star)^2",
+    "scope": "Fixed-coefficient surrogate; b is not a measured optimizer momentum trajectory",
+    "errors": {
+      "candidate_value_equals_lambda": {
+        "max_absolute_error": 4.440892098500626e-16,
+        "max_scaled_error": 1.7705354697532848e-16
+      },
+      "candidate_gradient_is_zero": {
+        "max_absolute_error": 1.2293175918927112e-16,
+        "max_scaled_error": 1.2293175918927112e-16
+      },
+      "scalar_constraint_positive_root": {
+        "max_absolute_error": 8.881784197001252e-16,
+        "max_scaled_error": 3.0413857492155805e-16
+      },
+      "weighted_completed_square_gap_identity": {
+        "max_absolute_error": 1.8189894035458565e-12,
+        "max_scaled_error": 5.803118924540318e-16
+      }
+    },
+    "case_results": [
+      {
+        "horizon": 3,
+        "b_profile": "zero",
+        "A": 5.123500527819294,
+        "lambda": 1.0,
+        "maximum_b": 0.0,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 3.383503625955238e-17,
+        "smallest_sampled_perturbation_gap": 0.0025085248272374017
+      },
+      {
+        "horizon": 3,
+        "b_profile": "constant",
+        "A": 3.987769208955234,
+        "lambda": 1.7,
+        "maximum_b": 0.7,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.002641696752781364
+      },
+      {
+        "horizon": 3,
+        "b_profile": "random_nonnegative",
+        "A": 8.584150100143953,
+        "lambda": 2.911517894236697,
+        "maximum_b": 1.9115178942366968,
+        "positive_branch_margin": 1.0000000000000002,
+        "max_abs_gradient": 1.2293175918927112e-16,
+        "smallest_sampled_perturbation_gap": 0.0013563099367916998
+      },
+      {
+        "horizon": 3,
+        "b_profile": "random_nonnegative",
+        "A": 8.87324707595301,
+        "lambda": 2.5082197868193186,
+        "maximum_b": 1.5082197868193186,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 5.544960761606754e-17,
+        "smallest_sampled_perturbation_gap": 0.00354090849910893
+      },
+      {
+        "horizon": 3,
+        "b_profile": "random_nonnegative",
+        "A": 3.951403948785071,
+        "lambda": 2.39030659969875,
+        "maximum_b": 1.3903065996987503,
+        "positive_branch_margin": 0.9999999999999998,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.003277556385668401
+      },
+      {
+        "horizon": 3,
+        "b_profile": "random_nonnegative",
+        "A": 6.374255981472295,
+        "lambda": 2.5746634308785916,
+        "maximum_b": 1.5746634308785914,
+        "positive_branch_margin": 1.0000000000000002,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.00045844845496834097
+      },
+      {
+        "horizon": 17,
+        "b_profile": "zero",
+        "A": 24.509076029833558,
+        "lambda": 1.0,
+        "maximum_b": 0.0,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 5.914340581031783e-18,
+        "smallest_sampled_perturbation_gap": 0.05002363168456081
+      },
+      {
+        "horizon": 17,
+        "b_profile": "constant",
+        "A": 22.190012861871033,
+        "lambda": 1.7,
+        "maximum_b": 0.7,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 1.4430291224171844e-17,
+        "smallest_sampled_perturbation_gap": 0.06576365774377191
+      },
+      {
+        "horizon": 17,
+        "b_profile": "random_nonnegative",
+        "A": 75.44406348296062,
+        "lambda": 2.826637090510852,
+        "maximum_b": 1.8266370905108522,
+        "positive_branch_margin": 0.9999999999999998,
+        "max_abs_gradient": 1.1827554732377224e-17,
+        "smallest_sampled_perturbation_gap": 0.1150430148910333
+      },
+      {
+        "horizon": 17,
+        "b_profile": "random_nonnegative",
+        "A": 80.48980398040696,
+        "lambda": 2.8505712586547087,
+        "maximum_b": 1.8505712586547085,
+        "positive_branch_margin": 1.0000000000000002,
+        "max_abs_gradient": 1.737585227091757e-17,
+        "smallest_sampled_perturbation_gap": 0.06701608314466334
+      },
+      {
+        "horizon": 17,
+        "b_profile": "random_nonnegative",
+        "A": 85.77523408137885,
+        "lambda": 2.538189138993954,
+        "maximum_b": 1.5381891389939542,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 0.0,
+        "smallest_sampled_perturbation_gap": 0.11213816877361005
+      },
+      {
+        "horizon": 17,
+        "b_profile": "random_nonnegative",
+        "A": 56.27886091955034,
+        "lambda": 2.6938307097486733,
+        "maximum_b": 1.6938307097486733,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 1.4106579128761003e-17,
+        "smallest_sampled_perturbation_gap": 0.11132735597244814
+      },
+      {
+        "horizon": 100,
+        "b_profile": "zero",
+        "A": 125.21250053099723,
+        "lambda": 1.0,
+        "maximum_b": 0.0,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 9.06410279582726e-19,
+        "smallest_sampled_perturbation_gap": 0.17347692227495082
+      },
+      {
+        "horizon": 100,
+        "b_profile": "constant",
+        "A": 119.20087856129503,
+        "lambda": 1.7,
+        "maximum_b": 0.7,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 2.0002822558468913e-18,
+        "smallest_sampled_perturbation_gap": 0.1572330168395819
+      },
+      {
+        "horizon": 100,
+        "b_profile": "random_nonnegative",
+        "A": 512.0023029987877,
+        "lambda": 2.9784660717427114,
+        "maximum_b": 1.9784660717427116,
+        "positive_branch_margin": 0.9999999999999998,
+        "max_abs_gradient": 4.442611863541368e-18,
+        "smallest_sampled_perturbation_gap": 0.3822076202655085
+      },
+      {
+        "horizon": 100,
+        "b_profile": "random_nonnegative",
+        "A": 484.1782654400816,
+        "lambda": 2.976114628707161,
+        "maximum_b": 1.976114628707161,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 2.1893052193088655e-18,
+        "smallest_sampled_perturbation_gap": 0.35693270996545223
+      },
+      {
+        "horizon": 100,
+        "b_profile": "random_nonnegative",
+        "A": 577.2688634359145,
+        "lambda": 2.964128020392643,
+        "maximum_b": 1.9641280203926428,
+        "positive_branch_margin": 1.0,
+        "max_abs_gradient": 4.976138559328232e-18,
+        "smallest_sampled_perturbation_gap": 0.32050786507414575
+      },
+      {
+        "horizon": 100,
+        "b_profile": "random_nonnegative",
+        "A": 527.2916917297067,
+        "lambda": 2.9203083493410853,
+        "maximum_b": 1.920308349341085,
+        "positive_branch_margin": 1.0000000000000002,
+        "max_abs_gradient": 3.604439412327246e-18,
+        "smallest_sampled_perturbation_gap": 0.34671574217596524
+      }
+    ]
+  }
+}
