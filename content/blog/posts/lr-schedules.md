@@ -2,9 +2,9 @@
 title: "不同优化器的最优 LR Schedule"
 date: "2026-10-31T00:00:00+08:00"
 author: ["Jiwen Jiang"]
-description: "从终点损失出发，推导 SGD、AdaGrad 和 Muon 的学习率调度。"
-summary: "一个矩阵 Muon 模型的精确最优 LR Schedule、带动量时的全程求解条件，以及 SGD、AdaGrad 的终点误差上界。"
-tags: ["Optimization", "Learning Rate", "SGD", "AdaGrad", "Muon"]
+description: "从终点损失出发，依次推导 SGD、Adafactor、Adam 和 Muon 的 LR Schedule。"
+summary: "SGD 的线性上界与反比精确解，Adafactor 的相对步长，Adam 的动量修正，以及 Muon 的矩阵推导。"
+tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
 math: true
@@ -69,34 +69,23 @@ references:
     authors: "Dougal Maclaurin, David Duvenaud, Ryan Adams"
     source: "ICML 2015"
     url: "https://proceedings.mlr.press/v37/maclaurin15.html"
+  - id: 12
+    title: "Adafactor: Adaptive Learning Rates with Sublinear Memory Cost"
+    authors: "Noam Shazeer, Mitchell Stern"
+    source: "ICML 2018"
+    url: "https://proceedings.mlr.press/v80/shazeer18a.html"
 ---
+
 
 给定训练预算，怎样选择每一步的学习率，才能让最后的损失最小？答案取决于目标函数、梯度噪声和优化器的更新方式。
 
-在梯度能量有统一上界时，SGD 的终点误差上界给出 Linear Decay{{< cite 1 2 >}}；同一方法也能用于 AdaGrad{{< cite 3 >}}。而对一个无动量、使用精确极分解的 Muon 矩阵随机模型，最小化真实终点损失得到的步长与 $[(t+c)(t+c+1)]^{-1/2}$ 成正比，渐近为 $1/t$。两种形状对应不同的优化问题。
+统一把更新写成 $\theta_{t+1}=\theta_t-\eta_tu_t$。$u_t$ 包含预条件、动量或矩阵正交化，$\eta_t$ 是外部标量学习率。要优化的是固定预算后的 $\mathbb E[f(\theta_T)-f_*]$，其中 $f_*=f(\theta_*)$。
 
-## 一、先确定优化什么
+一般凸问题可以先优化终点误差上界；在可解的二次模型中，则能直接最小化真实终点损失。SGD 的 Linear Decay 来自前一种分析{{< cite 1 2 >}}，并不是所有优化器、所有目标下的统一答案。
 
-统一记参数更新为
+## 一、SGD
 
-$$
-\theta_{t+1}=\theta_t-\eta_t u_t.
-$$
-
-$u_t$ 是优化器生成的方向，包含动量、逐坐标预条件或矩阵正交化；$\eta_t$ 是外部标量学习率。SGD 的 $u_t=g_t$，AdaGrad 则把 $g_t$ 除以累计平方梯度的平方根。相同的 $\eta_t$，在两种优化器下对应不同的实际位移。
-
-目标是最小化固定预算后的期望损失
-
-$$
-\mathbb E[f(\theta_T)-f_*],
-\qquad f_*=f(\theta_*).
-$$
-
-终点损失、平均参数 $\bar\theta_T$ 的损失、单步下降量，对应不同的优化问题。一般凸问题可以先优化终点误差上界；对于可解的二次模型，还能利用精确递推，直接最小化终点损失。
-
-先假设 $f$ 凸，$g_t$ 是当前点的无偏随机次梯度，外部权重为确定性序列。沿用终点分析的编号：初始参数为 $\theta_1$，输出为 $\theta_T$，最后的 $\eta_T=0$ 只是边界约定[^index]。
-
-## 二、SGD 的线性衰减从哪里来
+先假设 $f$ 凸，$g_t$ 是当前点的条件无偏随机次梯度，外部权重为确定性序列。初始参数为 $\theta_1$，输出为 $\theta_T$，最后的 $\eta_T=0$ 只是边界约定[^index]。
 
 ### 把终点误差写成加权和
 
@@ -214,9 +203,214 @@ $$
 
 这里的 $a_t$ 必须作为固定上界参与优化。若改用一次训练中观测到的梯度曲线，换 LR Schedule 后梯度也会变，公式就变成基于旧轨迹的 refinement；原论文采用的正是先记录、平滑，再用于后续训练的方式{{< cite 1 2 >}}。它还需要未来的 $Q_T$，不能直接当作只看当前梯度的在线学习率算法。
 
-## 三、AdaGrad 的预条件与外部调度
+### 二次模型的精确最优解
 
-### 预条件以后要换一个能量
+如果目标函数和噪声已知，可以绕过统一上界，直接求终点损失的最小值。考虑带加性噪声的一维二次模型：
+
+$$
+f(x)=\frac h2x^2,\qquad
+x_{t+1}=(1-h\eta_t)x_t-\eta_t\epsilon_t.
+$$
+
+设 $h>0$、$r_0=\mathbb E[x_0^2]>0$，噪声条件均值为零、条件方差为固定的 $\sigma^2>0$，学习率为非负确定性序列。这里从 $x_0$ 开始，执行 $N$ 次更新，最小化 $\mathbb E f(x_N)$。记 $r_t=\mathbb E[x_t^2]$，有精确递推
+
+$$
+r_{t+1}=(1-h\eta_t)^2r_t+\sigma^2\eta_t^2.
+$$
+
+对步长配方：
+
+$$
+r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +(h^2r_t+\sigma^2) \left(\eta_t-\frac{hr_t}{h^2r_t+\sigma^2}\right)^2.
+$$
+
+因此一步最优为 $\eta_t^*=hr_t/(h^2r_t+\sigma^2)$。而最小可达的下一步误差
+
+$$
+\phi(r)=\frac{\sigma^2r}{h^2r+\sigma^2}
+$$
+
+关于 $r$ 单调增加。任何 LR Schedule 都有 $r_{t+1}\geq\phi(r_t)$，所以逐步达到等号，会同时最小化每个时刻的误差。这个标量模型中，一步最优恰好也是任意终点的全局最优[^scalar]。
+
+最优递推满足
+
+$$
+\frac1{r_{t+1}^*}=\frac1{r_t^*}+\frac{h^2}{\sigma^2},
+$$
+
+从而
+
+$$
+\boxed{
+\eta_t^*=\frac1{h\left(t+1+\dfrac{\sigma^2}{h^2r_0}\right)},\qquad \mathbb E f(x_N)_{\min} =\frac{h\sigma^2r_0}{2(\sigma^2+Nh^2r_0)}.
+}
+$$
+
+最优步长按反比衰减，不依赖预先指定的训练终点。
+
+### 与 Linear 和 Cosine 比较
+
+取 $h=\sigma^2=r_0=1$，执行 $N=100$ 次更新。精确最优 LR Schedule 是 $\eta_t=1/(t+2)$。另外三组 LR Schedule 分别为
+
+$$
+\begin{aligned}
+\eta_t^{\rm linear}&=\alpha(1-t/N),\\
+\eta_t^{\rm cosine}&=\tfrac\alpha2[1+\cos(\pi t/N)],\\
+\eta_t^{\rm constant}&=\alpha,
+\qquad t=0,\ldots,N-1.
+\end{aligned}
+$$
+
+对每一组分别在 $\alpha\in[0,1]$ 内搜索使终点损失最小的幅值。下图直接计算期望误差递推，没有抽样噪声。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg">
+  <img src="/images/lr-schedules/quadratic.svg" alt="带噪一维二次损失下四种 LR Schedule 及其精确期望损失，反比 LR Schedule 达到解析最优，其他 LR Schedule 分别调节幅值。" loading="lazy" width="1200">
+</picture>
+<figcaption>四条曲线使用同一个损失、噪声方差和更新预算。学习率轴与损失轴均为对数刻度；比较的是这个二次模型的终点损失。</figcaption>
+</figure>
+
+| LR Schedule | 最优或搜索得到的幅值 | 第 100 步期望损失 |
+| --- | --- | --- |
+| 精确最优 $1/(t+2)$ | 由解析式确定 | $0.0049505$ |
+| Linear | $\alpha\approx0.068448$ | $0.0062609$ |
+| Cosine | $\alpha\approx0.068092$ | $0.0069959$ |
+| Constant | $\alpha\approx0.029453$ | $0.0087200$ |
+
+在这个二次模型中，Linear 的终点损失低于 Cosine 和 Constant，但高于精确的反比衰减解。前面推导的 Linear Decay 最小化一般凸问题的统一上界；这里利用二次结构求解真实终点损失，得到不同的最优形状。
+
+## 二、Adafactor
+
+### 更新规则：因子化二阶矩与相对步长
+
+Adafactor 用行、列统计量近似二阶矩，再对预条件更新做裁剪。以下采用原论文中不含一阶动量的矩阵版本{{< cite 12 >}}。设 $W_t,G_t\in\mathbb R^{m\times n}$，$G_t$ 在 $W_t$ 处计算，$t\geq1$、$R_0=C_0=0$，稳定项 $\epsilon_1,\epsilon_2$ 与裁剪阈值 $d$ 均为正；所有平方、开方和除法均逐元素进行。
+
+先给平方梯度加一个正的稳定项：
+
+$$
+B_t=G_t^{\odot2}+\epsilon_1\mathbf1_m\mathbf1_n^\top.
+$$
+
+行统计 $R_t\in\mathbb R^{m\times1}$ 与列统计 $C_t\in\mathbb R^{1\times n}$ 分别更新为
+
+$$
+R_t=\beta_{2,t}R_{t-1}+(1-\beta_{2,t})B_t\mathbf1_n,
+$$
+
+$$
+C_t=\beta_{2,t}C_{t-1}+(1-\beta_{2,t})\mathbf1_m^\top B_t.
+$$
+
+据此重建二阶矩近似，并形成预条件方向：
+
+$$
+\widehat V_t=\frac{R_tC_t}{\mathbf1_m^\top R_t},\qquad U_t=G_t\oslash\sqrt{\widehat V_t}.
+$$
+
+因子化的是二阶矩估计，不是梯度本身。二阶矩状态只需存 $m+n$ 个数。接着定义 $\operatorname{RMS}(U)=\|U\|_F/\sqrt{mn}$，对更新做 RMS 裁剪：
+
+$$
+\kappa_t=\max\!\left(1,\frac{\operatorname{RMS}(U_t)}{d}\right),\qquad D_t=U_t/\kappa_t.
+$$
+
+最后乘上参数尺度 $s_t$ 和相对步长 $\rho_t$：
+
+$$
+s_t=\max(\epsilon_2,\operatorname{RMS}(W_t)),\qquad W_{t+1}=W_t-\rho_ts_tD_t.
+$$
+
+这里应区分两条曲线：$\rho_t$ 是**相对步长**，$\alpha_t=\rho_ts_t$ 是乘在裁剪方向 $D_t$ 上的**绝对步长**。即使 $\rho_t$ 线性衰减，只要参数 RMS 在变，$\alpha_t$ 就不再是直线。
+
+原论文提出的配置为 $\beta_{2,t}=1-t^{-0.8}$、$\rho_t=\min(10^{-2},t^{-1/2})$，也实验了带 warmup 的 $\rho_t=\min(10^{-6}t,t^{-1/2})$。这些是算法配置与实验选择，不能直接视为终点损失的最优解。
+
+### 先求一步最优的相对步长
+
+条件在更新前的历史 $\mathcal F_{t-1}$ 上，$s_t$ 已知，而 $D_t$ 仍取决于当前随机梯度。定义方向的对齐与平方长度：
+
+$$
+\mathcal A_t=\mathbb E[\langle\nabla f(W_t),D_t\rangle_F\mid\mathcal F_{t-1}],\qquad \mathcal V_t=\mathbb E[\|D_t\|_F^2\mid\mathcal F_{t-1}].
+$$
+
+若 $f$ 的梯度是 $L_s$-Lipschitz，光滑性给出
+
+$$
+\mathbb E[f(W_t-\rho s_tD_t)\mid\mathcal F_{t-1}]\leq f(W_t)-\rho s_t\mathcal A_t+\frac{L_s\rho^2s_t^2\mathcal V_t}{2}.
+$$
+
+当 $\mathcal V_t>0$，对右端求非负极小值得到
+
+$$
+\boxed{\rho_t^{\rm one}=\frac{[\mathcal A_t]_+}{L_ss_t\mathcal V_t},\qquad \alpha_t^{\rm one}=\frac{[\mathcal A_t]_+}{L_s\mathcal V_t}.}
+$$
+
+裁剪保证 $\mathcal V_t\leq mn\,d^2$，但没有固定 $\mathcal A_t$。所以“更新长度有界”本身推不出 Linear 或 Inverse Square Root。这一步只最小化当前下降上界，还没有考虑学习率对后续参数、二阶矩和裁剪状态的影响。
+
+### 从变度量递推求终点上界
+
+把矩阵展平成向量，记 $g_t=\operatorname{vec}(G_t)$、$\theta_t=\operatorname{vec}(W_t)$。Adafactor 可以写成
+
+$$
+\theta_{t+1}=\theta_t-\rho_tH_t^{-1}g_t,\qquad H_t=\frac{\kappa_t}{s_t}\operatorname{diag}\!\left(\operatorname{vec}\sqrt{\widehat V_t}\right).
+$$
+
+滑动平均、更新裁剪和参数尺度都进入了 $H_t$，因此不能假设 $H_t$ 单调增加。沿用 SGD 的权重构造 $\rho_t=w_t\sum_{s>t}w_s/S$，引入 $z_{t+1}=z_t-w_tH_t^{-1}g_t$、$z_1=\theta_1$，写 $e_t=z_t-\theta_*$。加权平方距离满足
+
+$$
+2w_t\langle g_t,e_t\rangle=\|e_t\|_{H_t}^2-\|e_{t+1}\|_{H_t}^2+w_t^2g_t^\top H_t^{-1}g_t.
+$$
+
+前两项求和，得到
+
+$$
+\|e_1\|_{H_1}^2-\|e_{T+1}\|_{H_T}^2+\sum_{t=2}^{T}e_t^\top(H_t-H_{t-1})e_t.
+$$
+
+若辅助轨迹满足 $\|e_t\|\leq R$，可以用预条件矩阵的累计正向变化控制它：
+
+$$
+\Lambda_T(H)=\lambda_{\max}(H_1)+\sum_{t=2}^{T}[\lambda_{\max}(H_t-H_{t-1})]_+.
+$$
+
+因为每个变化项不超过 $R^2[\lambda_{\max}(H_t-H_{t-1})]_+$，上面的距离和至多为 $R^2\Lambda_T(H)$。这个变度量处理也适用于其他非单调预条件器{{< cite 3 >}}。
+
+在凸目标、原始随机梯度条件无偏的假设下，代入终点转换：
+
+$$
+\mathbb E[f(\theta_T)-f_*]\leq\frac{R^2\mathbb E\Lambda_T(H)+\sum_t w_t^2\mathbb E[g_t^\top H_t^{-1}g_t]}{2S}.
+$$
+
+这里不要求预条件后的方向无偏。距离恒等式对每个样本成立，无偏性只用于原始梯度 $g_t$ 与凸性的关系。Adafactor 对应的能量为
+
+$$
+g_t^\top H_t^{-1}g_t=\frac{s_t}{\kappa_t}\sum_{i,j}\frac{G_{t,ij}^2}{\sqrt{\widehat V_{t,ij}}}.
+$$
+
+注意它不同于更新的欧氏平方长度 $g_t^\top H_t^{-2}g_t$。若对候选 LR Schedule 存在共同的确定性界
+
+$$
+R^2\mathbb E\Lambda_T(H)\leq A,\qquad \mathbb E[g_t^\top H_t^{-1}g_t]\leq a_t,\qquad A>0,\ a_t>0,
+$$
+
+要优化的上界就是 $\mathcal B(w)=(A+\sum_ta_tw_t^2)/(2\sum_tw_t)$。令 $Q_t=\sum_{s=1}^ta_s^{-1}$，沿用 SGD 的加权 Cauchy–Schwarz，得到
+
+$$
+\boxed{\rho_t^*=\sqrt{\frac A{Q_T}}\frac1{a_t}\left(1-\frac{Q_t}{Q_T}\right),\qquad \mathcal B_{\min}=\sqrt{\frac A{Q_T}}.}
+$$
+
+将 $a_t$ 用同一个常数 $a$ 控制时，便得到相对步长的 Linear Decay：
+
+$$
+\boxed{\rho_t^*=\sqrt{\frac A{aT}}\left(1-\frac tT\right),\qquad \alpha_t^*=s_t\rho_t^*.}
+$$
+
+这个结果优化的是固定界 $A,a_t$ 下的终点误差上界，求出的调度还须属于这些界成立的候选集合。实际的 $s_t,\kappa_t,\widehat V_t$ 会随调度改变；直接把某次训练的统计量代入，并不能得到原训练问题的全局最优解。要让上界趋于零，还需 $A/Q_T\to0$，仅有每一步的 $H_t$ 有界并不足够。
+
+
+<details class="technical-note">
+<summary>补充：AdaGrad 的单调预条件与外部线性衰减</summary>
+
+**预条件以后要换一个能量**
 
 考虑没有一阶动量的预条件更新
 
@@ -266,8 +460,7 @@ $$
 
 $A$、$B$ 固定是这个优化步骤的条件。求出的 LR Schedule 还须属于这些共同界成立的候选集合；否则需要在可行集合内重新优化。
 
-<details class="technical-note">
-<summary>为什么单调预条件矩阵会给出迹项</summary>
+**为什么单调预条件矩阵会给出迹项**
 
 写 $e_t=z_t-\theta_*$，直接展开有
 
@@ -286,9 +479,9 @@ $$
 
 对半正定矩阵 $M$，$e^\top Me\leq\|e\|^2\operatorname{tr}(M)$。用 $\|e_t\|\leq R$ 控制距离，再将迹相加，便得到 $R^2\operatorname{tr}(H_T)$。
 
-</details>
 
-### AdaGrad 的外部调度与坐标步长
+
+**AdaGrad 的外部调度与坐标步长**
 
 AdaGrad 的对角预条件矩阵为
 
@@ -296,7 +489,7 @@ $$
 H_{t,ii}=\sqrt{\epsilon+\sum_{s=1}^{t}g_{s,i}^2}.
 $$
 
-累计平方和单调增加，满足上一节需要的矩阵单调性。不过，预条件梯度能量并不因此恒定：若原始梯度的二阶矩近乎平稳，累计分母仍会增长。常数 $B$ 是用于分析的统一上界。取线性外部调度后，更新写成
+累计平方和单调增加，满足这里需要的矩阵单调性。不过，预条件梯度能量并不因此恒定：若原始梯度的二阶矩近乎平稳，累计分母仍会增长。常数 $B$ 是用于分析的统一上界。取线性外部调度后，更新写成
 
 $$
 \boxed{
@@ -310,8 +503,7 @@ $$
 
 把 AdaGrad 的经典遗憾界与终点转换结合，还能得到等权结论，并保留逐坐标的梯度信息{{< cite 4 >}}。
 
-<details class="technical-note">
-<summary>用 AdaGrad 的遗憾界重新求一次最优权重</summary>
+**用 AdaGrad 的遗憾界重新求一次最优权重**
 
 给辅助 AdaGrad 输入 $h_t=w_tg_t$。为简化记号，先忽略数值稳定项，零分母且零分子时把该坐标更新定义为零。若存在统一常数 $D_\infty$，使 $\|z_t-\theta_*\|_\infty\leq D_\infty$，取基础步长 $\alpha=D_\infty/\sqrt2$，有
 
@@ -330,60 +522,129 @@ $$
 
 最后一个比值的最小值是 $T^{-1/2}$，等权重取到。此时 $w_t$ 在辅助 AdaGrad 的分子与累计平方根中抵消；终点转换额外乘上的剩余权重比例就是 $1-t/T$。这给出 AdaGrad 外部线性调度的另一条证明，并保留了它逐坐标适应梯度大小的结构。
 
+
+
 </details>
 
-## 四、Adam 和动量多了哪些项
+## 三、Adam
 
-RMSProp 用滑动平均替代累计平方和。Adam 进一步引入一阶动量，其核心状态为
+### 二阶矩预条件与一阶动量
 
-$$
-m_t=\beta_1m_{t-1}+(1-\beta_1)g_t,\qquad v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^{\odot2},\qquad u_t=\frac{\widehat m_t}{\sqrt{\widehat v_t}+\epsilon}.
-$$
-
-帽子表示从零初始化时的一阶、二阶矩偏差修正{{< cite 5 >}}。这里有两个不同的问题。
-
-### 滑动平均失去单调性
-
-当新梯度变小，$v_t$ 可以下降，因而不能直接使用 $H_t\succeq H_{t-1}$。对仍然使用当前梯度的更新 $H_t^{-1}g_t$，可以把迹项换成预条件矩阵的累计变化：
+Adam 用滑动平均估计梯度的一阶、二阶矩{{< cite 5 >}}：
 
 $$
-\Lambda_T=\lambda_{\max}(H_1)
-+\sum_{t=2}^{T}\bigl[\lambda_{\max}(H_t-H_{t-1})\bigr]_+,
+m_t=\beta_1m_{t-1}+(1-\beta_1)g_t,\qquad v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^{\odot2}.
 $$
 
-其中 $[a]_+=\max(a,0)$。因为
+从 $m_0=v_0=0$ 出发，偏差修正后的状态与更新为
 
 $$
-e_t^\top(H_t-H_{t-1})e_t
-\leq R^2\bigl[\lambda_{\max}(H_t-H_{t-1})\bigr]_+,
+\widehat m_t=\frac{m_t}{1-\beta_1^t},\qquad \widehat v_t=\frac{v_t}{1-\beta_2^t},\qquad u_t=\widehat m_t\oslash(\sqrt{\widehat v_t}+\epsilon).
 $$
 
-前面的终点界仍可成立，只需将 $R^2\mathbb E\operatorname{tr}(H_T)$ 换成 $R^2\mathbb E\Lambda_T${{< cite 3 >}}。但即使 $H_t$ 始终有界，反复振荡也可能使 $\Lambda_T$ 持续增长；写出一个误差上界，不保证这个上界随训练步数趋于零。
+令 $H_t=\operatorname{diag}(\sqrt{\widehat v_t}+\epsilon)$，则 $\theta_{t+1}=\theta_t-\eta_tH_t^{-1}\widehat m_t$。与 Adafactor 一样，二阶矩滑动平均不保证 $H_t$ 单调，所以仍需控制 $\Lambda_T(H)$。Adam 的收敛反例与 AMSGrad 对二阶矩历史最大值的使用，也说明不能省略对预条件器变化的控制{{< cite 6 >}}。
 
-Adam 的收敛反例以及 AMSGrad 对二阶矩历史最大值的使用，都说明这一步不能略去{{< cite 6 >}}。若已控制 $\Lambda_T$，并将能量项用共同常数界住，仍可得到线性的上界最优形状；这些条件需要先于结论成立。
-
-### 一阶动量不是当前点的无偏梯度
-
-终点转换依赖 $\mathbb E[g_t\mid\theta_1,\ldots,\theta_t]\in\partial f(\theta_t)$。一般来说，
+一阶动量带来另一个差别：
 
 $$
-\mathbb E[m_t\mid\mathcal F_{t-1}]
-=\beta_1m_{t-1}+(1-\beta_1)\nabla f(\theta_t),
+\mathbb E[m_t\mid\mathcal F_{t-1}]=\beta_1m_{t-1}+(1-\beta_1)\nabla f(\theta_t).
 $$
 
-它不等于当前梯度。偏差修正消除的是从零初始化的缩放偏差，并没有消除过去梯度与当前梯度之间的差异。SGD with momentum 也有同一个问题。
+它一般不等于当前梯度。偏差修正消除的是从零初始化的缩放偏差，没有消除旧梯度与当前梯度之间的差异。
 
-带动量的情况可以从基础算法的遗憾界出发，再使用通用终点转换；也可以直接分析扩展状态 $(\theta_t,m_t,v_t)$。两种方法都需要控制动量引入的偏差。
+### 将动量偏差保留在终点上界中
 
-AdamW 还包含解耦权重衰减{{< cite 7 >}}：
+令辅助更新为 $z_{t+1}=z_t-w_tH_t^{-1}\widehat m_t$，仍取 $\eta_t=w_t\sum_{s>t}w_s/S$。展开距离得到的是 $\langle\widehat m_t,z_t-\theta_*\rangle$，而凸性需要原始梯度 $g_t$。把 $g_t=\widehat m_t+(g_t-\widehat m_t)$ 代入，得到
 
 $$
-\theta_{t+1}=(1-\eta_t\lambda)\theta_t-\eta_tu_t.
+\mathbb E[f(\theta_T)-f_*]\leq\frac{R^2\mathbb E\Lambda_T(H)+\sum_tw_t^2\mathbb E[\widehat m_t^\top H_t^{-1}\widehat m_t]}{2S}+\mathcal C_T,
 $$
 
-即使暂时忽略梯度更新，权重也会乘上 $\prod_t(1-\eta_t\lambda)$。固定 $\lambda$ 而改变 LR Schedule，同时改变了累计衰减；在相同模型上比较 Linear 与 Cosine 时，这也是训练过程发生的变化。
+其中动量修正项为
 
-## 五、直接求 Muon 的最优 LR Schedule
+$$
+\mathcal C_T=\frac1S\sum_tw_t\,\mathbb E\langle g_t-\widehat m_t,z_t-\theta_*\rangle.
+$$
+
+仍假设目标凸、原始随机梯度条件无偏、$\|z_t-\theta_*\|\leq R$。选取对候选 LR Schedule 共同成立的固定界：
+
+$$
+A\geq R^2\mathbb E\Lambda_T(H),\qquad a_t\geq\mathbb E[\widehat m_t^\top H_t^{-1}\widehat m_t],
+$$
+
+$$
+b_t\geq R\,\mathbb E\|g_t-\widehat m_t\|,\qquad A>0,\ a_t>0.
+$$
+
+由 Cauchy–Schwarz，$\mathcal C_T\leq\sum_tw_tb_t/S$。
+
+
+需要优化的完整表达式变成
+
+$$
+\mathcal B_{\rm mom}(w)
+=\frac{A+\sum_ta_tw_t^2+2\sum_tb_tw_t}{2\sum_tw_t}.
+$$
+
+若标量方程
+
+$$
+\sum_t\frac{(\lambda-b_t)^2}{a_t}=A
+$$
+
+有满足 $\lambda>\max_t b_t$ 的解，则
+
+$$
+\boxed{
+w_t^*=\frac{\lambda-b_t}{a_t},\qquad \eta_t^*=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \mathcal B_{\rm mom,min}=\lambda.
+}
+$$
+
+验证只需配方。对任意正权重，
+
+$$
+2S[\mathcal B_{\rm mom}(w)-\lambda]
+=\sum_ta_t(w_t-w_t^*)^2\geq0.
+$$
+
+若 $b_t=b$ 为常数，它只使最小上界增加 $b$，不改变最佳权重形状。若偏差界随时间变化，最优权重也会变化。正分支条件不满足时，最优解可能落到零权重边界，不能直接使用上面的正权重公式[^bias]。
+
+
+当 $a_t=a$、$b_t=b$ 都取常数时，$\lambda=b+\sqrt{Aa/T}$，所以
+
+$$
+\boxed{\eta_t^*=\sqrt{\frac A{aT}}\left(1-\frac tT\right),\qquad \mathcal B_{\rm mom,min}=b+\sqrt{\frac{Aa}{T}}.}
+$$
+
+共同的常数能量界与偏差界给出了这个线性解，求出的权重还须属于这些界成立的候选集合。若 $b$ 不随训练预算减小，上界还会留下一个误差底；这并不是 Adam 自动收敛到最优点的证明。
+
+### 直接优化真实终点：把矩估计也纳入状态
+
+对于实际非凸训练，可以把每一步学习率作为变量，沿完整训练过程求导{{< cite 11 >}}。以 AdamW 为例，更新额外包含解耦权重衰减{{< cite 7 >}}：
+
+$$
+\theta_{t+1}=(1-\lambda_{\rm wd}\eta_t)\theta_t-\eta_tu_t.
+$$
+
+取 $X_t=(\theta_t,m_{t-1},v_{t-1})$，完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里执行 $t=1,\ldots,N$ 共 $N$ 次更新，目标为 $J(\eta)=\mathbb E f(\theta_{N+1})$。对固定的随机样本序列反向传播：
+
+$$
+p_{N+1}=(\nabla f(\theta_{N+1}),0,0),\qquad p_t=(D_XF_t)^\top p_{t+1}.
+$$
+
+在可微、允许交换求导与期望、且基础随机采样分布不依赖调度的条件下，有
+
+$$
+\boxed{\frac{\partial J}{\partial\eta_t}=-\mathbb E\langle p_{t+1}^{\theta},u_t+\lambda_{\rm wd}\theta_t\rangle.}
+$$
+
+$p_{t+1}^{\theta}$ 包含此后所有梯度与矩估计的变化，不能替换成当前梯度。内部最优点要求这个导数为零；在 $\eta_t=0$ 的边界处，右导数应非负。这给出了数值求解完整 LR Schedule 的条件，但非凸问题的驻点通常不保证全局最优。
+
+对 Adafactor，同样取 $X_t=(W_t,R_{t-1},C_{t-1})$，得到 $\partial J/\partial\rho_t=-\mathbb E\langle p_{t+1}^{W},s_tD_t\rangle_F$。反向递推必须包含参数尺度、二阶矩重建与裁剪；在裁剪和尺度下限的转折点，需要按实际实现处理分段导数。
+
+AdamW 的权重衰减还会带来累计因子 $\prod_t(1-\lambda_{\rm wd}\eta_t)$。固定衰减系数而更换 LR Schedule，同时也改变了这部分训练动态，因此前面无权重衰减的凸上界不能直接原样套用。
+
+## 四、Muon
 
 先考虑对当前随机梯度做精确极分解的更新，不含动量、权重衰减或矩阵倍率。实际 Muon 对动量做 Newton–Schulz 变换，需要另外保留动量状态{{< cite 8 10 >}}。
 
@@ -408,9 +669,9 @@ $$
 \mathbb E[\Xi_t\mid\mathcal F_{t-1}]=0,\qquad W_t^\top\Xi_t=0,\qquad \Xi_t^\top\Xi_t=\frac{\sigma^2}{k}I_k, \qquad \sigma>0.
 $$
 
-这里的噪声与当前参数列空间正交，且 Frobenius 范数固定为 $\sigma$。这样的无偏随机梯度确实可以构造：在 $W_t$ 的正交补中取 $k$ 个正交单位向量组成 $Q_t$，再令 $\Xi_t=\pm\sigma Q_t/\sqrt k$，正负号独立且等概率。条件 $m\geq2k$ 保证有足够的正交补空间。
+这里的噪声与当前参数列空间正交，且 Frobenius 范数固定为 $\sigma$。这样的无偏随机梯度确实可以构造：在 $W_t$ 的正交补中取 $k$ 个正交单位向量组成 $O_t$，再令 $\Xi_t=\pm\sigma O_t/\sqrt k$，正负号独立且等概率。条件 $m\geq2k$ 保证有足够的正交补空间。
 
-噪声的方向依赖当前参数，因而不同于固定分布的加性高斯噪声。在这些条件下，损失可以由一个标量状态精确递推。
+噪声的方向依赖当前参数，因而不同于固定分布的加性高斯噪声，也不同于 SGD 一节的标量加性噪声模型。两节的数值用于各自模型内比较调度，不用于比较优化器的优劣。在这些条件下，损失可以由一个标量状态精确递推。
 
 若当前 $W_t^\top W_t=(r_t/k)I_k$，则
 
@@ -441,7 +702,7 @@ $$
 W_{t+1}^\top W_{t+1}=\frac{r_{t+1}}kI_k,
 $$
 
-所以初始的等奇异值结构保持不变。原本的矩阵训练过程，关于损失所需的状态闭合为一个标量 $r_t$。
+所以初始的等奇异值结构保持不变。因此，损失的演化只需跟踪标量 $r_t$。
 
 ### 配方，再证明全程最优
 
@@ -572,17 +833,17 @@ $$
 
 沿完整训练轨迹反向传播，可以计算 $\nabla_\eta J$，再在非负约束下优化各步学习率{{< cite 11 >}}。这个外层问题一般非凸，驻点条件只是必要条件；具体解依赖目标、数据分布和训练预算，通常需要数值求解。精确极分解在秩变化处还可能不可微。
 
-## 六、Muon 的终点误差上界
+### 一般凸目标下的谱上界
 
-### 把正交化写成矩阵预条件
+#### 把正交化写成矩阵预条件
 
 先分析直接正交化当前随机梯度、没有动量与权重衰减、使用精确极分解的理想 Muon。Muon 的作者也区分了这个理论形式与对动量做 Newton–Schulz 近似的实际实现{{< cite 8 10 >}}。
 
 设参数与梯度为矩阵 $W_t,G_t$。对只保留非零奇异值的紧致 SVD，定义
 
 $$
-G_t=P_t\Sigma_tQ_t^\top,
-\qquad \operatorname{polar}(G_t)=P_tQ_t^\top.
+G_t=P_t\Sigma_tV_t^\top,
+\qquad \operatorname{polar}(G_t)=P_tV_t^\top.
 $$
 
 零梯度的更新定义为零。令
@@ -600,7 +861,7 @@ $$
 
 因此理想 Muon 可以写成 $W_{t+1}=W_t-\eta_tH_t^\dagger G_t$。这个表达式也覆盖非方阵和秩亏矩阵；满行秩时，伪逆就是普通逆。
 
-它在前面度量分析中对应的梯度能量是
+它在 Adafactor 一节的变度量分析中对应的梯度能量是
 
 $$
 \operatorname{tr}(G_t^\top H_t^\dagger G_t) =\operatorname{tr}(\Sigma_t) =\sum_j\sigma_j(G_t) =\|G_t\|_*.
@@ -608,7 +869,7 @@ $$
 
 这里 $\|\cdot\|_*$ 专指**核范数，即奇异值之和**。SGD 的能量是 $\mathbb E\|g_t\|^2$；理想 Muon 在这个证明里出现的则是 $\mathbb E\|G_t\|_*$。
 
-### 建立终点上界
+#### 建立终点上界
 
 继续使用 $S=\sum_t w_t$ 和 $\eta_t=w_t\sum_{s>t}w_s/S$。辅助矩阵按
 
@@ -651,7 +912,7 @@ $$
 \leq R^2[\lambda_{\max}(\Delta H_t)]_+.
 $$
 
-### 求出依赖梯度谱的 LR Schedule
+#### 求出依赖梯度谱的 LR Schedule
 
 对候选 LR Schedule 采用共同的确定性界
 
@@ -666,7 +927,7 @@ $$
 =\frac{A+\sum_t a_tw_t^2}{2\sum_t w_t}.
 $$
 
-令 $Q_t=\sum_{s=1}^{t}a_s^{-1}$。与第二节相同，固定总和时 $w_t\propto a_t^{-1}$，再对总和求极小，得到
+令 $Q_t=\sum_{s=1}^{t}a_s^{-1}$。沿用 SGD 中的权重优化，固定总和时 $w_t\propto a_t^{-1}$，再对总和求极小，得到
 
 $$
 \boxed{
@@ -683,13 +944,13 @@ $$
 }
 $$
 
-这是常数能量界下的一个特例。这里优化的是 $\mathcal B_{\rm Muon}$，与上一节直接优化真实终点损失的目标不同。解出的权重还须处于共同距离界、能量界成立的候选集合中。非恒定轮廓下，调度随核范数能量及其剩余累积量变化。若 $a_t$ 来自一次预训练记录，这仍然是依赖旧轨迹和未来统计的 refinement，不能直接当作可在线实现的最优控制。
+这是常数能量界下的一个特例。这里优化的是 $\mathcal B_{\rm Muon}$，与前面的矩阵二次模型直接优化真实终点损失的目标不同。解出的权重还须处于共同距离界、能量界成立的候选集合中。非恒定轮廓下，调度随核范数能量及其剩余累积量变化。若 $a_t$ 来自一次预训练记录，这仍然是依赖旧轨迹和未来统计的 refinement，不能直接当作可在线实现的最优控制。
 
 要让这个上界随训练步数趋于零，还需要 $A/Q_T\to0$。$A$ 包含预条件矩阵的累计变化：即使核范数能量稳定，$H_t$ 的方向振荡也可能使 $\Lambda_T^{\rm Muon}$ 随 $T$ 线性增长。
 
-### 动量 Muon 中必须保留的修正
+#### 动量 Muon 中必须保留的修正
 
-实际送入正交化的矩阵记为 $M_t$，它可能是动量，也可能包含 Nesterov 修正。用 $H_t=(M_tM_t^\top)^{1/2}$ 重复上面的代数，控制的是 $\langle M_t,Z_t-W_*\rangle_F$；凸性需要的仍然是当前随机梯度 $G_t$。两者相差
+本小节将第 $t$ 步送入正交化的矩阵记为 $M_t$；在前面的普通动量更新中，它对应刚更新的 $M_{t+1}$，也可以包含 Nesterov 修正。用 $H_t=(M_tM_t^\top)^{1/2}$ 重复上面的代数，控制的是 $\langle M_t,Z_t-W_*\rangle_F$；凸性需要的仍然是当前随机梯度 $G_t$。两者相差
 
 $$
 \mathcal C_T
@@ -714,59 +975,39 @@ $$
 \qquad b_t\geq R\,\mathbb E\|G_t-M_t\|_F.
 $$
 
-现在设 $a_t\geq\mathbb E\|M_t\|_*$，$A$ 控制度量变差；$A,a_t,b_t$ 都使用对候选 LR Schedule 共同成立的固定界。需要优化的完整表达式变成
+
+取 $a_t\geq\mathbb E\|M_t\|_*$、$A\geq R^2\mathbb E\Lambda_T(M)$，并将它们与 $b_t$ 一起固定为候选调度的共同界，就得到 Adam 一节的 $\mathcal B_{\rm mom}(w)$。因此在正分支成立时，仍由
 
 $$
-\mathcal B_{\rm mom}(w)
-=\frac{A+\sum_ta_tw_t^2+2\sum_tb_tw_t}{2\sum_tw_t}.
+\sum_t\frac{(\lambda-b_t)^2}{a_t}=A,\qquad w_t^*=\frac{\lambda-b_t}{a_t},\qquad \eta_t^*=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*}
 $$
 
-若标量方程
-
-$$
-\sum_t\frac{(\lambda-b_t)^2}{a_t}=A
-$$
-
-有满足 $\lambda>\max_t b_t$ 的解，则
-
-$$
-\boxed{
-w_t^*=\frac{\lambda-b_t}{a_t},\qquad \eta_t^*=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \mathcal B_{\rm mom,min}=\lambda.
-}
-$$
-
-验证只需配方。对任意正权重，
-
-$$
-2S[\mathcal B_{\rm mom}(w)-\lambda]
-=\sum_ta_t(w_t-w_t^*)^2\geq0.
-$$
-
-这个结果保留了动量偏差的代价。若 $b_t=b$ 为常数，它只使最小上界增加 $b$，不改变最佳权重形状。若偏差界随时间变化，最优权重也会变化。正分支条件不满足时，最优解可能落到零权重边界，不能直接使用上面的正权重公式[^bias]。
+确定上界最优调度。这里的能量换成了动量矩阵的核范数；动量的核范数稳定，并不意味着偏差项 $b_t$ 可以省略。
 
 上述结果要求 $A,a_t,b_t$ 对候选 LR Schedule 共同成立。若用有限次 Newton–Schulz 代替精确极分解，还需在距离展开中保留近似残差。
 
 矩阵级倍率也会进入结果。若理想更新是 $s_t\operatorname{polar}(G_t)$，其中 $s_t>0$，可将度量改为 $H_t/s_t$：能量变成 $s_t\|G_t\|_*$，矩阵变差也须同时改变。对恒定 $s>0$，学习率相应除以 $s$，实际位移保持一致。多个矩阵共用一个 LR Schedule 时，可以在分块度量下累加能量和变差；包含 AdamW 参数组的混合优化器，还需纳入那些参数组自身的界。
 
-## 七、给定更新方向的一步最优
+<details class="technical-note">
+<summary>补充：一步下降上界，以及 Hyperball 的步长换算</summary>
 
 对于一般方向 $u_t$，可以先解一个较局部的问题。假设 $f$ 的梯度是 $L_s$-Lipschitz，条件在更新前的历史上，定义
 
 $$
-a_t=\mathbb E[\langle\nabla f(\theta_t),u_t\rangle\mid\mathcal F_{t-1}],\qquad b_t=\mathbb E[\|u_t\|^2\mid\mathcal F_{t-1}].
+\mathcal A_t=\mathbb E[\langle\nabla f(\theta_t),u_t\rangle\mid\mathcal F_{t-1}],\qquad \mathcal V_t=\mathbb E[\|u_t\|^2\mid\mathcal F_{t-1}].
 $$
 
 光滑性给出
 
 $$
 \mathbb E[f(\theta_t-\eta u_t)\mid\mathcal F_{t-1}]
-\leq f(\theta_t)-\eta a_t+\frac{L_s\eta^2b_t}{2}.
+\leq f(\theta_t)-\eta \mathcal A_t+\frac{L_s\eta^2\mathcal V_t}{2}.
 $$
 
-当 $b_t>0$，这个二次上界在非负步长中的最小值取于
+当 $\mathcal V_t>0$，这个二次上界在非负步长中的最小值取于
 
 $$
-\boxed{\eta_t^{\rm one}=\frac{[a_t]_+}{L_sb_t}.}
+\boxed{\eta_t^{\rm one}=\frac{[\mathcal A_t]_+}{L_s\mathcal V_t}.}
 $$
 
 分子度量方向与真实梯度的对齐，分母度量更新的平方长度。它允许不同优化器使用不同的 $u_t$，但解的是当前这一步的上界，不是固定终点的全程最优控制。
@@ -779,9 +1020,9 @@ $$
 {L_s\bigl(\|\nabla f(\theta_t)\|^2+\operatorname{tr}\Sigma_t\bigr)}.
 $$
 
-当信号相对噪声变小，一步最优上界步长下降。若更新带动量或者根据当前梯度生成预条件子，就必须重新计算 $a_t,b_t$，不能默认它们仍有这个表达式。
+当信号相对噪声变小，一步最优上界步长下降。若更新带动量或者根据当前梯度生成预条件子，就必须重新计算 $\mathcal A_t,\mathcal V_t$，不能默认它们仍有这个表达式。
 
-### 正交化改变了长度与对齐
+**正交化改变了长度与对齐**
 
 Muon 对动量矩阵做近似正交化，实际实现还涉及 Newton–Schulz 近似与矩阵形状相关的倍率{{< cite 8 >}}。先去掉这些实现因素，考虑无噪声、无动量的理想情形：令真实矩阵梯度的紧致 SVD 为
 
@@ -807,7 +1048,7 @@ $$
 
 真实 Muon 对动量矩阵而非当前真实梯度做变换，随机正交化又是非线性的，此时对齐项一般不是 $\|\nabla f\|_*$。即使输出矩阵的 Frobenius 范数近乎固定，也没有固定它与真实梯度的夹角，因此不能只由“更新长度稳定”确定全程最优 LR Schedule。
 
-### Hyperball 调度的是投影前的相对步长
+**Hyperball 调度的是投影前的相对步长**
 
 Hyperball 的受约束参数块使用
 
@@ -834,82 +1075,7 @@ $$
 
 后续求最优 LR Schedule 时，还需要把球面投影写进损失递推。前面的欧氏终点定理和一步光滑性上界，都不能原样套在投影后的完整更新上。
 
-## 八、SGD 的精确二次模型
-
-再对 SGD 解一次真实终点损失。这里使用标量加性噪声模型，与第五节 Muon 的矩阵正交噪声模型不同，两组数值不用于比较优化器的优劣：
-
-$$
-f(x)=\frac h2x^2,\qquad
-x_{t+1}=(1-h\eta_t)x_t-\eta_t\epsilon_t.
-$$
-
-设 $h>0$、$r_0=\mathbb E[x_0^2]>0$，噪声条件均值为零、条件方差为固定的 $\sigma^2>0$，学习率为非负确定性序列。这里从 $x_0$ 开始，执行 $N$ 次更新，最小化 $\mathbb E f(x_N)$。记 $r_t=\mathbb E[x_t^2]$，有精确递推
-
-$$
-r_{t+1}=(1-h\eta_t)^2r_t+\sigma^2\eta_t^2.
-$$
-
-对步长配方：
-
-$$
-r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +(h^2r_t+\sigma^2) \left(\eta_t-\frac{hr_t}{h^2r_t+\sigma^2}\right)^2.
-$$
-
-因此一步最优为 $\eta_t^*=hr_t/(h^2r_t+\sigma^2)$。而最小可达的下一步误差
-
-$$
-\phi(r)=\frac{\sigma^2r}{h^2r+\sigma^2}
-$$
-
-关于 $r$ 单调增加。任何 LR Schedule 都有 $r_{t+1}\geq\phi(r_t)$，所以逐步达到等号，会同时最小化每个时刻的误差。这个标量模型中，一步最优恰好也是任意终点的全局最优[^scalar]。
-
-最优递推满足
-
-$$
-\frac1{r_{t+1}^*}=\frac1{r_t^*}+\frac{h^2}{\sigma^2},
-$$
-
-从而
-
-$$
-\boxed{
-\eta_t^*=\frac1{h\left(t+1+\dfrac{\sigma^2}{h^2r_0}\right)},\qquad \mathbb E f(x_N)_{\min} =\frac{h\sigma^2r_0}{2(\sigma^2+Nh^2r_0)}.
-}
-$$
-
-最优步长按反比衰减，不依赖预先指定的训练终点。
-
-### 与 Linear 和 Cosine 比较
-
-取 $h=\sigma^2=r_0=1$，执行 $N=100$ 次更新。精确最优 LR Schedule 是 $\eta_t=1/(t+2)$。另外三组 LR Schedule 分别为
-
-$$
-\begin{aligned}
-\eta_t^{\rm linear}&=\alpha(1-t/N),\\
-\eta_t^{\rm cosine}&=\tfrac\alpha2[1+\cos(\pi t/N)],\\
-\eta_t^{\rm constant}&=\alpha,
-\qquad t=0,\ldots,N-1.
-\end{aligned}
-$$
-
-对每一组分别在 $\alpha\in[0,1]$ 内搜索使终点损失最小的幅值。下图直接计算期望误差递推，没有抽样噪声。
-
-<figure>
-<picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg">
-  <img src="/images/lr-schedules/quadratic.svg" alt="带噪一维二次损失下四种 LR Schedule 及其精确期望损失，反比 LR Schedule 达到解析最优，其他 LR Schedule 分别调节幅值。" loading="lazy" width="1200">
-</picture>
-<figcaption>四条曲线使用同一个损失、噪声方差和更新预算。学习率轴与损失轴均为对数刻度；比较的是这个二次模型的终点损失。</figcaption>
-</figure>
-
-| LR Schedule | 最优或搜索得到的幅值 | 第 100 步期望损失 |
-| --- | --- | --- |
-| 精确最优 $1/(t+2)$ | 由解析式确定 | $0.0049505$ |
-| Linear | $\alpha\approx0.068448$ | $0.0062609$ |
-| Cosine | $\alpha\approx0.068092$ | $0.0069959$ |
-| Constant | $\alpha\approx0.029453$ | $0.0087200$ |
-
-在这个二次模型中，Linear 的终点损失低于 Cosine 和 Constant，但高于精确的反比衰减解。第二节的 Linear Decay 最小化一般凸问题的统一上界；这里利用二次结构求解真实终点损失，得到不同的最优形状。
+</details>
 
 ## 引用本文
 
