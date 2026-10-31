@@ -56,7 +56,7 @@ INK = "#383832"
 SECONDARY = "#74746c"
 GRID = "#e7e8e2"
 STYLES = {
-    "exact": {"label": "Exact optimum", "color": INK, "ls": "-", "lw": 2.25},
+    "exact": {"label": "Model optimum", "color": INK, "ls": "-", "lw": 2.25},
     "linear": {"label": "Linear (tuned)", "color": "#b56b30", "ls": (0, (5, 2)), "lw": 2.0},
     "cosine": {"label": "Cosine (tuned)", "color": "#517b8b", "ls": (0, (5, 2, 1, 2)), "lw": 2.0},
     "constant": {"label": "Constant (tuned)", "color": "#94826d", "ls": (0, (1, 2)), "lw": 2.0},
@@ -250,21 +250,25 @@ def configure_plotting():
 
 def draw_panel(ax, records: dict, loss: bool):
     from matplotlib.ticker import FuncFormatter, NullFormatter
+    curves = {}
     for name, record in records.items():
         values = record["r"] / 2.0 if loss else record["eta"]
+        if not loss:
+            boundary = (1 / (HORIZON + 2) if name == "exact" else
+                        record["eta"][-1] if name == "constant" else 0.0)
+            values = np.append(values, boundary)
+        curves[name] = values
         ax.plot(np.arange(len(values)), values, **STYLES[name])
-    ax.set_yscale("log")
+    ax.set_yscale("linear")
     ax.set_xlim(0, HORIZON)
     ax.set_xticks([0, 25, 50, 75, 100])
     ax.set_xlabel("Updates completed, $t$" if loss else "Update index, $t$", labelpad=7)
     if loss:
-        ax.set_ylim(0.0038, 0.7)
-        ax.set_yticks([0.005, 0.01, 0.05, 0.1, 0.5])
-        ax.set_ylabel(r"Expected loss $\mathbb{E}[f(x_t)]$ (log scale)", labelpad=8)
+        ax.set_ylabel(r"Expected loss $\mathbb{E}[f(x_t)]$", labelpad=8)
     else:
-        ax.set_ylim(1e-5, 0.75)
-        ax.set_yticks([0.00001, 0.0001, 0.001, 0.01, 0.1, 0.5])
-        ax.set_ylabel(r"Learning rate $\eta_t$ (log scale)", labelpad=8)
+        ax.set_ylabel(r"Learning rate $\eta_t$", labelpad=8)
+    ax.set_ylim(0, 0.525)
+    ax.set_yticks(np.arange(0, 0.51, 0.1))
     ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
     ax.yaxis.set_minor_formatter(NullFormatter())
     ax.tick_params(which="minor", length=0)
@@ -272,6 +276,21 @@ def draw_panel(ax, records: dict, loss: bool):
     ax.grid(axis="y", which="major", color=GRID, linewidth=0.7)
     ax.set_axisbelow(True)
     ax.spines[["top", "right"]].set_visible(False)
+    # Linear insets retain visibility of the smaller learning rates and late loss.
+    zoom = ax.inset_axes([.37, .43, .60, .48])
+    for name, values in curves.items():
+        zoom.plot(np.arange(len(values)), values, **{**STYLES[name], "lw": 1.5})
+    zoom.set_yscale("linear")
+    zoom.set_xlim(50 if loss else 0, HORIZON)
+    zoom.set_ylim(0, .045 if loss else .075)
+    zoom.set_xticks([50, 75, 100] if loss else [0, 50, 100])
+    zoom.set_yticks([0, .02, .04] if loss else [0, .025, .05, .075])
+    zoom.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
+    zoom.tick_params(labelsize=8, length=2)
+    zoom.set_title("Late loss (linear zoom)" if loss else "LR (linear zoom)", fontsize=9, pad=5)
+    zoom.grid(axis="y", color=GRID, linewidth=.5)
+    zoom.set_axisbelow(True)
+    zoom.spines[["top", "right"]].set_visible(False)
 
 
 def make_figure(path: Path, records: dict, mobile: bool, preview_dir: Path | None):
@@ -304,7 +323,7 @@ def make_figure(path: Path, records: dict, mobile: bool, preview_dir: Path | Non
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, metadata={"Date": None,
         "Title": "Exact expected-loss comparison of SGD learning-rate schedules",
-        "Description": "Scalar quadratic with unit noise variance, unit initial second moment, and 100 updates. Exact optimum compared with independently tuned linear, cosine, and constant schedules. Both vertical axes are logarithmic. No sampled training data."})
+        "Description": "Scalar quadratic with unit noise variance, unit initial second moment, and 100 updates. Exact optimum compared with independently tuned linear, cosine, and constant schedules. All axes are linear, including zooms. Learning rates extend to the unused t=100 budget boundary. No sampled training data."})
     path.write_text("".join(line.rstrip() + "\n" for line in path.read_text(encoding="utf-8").splitlines()),
                     encoding="utf-8")
     if preview_dir is not None:

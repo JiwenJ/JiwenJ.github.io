@@ -280,10 +280,10 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg">
-  <img src="/images/lr-schedules/quadratic.svg" alt="带噪一维二次损失下四种 LR Schedule 及其精确期望损失，反比 LR Schedule 达到解析最优，其他 LR Schedule 分别调节幅值。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg?v=linear">
+  <img src="/images/lr-schedules/quadratic.svg?v=linear" alt="带噪一维二次损失下四种 LR Schedule 及其精确期望损失，反比 LR Schedule 达到解析最优，其他 LR Schedule 分别调节幅值。" loading="lazy" width="1200">
 </picture>
-<figcaption>四条曲线使用同一个损失、噪声方差和更新预算。学习率轴与损失轴均为对数刻度；比较的是这个二次模型的终点损失。</figcaption>
+<figcaption>四条曲线使用同一个损失、噪声方差和更新预算，所有坐标轴均为线性刻度；小图放大学习率和后半程损失。学习率曲线延伸至不再执行更新的预算边界 $t=N$。比较的是这个二次模型的终点损失。</figcaption>
 </figure>
 
 | LR Schedule | 最优或搜索得到的幅值 | 第 100 步期望损失 |
@@ -822,6 +822,13 @@ $$
 
 因此，给 Muon 使用前面的 warmup 加 Linear Decay 至 $0$，与这套分析并不矛盾。若固定 warmup，并在后续区间满足上述共同常数界，可以得到线性的上界最优形状。对带动量的版本，还需共同的常数偏差界；若偏差界随时间变化，最优权重一般不再恒定。仅凭优化器叫 Muon，或输出矩阵近乎正交，不能断言哪条曲线在实际任务上全局最优。
 
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-bound-optimal-mobile.svg">
+  <img src="/images/lr-schedules/muon-bound-optimal-desktop.svg" alt="理想 Muon 的条件上界最优衰减形状：固定 5% warmup 升至归一化峰值 1，随后线性降至 0。warmup 长度和峰值没有联合优化。" loading="lazy" width="1200">
+</picture>
+<figcaption>固定 5% warmup 的归一化示意。橙色部分是共同常数界下的上界最优衰减形状；warmup 前缀为给定设置。</figcaption>
+</figure>
 
 ### 带动量时，真实终点如何求解
 
@@ -1001,10 +1008,10 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg">
-  <img src="/images/lr-schedules/muon-quadratic-desktop.svg" alt="可解矩阵 Muon 模型的最优学习率及终点损失，与分别调节峰值的 Linear、Cosine 和 Constant 比较。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg?v=linear">
+  <img src="/images/lr-schedules/muon-quadratic-desktop.svg?v=linear" alt="可解矩阵 Muon 模型的最优学习率及终点损失，与分别调节峰值的 Linear、Cosine 和 Constant 比较。" loading="lazy" width="1200">
 </picture>
-<figcaption>同一个矩阵 Muon 模型、相同预算下的精确递推。各组比较分别搜索峰值；纵轴为对数刻度。</figcaption>
+<figcaption>同一个矩阵 Muon 模型、相同预算下的精确递推。各组比较分别搜索峰值；所有坐标轴均为线性刻度，小图放大学习率和后半程损失。学习率曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
 </figure>
 
 | LR Schedule | 最优或搜索得到的峰值 | 第 100 步期望损失 |

@@ -64,7 +64,7 @@ N, K = 100, 4
 ATOL, RTOL = 3e-12, 3e-11
 INK, SECONDARY, GRID = "#383832", "#74746c", "#e7e8e2"
 STYLES = {
-    "exact": {"label": "Exact optimum", "color": INK, "ls": "-", "lw": 2.25},
+    "exact": {"label": "Model optimum", "color": INK, "ls": "-", "lw": 2.25},
     "linear": {"label": "Linear (tuned)", "color": "#b56b30", "ls": (0, (5, 2)), "lw": 2.0},
     "cosine": {"label": "Cosine (tuned)", "color": "#517b8b", "ls": (0, (5, 2, 1, 2)), "lw": 2.0},
     "constant": {"label": "Constant (tuned)", "color": "#94826d", "ls": (0, (1, 2)), "lw": 2.0},
@@ -328,21 +328,27 @@ def make_figure(path, records, mobile, preview_dir):
                 else r"$f(W)=\frac{1}{2}\|W\|_F^2$ · $k=4$ · $\sigma^2=r_0=1$ · $100$ updates")
     fig.text(0.5, 0.922, subtitle, ha="center", va="top", fontsize=11, color=SECONDARY, linespacing=1.6)
     for loss, ax in enumerate(axes):
+        curves = {}
         for name, data in records.items():
             values = data["r"]/2.0 if loss else data["eta"]
+            if not loss:
+                boundary = (optimal_rate(data["r"][-1]) if name == "exact" else
+                            data["eta"][-1] if name == "constant" else 0.0)
+                values = np.append(values, boundary)
+            curves[name] = values
             ax.plot(np.arange(len(values)), values, **STYLES[name])
-        ax.set_yscale("log")
+        ax.set_yscale("linear")
         ax.set_xlim(0, N)
         ax.set_xticks([0, 25, 50, 75, 100])
         ax.set_xlabel("Updates completed, $t$" if loss else "Update index, $t$", labelpad=7)
         if loss:
-            ax.set_ylim(0.0038, 0.7)
-            ax.set_yticks([0.005, 0.01, 0.05, 0.1, 0.5])
-            ax.set_ylabel(r"Expected loss $\mathbb{E}[f(W_t)]$ (log scale)", labelpad=8)
+            ax.set_ylim(0, .525)
+            ax.set_yticks(np.arange(0, .51, .1))
+            ax.set_ylabel(r"Expected loss $\mathbb{E}[f(W_t)]$", labelpad=8)
         else:
-            ax.set_ylim(4e-6, 0.55)
-            ax.set_yticks([0.00001, 0.0001, 0.001, 0.01, 0.1])
-            ax.set_ylabel(r"Learning rate $\eta_t$ (log scale)", labelpad=8)
+            ax.set_ylim(0, .375)
+            ax.set_yticks([0, .1, .2, .3])
+            ax.set_ylabel(r"Learning rate $\eta_t$", labelpad=8)
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
         ax.yaxis.set_minor_formatter(NullFormatter())
         ax.tick_params(which="minor", length=0)
@@ -351,6 +357,20 @@ def make_figure(path, records, mobile, preview_dir):
         ax.set_axisbelow(True)
         ax.spines[["top", "right"]].set_visible(False)
         ax.set_title("(b) Expected loss" if loss else "(a) Learning-rate schedules", loc="left", fontsize=12, pad=13)
+        zoom = ax.inset_axes([.37, .43, .60, .48])
+        for name, values in curves.items():
+            zoom.plot(np.arange(len(values)), values, **{**STYLES[name], "lw": 1.5})
+        zoom.set_yscale("linear")
+        zoom.set_xlim(50 if loss else 0, N)
+        zoom.set_ylim(0, .045 if loss else .04)
+        zoom.set_xticks([50, 75, 100] if loss else [0, 50, 100])
+        zoom.set_yticks([0, .02, .04] if loss else [0, .02, .04])
+        zoom.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
+        zoom.tick_params(labelsize=8, length=2)
+        zoom.set_title("Late loss (linear zoom)" if loss else "LR (linear zoom)", fontsize=9, pad=5)
+        zoom.grid(axis="y", color=GRID, linewidth=.5)
+        zoom.set_axisbelow(True)
+        zoom.spines[["top", "right"]].set_visible(False)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="center", bbox_to_anchor=(0.52, 0.835 if mobile else 0.847),
                ncol=2 if mobile else 4, frameon=False, fontsize=10.5, handlelength=2.6,
@@ -360,7 +380,7 @@ def make_figure(path, records, mobile, preview_dir):
     fig.text(0.5, 0.035, footer, ha="center", fontsize=10.5, color=SECONDARY, linespacing=1.5)
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, metadata={"Date": None, "Title": "Solvable isotropic matrix model of a Muon polar update",
-        "Description": "Exact polar update with no momentum and isotropic tangent noise. Independently tuned baseline schedules; exact pathwise loss recurrence, no Monte Carlo. Both vertical axes logarithmic. Optimality applies only to this matrix model, not neural-network training."})
+        "Description": "Exact polar update with no momentum and isotropic tangent noise. Independently tuned baseline schedules; exact pathwise loss recurrence, no Monte Carlo. All axes are linear, including zooms. Learning rates extend to the unused t=100 budget boundary. Optimality applies only to this matrix model, not neural-network training."})
     path.write_text("".join(line.rstrip() + "\n" for line in path.read_text(encoding="utf-8").splitlines()),
                     encoding="utf-8")
     if preview_dir is not None:
