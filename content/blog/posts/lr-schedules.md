@@ -3,7 +3,7 @@ title: "不同优化器的最优 LR Schedule"
 date: "2026-10-31T00:00:00+08:00"
 author: ["Jiwen Jiang"]
 description: "从终点损失出发，依次推导 SGD、Adafactor、Adam 和 Muon 的 LR Schedule。"
-summary: "SGD 的线性上界与反比精确解，Adafactor 的相对步长，Adam 的动量修正，以及 Muon 的矩阵推导。"
+summary: "SGD 的线性上界与反比精确解，Adafactor 的相对步长，Adam 的动量修正，以及带动量 Muon 的 LR 与 ELR。"
 tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
@@ -75,6 +75,16 @@ references:
     authors: "Noam Shazeer, Mitchell Stern"
     source: "ICML 2018"
     url: "https://proceedings.mlr.press/v80/shazeer18a.html"
+  - id: 13
+    title: "从参数对称性到有效学习率"
+    authors: "苏剑林"
+    source: "科学空间, 2026"
+    url: "https://spaces.ac.cn/archives/11985"
+  - id: 14
+    title: "Muon 官方实现"
+    authors: "Keller Jordan et al."
+    source: "GitHub"
+    url: "https://github.com/KellerJordan/Muon/blob/master/muon.py"
 ---
 
 
@@ -187,6 +197,14 @@ $$
 $$
 
 它在 $t=T_w$ 达到峰值，随后直接线性降到 $\eta(T)=0$，中间没有恒定学习率阶段。$t=T$ 是预算边界；最后一次实际更新是否使用零学习率，要按更新索引约定区分[^index]。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-warmup-linear-mobile.svg">
+  <img src="/images/lr-schedules/sgd-warmup-linear-desktop.svg" alt="SGD 的 Warmup 加 Linear Decay：固定前 5% 训练进度线性升至峰值 1，随后直接线性降到 0，纵轴为线性刻度。" loading="lazy" width="1200">
+</picture>
+<figcaption>SGD 的两段式 LR Schedule。warmup 占比取 5% 作示意，纵轴除以峰值学习率；常数梯度界支持后半段的线性形状。</figcaption>
+</figure>
 
 前面的常数梯度界推出了线性衰减形状，没有同时求出 warmup 长度。Defazio 等人的实验为非自适应调度加入了固定 warmup；使用随时间变化的梯度统计所作的 refinement，也能产生 warmup，但曲线通常不再是严格的两段直线{{< cite 1 >}}。
 
@@ -661,11 +679,51 @@ AdamW 的权重衰减还会带来累计因子 $\prod_t(1-\lambda_{\rm wd}\eta_t)
 
 ## 四、Muon
 
-沿用 SGD 一节的终点上界分析，无动量、精确极分解的理想 Muon 在共同的常数能量界与受控的预条件矩阵变差下，也会得到线性衰减。关键在于这些量是否受控：正交化固定了部分更新尺度，却没有固定梯度的谱、方向以及动量偏差。
+Muon 先累积动量，再对更新矩阵作 Newton–Schulz 变换。用 EMA 记号写出 Nesterov 版本，区分动量缓存 $B_t$ 与送入矩阵变换的 $M_t${{< cite 8 14 >}}：
 
-以下先分析对当前梯度做精确极分解、没有动量与权重衰减的理想更新，再加入动量修正。实际 Muon 对动量做有限次 Newton–Schulz 变换，因此不能把理想更新的结论直接当作实际训练的最优调度{{< cite 8 10 >}}。
+$$
+B_t=\beta B_{t-1}+(1-\beta)G_t,\qquad M_t=(1-\beta)G_t+\beta B_t,\qquad U_t=s_t\Phi(M_t).
+$$
 
-### 与 SGD 使用同一终点目标
+普通动量版本取 $M_t=B_t$。$\Phi$ 表示实际采用的矩阵变换，$s_t$ 包含矩阵倍率。外部 LR 出现在参数更新中：$W_{t+1}=(1-\eta_t\lambda_{\rm wd})W_t-\eta_tU_t$。
+
+### 外部 LR 与 ELR 是两条曲线
+
+记权重 RMS 为 $r_t$、非衰减更新 RMS 为 $q_t$，相对更新幅度定义为
+
+$$
+\mathrm{ELR}_t=\frac{\eta_t q_t}{r_t}=\frac{\eta_t\|U_t\|_F}{\|W_t\|_F}.
+$$
+
+外部 LR 线性下降，并不意味着 ELR 也线性下降。苏剑林在《从参数对称性到有效学习率》中，先选取 Linear Decay 作为外部 LR，再用 Adam 的更新尺度和权重范数近似推算 ELR；最后提出相似渐近形状可以推广到 Muon{{< cite 13 >}}。这一步讨论的是 LR 到 ELR 的映射。
+
+以 warmup 结束为起点，令 $\tau\in[0,1]$ 表示后续衰减进度。采用给定的 $\eta(\tau)=\eta_{\rm pk}(1-\tau)$，并用 $q(\tau)\approx q_0$、$r^2(\tau)\approx r_\infty^2(1-c_0e^{-\kappa\tau})$ 描述范数增长，就有
+
+$$
+\boxed{\frac{\mathrm{ELR}(\tau)}{\mathrm{ELR}(0)}\approx(1-\tau)\sqrt{\frac{1-c_0}{1-c_0e^{-\kappa\tau}}}},\qquad 0\lt c_0\lt1,\ \kappa\gt0.
+$$
+
+分子随外部 LR 线性减小，分母随权重范数增大，因此 ELR 早期下降更快；范数接近平台后，它才近似按直线下降。这里的单指数范数模型是参考近似，$c_0,\kappa$ 需要由具体训练确定，不能从优化器名称直接读出。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-lr-elr-mobile.svg">
+  <img src="/images/lr-schedules/muon-lr-elr-desktop.svg" alt="带动量 Muon 的外部 LR 与 ELR：外部 LR 给定为线性衰减，在更新 RMS 近似稳定且权重 RMS 增长的模型下，ELR 前期下降更快、后期接近线性。两条曲线均除以各自起点，纵轴线性。" loading="lazy" width="1200">
+</picture>
+<figcaption>示意取 $c_0=0.9,\kappa=5$，只画 warmup 后的衰减阶段。橙色是给定的外部 LR，蓝色是范数增长近似下的 ELR；两者分别按起点归一化。</figcaption>
+</figure>
+
+Muon 的常数不能直接照搬 Adam。例如精确极分解下，若 $W_t\in\mathbb R^{m\times n}$、$\operatorname{rank}(M_t)=k$，则 $q_t^2=s_t^2k/(mn)$。动量会影响更新方向的时间相关性，而不只是给这个幅度乘一个 Adam 式的因子。带权重衰减时，范数严格满足
+
+$$
+r_{t+1}^2=(1-\lambda_{\rm wd}\eta_t)^2r_t^2+\eta_t^2q_t^2-\frac{2\eta_t(1-\lambda_{\rm wd}\eta_t)}{mn}\langle W_t,U_t\rangle_F.
+$$
+
+动量和有限次 Newton–Schulz 都会影响右端，交叉项不能直接删去。因此，图中的弯曲 ELR 是特定渐近假设下的参考形状，尚未求出实际带动量 Muon 的全局最优外部 LR。若目标是让 ELR 服从某条指定曲线 $e_t$，需要设置 $\eta_t=e_t r_t/q_t$，并考虑 $r_t,q_t$ 也会随新调度改变。
+
+### 终点上界中为什么也会出现 Linear
+
+下面回到与 SGD 相同的凸终点上界问题。先用无动量、精确极分解说明矩阵能量的来源，再保留动量与有限次 Newton–Schulz 的影响。只有进一步采用共同常数界，才会再次得到线性形状；这与上面的 ELR 映射是不同的分析。
 
 #### 把正交化写成矩阵预条件
 
@@ -814,38 +872,48 @@ $$
 
 确定上界最优调度。这里的能量换成了动量矩阵的核范数；动量的核范数稳定，并不意味着偏差项 $b_t$ 可以省略。
 
-上述结果要求 $A,a_t,b_t$ 对候选 LR Schedule 共同成立。若用有限次 Newton–Schulz 代替精确极分解，还需在距离展开中保留近似残差。
+上述结果要求 $A,a_t,b_t$ 对候选 LR Schedule 共同成立。
 
 矩阵级倍率也会进入结果。若理想更新是 $s_t\operatorname{polar}(G_t)$，其中 $s_t>0$，可将度量改为 $H_t/s_t$：能量变成 $s_t\|G_t\|_*$，矩阵变差也须同时改变。对恒定 $s>0$，学习率相应除以 $s$，实际位移保持一致。多个矩阵共用一个 LR Schedule 时，可以在分块度量下累加能量和变差；包含 AdamW 参数组的混合优化器，还需纳入那些参数组自身的界。
 
+#### 把有限次 Newton–Schulz 纳入上界
+
+仍暂不加权重衰减。直接使用实际更新 $U_t=s_t\Phi(M_t)$，取 $H_t=(M_tM_t^\top)^{1/2}/s_t$，定义能量与残差
+
+$$
+e_t=\operatorname{tr}(U_t^\top H_tU_t),\qquad \Delta_t=G_t-H_tU_t.
+$$
+
+辅助更新改为 $Z_{t+1}=Z_t-w_tU_t$。对 $E_t=Z_t-W_*$，距离展开是逐步成立的恒等式：
+
+$$
+2w_t\langle G_t,E_t\rangle_F=\|E_t\|_{H_t}^2-\|E_{t+1}\|_{H_t}^2+w_t^2e_t+2w_t\langle\Delta_t,E_t\rangle_F.
+$$
+
+因此，共同界应取 $a_t\geq\mathbb E e_t$、$b_t\geq R\mathbb E\|\Delta_t\|_F$，再优化同一个 $\mathcal B_{\rm mom}$。精确极分解时恢复 $e_t=s_t\|M_t\|_*$、$\Delta_t=G_t-M_t$；有限次迭代时，能量与偏差界都要改变。
+
 #### Warmup 与零终点约束
 
-因此，给 Muon 使用前面的 warmup 加 Linear Decay 至 $0$，与这套分析并不矛盾。若固定 warmup，并在后续区间满足上述共同常数界，可以得到线性的上界最优形状。对带动量的版本，还需共同的常数偏差界；若偏差界随时间变化，最优权重一般不再恒定。仅凭优化器叫 Muon，或输出矩阵近乎正交，不能断言哪条曲线在实际任务上全局最优。
+固定 warmup 后，真实训练从其结束时的参数与动量缓存继续，只把辅助序列重新设为该处的参数，不能清零真实动量。若后续候选调度共同满足常数界 $A,a,b$，则上界为 $\mathcal B_{\rm mom}=(A+a\sum_tw_t^2)/(2S)+b$：常数 $b$ 抬高上界，最佳权重仍相等，外部 LR 因而线性降到 $0$。若 $a_t$ 或 $b_t$ 随时间变化，这个结论就不再直接成立。
 
-<figure>
-<picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-bound-optimal-mobile.svg">
-  <img src="/images/lr-schedules/muon-bound-optimal-desktop.svg" alt="理想 Muon 的条件上界最优衰减形状：固定 5% warmup 升至归一化峰值 1，随后线性降至 0。warmup 长度和峰值没有联合优化。" loading="lazy" width="1200">
-</picture>
-<figcaption>固定 5% warmup 的归一化示意。橙色部分是共同常数界下的上界最优衰减形状；warmup 前缀为给定设置。</figcaption>
-</figure>
+这里得到的是常数界下的最优衰减形状，峰值与 warmup 长度仍需另行确定；不能据此判定实际 Muon 训练的最佳曲线。
 
 ### 带动量时，真实终点如何求解
 
-带动量 Muon 要保留参数与动量两个状态。以固定 $\beta$、矩阵倍率 $s$ 和衰减系数 $\lambda_{\rm wd}$ 为例：
+带动量 Muon 要保留参数与动量缓存两个状态。以 Nesterov、固定 $\beta$、矩阵倍率 $s$ 和衰减系数 $\lambda_{\rm wd}$ 为例，以下从 $t=0$ 开始计数：
 
 $$
-M_{t+1}=\beta M_t+(1-\beta)G(W_t,\xi_t),\qquad W_{t+1}=(1-\lambda_{\rm wd}\eta_t)W_t -\eta_t s\Phi(M_{t+1}).
+B_{t+1}=\beta B_t+(1-\beta)G(W_t,\xi_t),\qquad M_t=(1-\beta)G(W_t,\xi_t)+\beta B_{t+1}.
 $$
 
-$\Phi$ 可以是精确极分解，也可以是实现中的有限次 Newton–Schulz 变换；使用 Nesterov 时应换成对应的输入矩阵。先把每一步非负学习率都作为变量，要解的是
+参数更新为 $W_{t+1}=(1-\lambda_{\rm wd}\eta_t)W_t-\eta_ts\Phi(M_t)$；普通动量则取 $M_t=B_{t+1}$。$\Phi$ 可以是精确极分解，也可以是实际的有限次 Newton–Schulz 变换。把每一步非负学习率都作为变量，要解的是
 
 $$
 \min_{\eta_0,\ldots,\eta_{N-1}\geq0}
 J(\eta)=\mathbb E_\xi f(W_N(\eta)).
 $$
 
-写 $X_t=(W_t,M_t)$，将完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里 $\xi$ 的分布不依赖学习率；若噪声随参数变化，其依赖须已包含在 $G(W,\xi)$ 中。在可微且可交换求导与期望的条件下，对固定的样本序列反向传播：
+写 $X_t=(W_t,B_t)$，将完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里 $\xi$ 的分布不依赖学习率；若噪声随参数变化，其依赖须已包含在 $G(W,\xi)$ 中。在可微且可交换求导与期望的条件下，对固定的样本序列反向传播：
 
 $$
 p_N=(\nabla f(W_N),0),\qquad p_t=(D_XF_t)^\top p_{t+1}.
@@ -858,7 +926,7 @@ $$
 \frac{\partial J}{\partial\eta_t}
 =-\mathbb E\left\langle
 p_{t+1}^{W},\,
-s\Phi(M_{t+1})+\lambda_{\rm wd}W_t
+s\Phi(M_t)+\lambda_{\rm wd}W_t
 \right\rangle_F.
 }
 $$
