@@ -11,6 +11,7 @@ math: true
 isCJKLanguage: true
 ShowToc: true
 TocOpen: false
+aliases: ["/blog/posts/lr-schedule/"]
 citationKey: "jiang2026lrschedules"
 citationUrl: "https://jiwenj.github.io/blog/posts/lr-schedules/"
 references:
@@ -176,6 +177,20 @@ $$
 $$
 
 线性来自“剩余权重的占比”：每一步的权重相等，剩余权重就与剩余步数成正比。这个速率达到一般凸随机优化的最优最坏情况阶{{< cite 1 >}}。实际训练通常不知道 $D$ 和 $G$，因此会保留线性形状，另外搜索峰值学习率。
+
+### Warmup 后线性降到 0
+
+固定总预算 $T$，在 $T_w$ 处结束 warmup，峰值学习率为 $\eta_{\rm pk}$，最小学习率为 $0$。用 $0\leq t\leq T$ 表示训练进度，这条调度曲线可以写成一行：
+
+$$
+\boxed{\eta(t)=\eta_{\rm pk}\min\!\left\{\frac{t}{T_w},\frac{T-t}{T-T_w}\right\},\qquad 0\lt T_w\lt T.}
+$$
+
+它在 $t=T_w$ 达到峰值，随后直接线性降到 $\eta(T)=0$，中间没有恒定学习率阶段。$t=T$ 是预算边界；最后一次实际更新是否使用零学习率，要按更新索引约定区分[^index]。
+
+前面的常数梯度界推出了线性衰减形状，没有同时求出 warmup 长度。Defazio 等人的实验为非自适应调度加入了固定 warmup；使用随时间变化的梯度统计所作的 refinement，也能产生 warmup，但曲线通常不再是严格的两段直线{{< cite 1 >}}。
+
+若先固定 warmup 前缀，可以把 warmup 后的参数作为新的初始点，在剩余区间重新应用终点上界。此时仍须满足凸性、原始梯度条件无偏等假设，并对候选后续调度使用共同的距离与能量界。这个分析支持衰减段的线性形状，不等于联合证明了整条 warmup 加衰减曲线、峰值和 warmup 长度都最优。
 
 ### 梯度随时间变化时
 
@@ -646,198 +661,13 @@ AdamW 的权重衰减还会带来累计因子 $\prod_t(1-\lambda_{\rm wd}\eta_t)
 
 ## 四、Muon
 
-先考虑对当前随机梯度做精确极分解的更新，不含动量、权重衰减或矩阵倍率。实际 Muon 对动量做 Newton–Schulz 变换，需要另外保留动量状态{{< cite 8 10 >}}。
+沿用 SGD 一节的终点上界分析，无动量、精确极分解的理想 Muon 在共同的常数能量界与受控的预条件矩阵变差下，也会得到线性衰减。关键在于这些量是否受控：正交化固定了部分更新尺度，却没有固定梯度的谱、方向以及动量偏差。
 
-### 一个闭合的矩阵随机模型
+以下先分析对当前梯度做精确极分解、没有动量与权重衰减的理想更新，再加入动量修正。实际 Muon 对动量做有限次 Newton–Schulz 变换，因此不能把理想更新的结论直接当作实际训练的最优调度{{< cite 8 10 >}}。
 
-设 $W_t\in\mathbb R^{m\times k}$，$m\geq2k$，目标为
-
-$$
-f(W)=\frac h2\|W\|_F^2,
-\qquad h>0.
-$$
-
-初始矩阵满足 $W_0^\top W_0=(r_0/k)I_k$，$r_0>0$。也就是说，它的 $k$ 个奇异值相等。令 $r_t=\|W_t\|_F^2$，随机梯度取为
-
-$$
-G_t=hW_t+\Xi_t,
-$$
-
-其中噪声满足
-
-$$
-\mathbb E[\Xi_t\mid\mathcal F_{t-1}]=0,\qquad W_t^\top\Xi_t=0,\qquad \Xi_t^\top\Xi_t=\frac{\sigma^2}{k}I_k, \qquad \sigma>0.
-$$
-
-这里的噪声与当前参数列空间正交，且 Frobenius 范数固定为 $\sigma$。这样的无偏随机梯度确实可以构造：在 $W_t$ 的正交补中取 $k$ 个正交单位向量组成 $O_t$，再令 $\Xi_t=\pm\sigma O_t/\sqrt k$，正负号独立且等概率。条件 $m\geq2k$ 保证有足够的正交补空间。
-
-噪声的方向依赖当前参数，因而不同于固定分布的加性高斯噪声，也不同于 SGD 一节的标量加性噪声模型。两节的数值用于各自模型内比较调度，不用于比较优化器的优劣。在这些条件下，损失可以由一个标量状态精确递推。
-
-若当前 $W_t^\top W_t=(r_t/k)I_k$，则
-
-$$
-G_t^\top G_t
-=\frac{h^2r_t+\sigma^2}{k}I_k.
-$$
-
-因此精确极分解有显式表达式：
-
-$$
-U_t=\operatorname{polar}(G_t) =\frac{\sqrt k\,G_t}{\sqrt{h^2r_t+\sigma^2}}, \qquad U_t^\top U_t=I_k.
-$$
-
-将它代入 $W_{t+1}=W_t-\eta_tU_t$，得到
-
-$$
-\boxed{
-r_{t+1}
-=r_t-\frac{2\eta_t h\sqrt k\,r_t}
-{\sqrt{h^2r_t+\sigma^2}}+k\eta_t^2.
-}
-$$
-
-这个等式对每个噪声样本都成立，尚未取期望。与此同时，
-
-$$
-W_{t+1}^\top W_{t+1}=\frac{r_{t+1}}kI_k,
-$$
-
-所以初始的等奇异值结构保持不变。因此，损失的演化只需跟踪标量 $r_t$。
-
-### 配方，再证明全程最优
-
-把上面的递推配方：
-
-$$
-r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +k\left( \eta_t-\frac{hr_t}{\sqrt k\sqrt{h^2r_t+\sigma^2}} \right)^2.
-$$
-
-因此，当前状态下的最优步长是
-
-$$
-\eta^*(r)=\frac{hr}{\sqrt k\sqrt{h^2r+\sigma^2}},
-$$
-
-其最小下一步状态为
-
-$$
-\phi(r)=\frac{\sigma^2r}{h^2r+\sigma^2}.
-$$
-
-还差一步才能称为全程最优。注意
-
-$$
-\phi'(r)=\frac{\sigma^4}{(h^2r+\sigma^2)^2}>0.
-$$
-
-任意非负学习率都有 $r_{t+1}\geq\phi(r_t)$。由于 $\phi$ 单调，归纳可得
-
-$$
-r_N\geq\phi^{\circ N}(r_0).
-$$
-
-每一步选择 $\eta^*(r_t)$ 会达到等号。因此它同时最小化任意预算 $N$ 下的 $f(W_N)=hr_N/2$。这不仅覆盖预先设定的 LR Schedule，也覆盖根据历史、甚至当前噪声选择标量步长的策略：配方得到的下界对每条轨迹都成立。
-
-### 解出时间形式
-
-最优状态满足
-
-$$
-\frac1{r_{t+1}^*}=\frac1{r_t^*}+\frac{h^2}{\sigma^2}.
-$$
-
-记 $c=\sigma^2/(h^2r_0)$，于是
-
-$$
-r_t^*=\frac{\sigma^2}{h^2(t+c)}.
-$$
-
-代回步长，得到这个矩阵 Muon 模型的精确最优 LR Schedule：
-
-$$
-\boxed{
-\eta_t^* =\frac{\sigma}{h\sqrt k} \frac1{\sqrt{(t+c)(t+c+1)}},\qquad \mathbb E f(W_N)_{\min} =\frac{\sigma^2}{2h(N+c)}.
-}
-$$
-
-它没有在预定终点归零，且当 $t\gg c$ 时，
-
-$$
-\eta_t^*\sim\frac{\sigma}{h\sqrt k}\frac1t.
-$$
-
-矩阵宽度 $k$ 的因子来自 $\|U_t\|_F^2=k$。若实现使用 $sU_t$、$s>0$ 为固定倍率，则对应学习率为 $\eta_t^*/s$。
-
-由于梯度的奇异值相等，极分解在这里等价于整体归一化。若改用同一个随机梯度做 SGD，相同位移对应
-
-$$
-\eta_t^{\rm SGD}
-=\frac{\sqrt k}{\sqrt{h^2r_t+\sigma^2}}\eta_t^{\rm Muon}.
-$$
-
-在最优轨迹上，它化为 $\eta_t^{\rm SGD}=1/[h(t+c+1)]$。两种优化器能走出同一条参数轨迹，但对应的外部学习率并不相同。一般矩阵的奇异值不相等时，极分解会分别改变各个谱方向，这个标量换算就不再成立。
-
-取 $h=\sigma^2=r_0=1$、$k=4$，执行 $N=100$ 次更新。精确解为 $\eta_t^*=1/[2\sqrt{(t+1)(t+2)}]$。作为比较，Linear、Cosine 和 Constant 分别取 $\alpha(1-t/N)$、$\alpha[1+\cos(\pi t/N)]/2$ 和 $\alpha$，索引均为 $t=0,\ldots,N-1$。对每组分别在峰值 $\alpha\in[0,1/\sqrt k]$ 内优化真实终点损失。
-
-<figure>
-<picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg">
-  <img src="/images/lr-schedules/muon-quadratic-desktop.svg" alt="可解矩阵 Muon 模型的最优学习率及终点损失，与分别调节峰值的 Linear、Cosine 和 Constant 比较。" loading="lazy" width="1200">
-</picture>
-<figcaption>同一个矩阵 Muon 模型、相同预算下的精确递推。各组比较分别搜索峰值；纵轴为对数刻度。</figcaption>
-</figure>
-
-| LR Schedule | 最优或搜索得到的峰值 | 第 100 步期望损失 |
-| --- | --- | --- |
-| 精确最优 | $\eta_0^*=1/(2\sqrt2)$ | $0.0049505$ |
-| Linear | $\alpha\approx0.0367602$ | $0.0064220$ |
-| Cosine | $\alpha\approx0.0366828$ | $0.0071489$ |
-| Constant | $\alpha\approx0.0158727$ | $0.0092292$ |
-
-这个精确解依赖等奇异值与正交噪声假设。各向异性梯度、动量或近似正交化都会改变递推，$1/t$ 的渐近形状也不再由上述证明保证。
-
-### 带动量时，怎样求全程最优
-
-带动量 Muon 要保留参数与动量两个状态。以固定 $\beta$、矩阵倍率 $s$ 和衰减系数 $\lambda_{\rm wd}$ 为例：
-
-$$
-M_{t+1}=\beta M_t+(1-\beta)G(W_t,\xi_t),\qquad W_{t+1}=(1-\lambda_{\rm wd}\eta_t)W_t -\eta_t s\Phi(M_{t+1}).
-$$
-
-$\Phi$ 可以是精确极分解，也可以是实现中的有限次 Newton–Schulz 变换；使用 Nesterov 时应换成对应的输入矩阵。现在要解的是
-
-$$
-\min_{\eta_0,\ldots,\eta_{N-1}\geq0}
-J(\eta)=\mathbb E_\xi f(W_N(\eta)).
-$$
-
-写 $X_t=(W_t,M_t)$，将完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里 $\xi$ 的分布不依赖学习率；若噪声随参数变化，其依赖须已包含在 $G(W,\xi)$ 中。在可微且可交换求导与期望的条件下，对固定的样本序列反向传播：
-
-$$
-p_N=(\nabla f(W_N),0),\qquad p_t=(D_XF_t)^\top p_{t+1}.
-$$
-
-于是每一个时刻的学习率梯度为
-
-$$
-\boxed{
-\frac{\partial J}{\partial\eta_t}
-=-\mathbb E\left\langle
-p_{t+1}^{W},\,
-s\Phi(M_{t+1})+\lambda_{\rm wd}W_t
-\right\rangle_F.
-}
-$$
-
-对内部最优点，这个导数为零；若最优值落在 $\eta_t=0$，相应右导数应非负。$p_{t+1}^{W}$ 衡量当前位移对最终损失的影响，已经包含此后所有梯度、动量和正交化的变化。若只优化下一步真实损失 $f(W_{t+1})$，对应导数使用 $\nabla f(W_{t+1})$；使用当前梯度只给出一阶下降近似。
-
-沿完整训练轨迹反向传播，可以计算 $\nabla_\eta J$，再在非负约束下优化各步学习率{{< cite 11 >}}。这个外层问题一般非凸，驻点条件只是必要条件；具体解依赖目标、数据分布和训练预算，通常需要数值求解。精确极分解在秩变化处还可能不可微。
-
-### 一般凸目标下的谱上界
+### 与 SGD 使用同一终点目标
 
 #### 把正交化写成矩阵预条件
-
-先分析直接正交化当前随机梯度、没有动量与权重衰减、使用精确极分解的理想 Muon。Muon 的作者也区分了这个理论形式与对动量做 Newton–Schulz 近似的实际实现{{< cite 8 10 >}}。
 
 设参数与梯度为矩阵 $W_t,G_t$。对只保留非零奇异值的紧致 SVD，定义
 
@@ -944,13 +774,13 @@ $$
 }
 $$
 
-这是常数能量界下的一个特例。这里优化的是 $\mathcal B_{\rm Muon}$，与前面的矩阵二次模型直接优化真实终点损失的目标不同。解出的权重还须处于共同距离界、能量界成立的候选集合中。非恒定轮廓下，调度随核范数能量及其剩余累积量变化。若 $a_t$ 来自一次预训练记录，这仍然是依赖旧轨迹和未来统计的 refinement，不能直接当作可在线实现的最优控制。
+这是常数能量界下的一个特例。这里优化的是 $\mathcal B_{\rm Muon}$，没有直接求出某个具体训练任务的真实终点损失最小值。解出的权重还须处于共同距离界、能量界成立的候选集合中。非恒定轮廓下，调度随核范数能量及其剩余累积量变化。若 $a_t$ 来自一次预训练记录，这仍然是依赖旧轨迹和未来统计的 refinement，不能直接当作可在线实现的最优控制。
 
 要让这个上界随训练步数趋于零，还需要 $A/Q_T\to0$。$A$ 包含预条件矩阵的累计变化：即使核范数能量稳定，$H_t$ 的方向振荡也可能使 $\Lambda_T^{\rm Muon}$ 随 $T$ 线性增长。
 
 #### 动量 Muon 中必须保留的修正
 
-本小节将第 $t$ 步送入正交化的矩阵记为 $M_t$；在前面的普通动量更新中，它对应刚更新的 $M_{t+1}$，也可以包含 Nesterov 修正。用 $H_t=(M_tM_t^\top)^{1/2}$ 重复上面的代数，控制的是 $\langle M_t,Z_t-W_*\rangle_F$；凸性需要的仍然是当前随机梯度 $G_t$。两者相差
+本小节将第 $t$ 步送入正交化的矩阵记为 $M_t$，它可以是普通动量，也可以包含 Nesterov 修正。用 $H_t=(M_tM_t^\top)^{1/2}$ 重复上面的代数，控制的是 $\langle M_t,Z_t-W_*\rangle_F$；凸性需要的仍然是当前随机梯度 $G_t$。两者相差
 
 $$
 \mathcal C_T
@@ -987,6 +817,208 @@ $$
 上述结果要求 $A,a_t,b_t$ 对候选 LR Schedule 共同成立。若用有限次 Newton–Schulz 代替精确极分解，还需在距离展开中保留近似残差。
 
 矩阵级倍率也会进入结果。若理想更新是 $s_t\operatorname{polar}(G_t)$，其中 $s_t>0$，可将度量改为 $H_t/s_t$：能量变成 $s_t\|G_t\|_*$，矩阵变差也须同时改变。对恒定 $s>0$，学习率相应除以 $s$，实际位移保持一致。多个矩阵共用一个 LR Schedule 时，可以在分块度量下累加能量和变差；包含 AdamW 参数组的混合优化器，还需纳入那些参数组自身的界。
+
+#### Warmup 与零终点约束
+
+因此，给 Muon 使用前面的 warmup 加 Linear Decay 至 $0$，与这套分析并不矛盾。若固定 warmup，并在后续区间满足上述共同常数界，可以得到线性的上界最优形状。对带动量的版本，还需共同的常数偏差界；若偏差界随时间变化，最优权重一般不再恒定。仅凭优化器叫 Muon，或输出矩阵近乎正交，不能断言哪条曲线在实际任务上全局最优。
+
+
+### 带动量时，真实终点如何求解
+
+带动量 Muon 要保留参数与动量两个状态。以固定 $\beta$、矩阵倍率 $s$ 和衰减系数 $\lambda_{\rm wd}$ 为例：
+
+$$
+M_{t+1}=\beta M_t+(1-\beta)G(W_t,\xi_t),\qquad W_{t+1}=(1-\lambda_{\rm wd}\eta_t)W_t -\eta_t s\Phi(M_{t+1}).
+$$
+
+$\Phi$ 可以是精确极分解，也可以是实现中的有限次 Newton–Schulz 变换；使用 Nesterov 时应换成对应的输入矩阵。先把每一步非负学习率都作为变量，要解的是
+
+$$
+\min_{\eta_0,\ldots,\eta_{N-1}\geq0}
+J(\eta)=\mathbb E_\xi f(W_N(\eta)).
+$$
+
+写 $X_t=(W_t,M_t)$，将完整更新记为 $X_{t+1}=F_t(X_t,\eta_t,\xi_t)$。这里 $\xi$ 的分布不依赖学习率；若噪声随参数变化，其依赖须已包含在 $G(W,\xi)$ 中。在可微且可交换求导与期望的条件下，对固定的样本序列反向传播：
+
+$$
+p_N=(\nabla f(W_N),0),\qquad p_t=(D_XF_t)^\top p_{t+1}.
+$$
+
+于是每一个时刻的学习率梯度为
+
+$$
+\boxed{
+\frac{\partial J}{\partial\eta_t}
+=-\mathbb E\left\langle
+p_{t+1}^{W},\,
+s\Phi(M_{t+1})+\lambda_{\rm wd}W_t
+\right\rangle_F.
+}
+$$
+
+对内部最优点，这个导数为零；若最优值落在 $\eta_t=0$，相应右导数应非负。$p_{t+1}^{W}$ 衡量当前位移对最终损失的影响，已经包含此后所有梯度、动量和正交化的变化。若只优化下一步真实损失 $f(W_{t+1})$，对应导数使用 $\nabla f(W_{t+1})$；使用当前梯度只给出一阶下降近似。
+
+沿完整训练轨迹反向传播，可以计算 $\nabla_\eta J$，再在非负约束下优化各步学习率{{< cite 11 >}}。这个外层问题一般非凸，驻点条件只是必要条件；具体解依赖目标、数据分布和训练预算，通常需要数值求解。精确极分解在秩变化处还可能不可微。
+
+若问题额外固定 warmup 前缀，就只优化其后的学习率；若要求最后一次实际更新的学习率为零，也应固定该变量。若进一步把衰减段限定为直线，形状已经由约束指定，剩下要选的是峰值等尚未固定的参数。这与允许所有非负学习率序列参与比较，是不同的优化问题。
+
+
+<details class="technical-note">
+<summary>补充：一个特殊矩阵模型的精确解，为什么可以不是 Linear</summary>
+
+这里改为直接最小化一个二次模型的真实终点损失，优化所有非负标量步长，不固定 warmup，也不要求最后一次实际更新的步长为零。模型使用等奇异值参数和与参数列空间正交的特殊噪声，并去掉动量。下面得到的反比渐近形状只属于这个模型，不是实际 Muon 的通用最优 LR Schedule。
+
+**模型与噪声假设**
+
+设 $W_t\in\mathbb R^{m\times k}$，$m\geq2k$，目标为
+
+$$
+f(W)=\frac h2\|W\|_F^2,
+\qquad h>0.
+$$
+
+初始矩阵满足 $W_0^\top W_0=(r_0/k)I_k$，$r_0>0$。也就是说，它的 $k$ 个奇异值相等。令 $r_t=\|W_t\|_F^2$，随机梯度取为
+
+$$
+G_t=hW_t+\Xi_t,
+$$
+
+其中噪声满足
+
+$$
+\mathbb E[\Xi_t\mid\mathcal F_{t-1}]=0,\qquad W_t^\top\Xi_t=0,\qquad \Xi_t^\top\Xi_t=\frac{\sigma^2}{k}I_k, \qquad \sigma>0.
+$$
+
+这里的噪声与当前参数列空间正交，且 Frobenius 范数固定为 $\sigma$。这样的无偏随机梯度确实可以构造：在 $W_t$ 的正交补中取 $k$ 个正交单位向量组成 $O_t$，再令 $\Xi_t=\pm\sigma O_t/\sqrt k$，正负号独立且等概率。条件 $m\geq2k$ 保证有足够的正交补空间。
+
+噪声的方向依赖当前参数，因而不同于固定分布的加性高斯噪声，也不同于 SGD 一节的标量加性噪声模型。两节的数值用于各自模型内比较调度，不用于比较优化器的优劣。在这些条件下，损失可以由一个标量状态精确递推。
+
+若当前 $W_t^\top W_t=(r_t/k)I_k$，则
+
+$$
+G_t^\top G_t
+=\frac{h^2r_t+\sigma^2}{k}I_k.
+$$
+
+因此精确极分解有显式表达式：
+
+$$
+U_t=\operatorname{polar}(G_t) =\frac{\sqrt k\,G_t}{\sqrt{h^2r_t+\sigma^2}}, \qquad U_t^\top U_t=I_k.
+$$
+
+将它代入 $W_{t+1}=W_t-\eta_tU_t$，得到
+
+$$
+\boxed{
+r_{t+1}
+=r_t-\frac{2\eta_t h\sqrt k\,r_t}
+{\sqrt{h^2r_t+\sigma^2}}+k\eta_t^2.
+}
+$$
+
+这个等式对每个噪声样本都成立，尚未取期望。与此同时，
+
+$$
+W_{t+1}^\top W_{t+1}=\frac{r_{t+1}}kI_k,
+$$
+
+所以初始的等奇异值结构保持不变。因此，损失的演化只需跟踪标量 $r_t$。
+
+**配方，再证明全程最优**
+
+把上面的递推配方：
+
+$$
+r_{t+1} =\frac{\sigma^2r_t}{h^2r_t+\sigma^2} +k\left( \eta_t-\frac{hr_t}{\sqrt k\sqrt{h^2r_t+\sigma^2}} \right)^2.
+$$
+
+因此，当前状态下的最优步长是
+
+$$
+\eta^*(r)=\frac{hr}{\sqrt k\sqrt{h^2r+\sigma^2}},
+$$
+
+其最小下一步状态为
+
+$$
+\phi(r)=\frac{\sigma^2r}{h^2r+\sigma^2}.
+$$
+
+还差一步才能称为全程最优。注意
+
+$$
+\phi'(r)=\frac{\sigma^4}{(h^2r+\sigma^2)^2}>0.
+$$
+
+任意非负学习率都有 $r_{t+1}\geq\phi(r_t)$。由于 $\phi$ 单调，归纳可得
+
+$$
+r_N\geq\phi^{\circ N}(r_0).
+$$
+
+每一步选择 $\eta^*(r_t)$ 会达到等号。因此它同时最小化任意预算 $N$ 下的 $f(W_N)=hr_N/2$。这不仅覆盖预先设定的 LR Schedule，也覆盖根据历史、甚至当前噪声选择标量步长的策略：配方得到的下界对每条轨迹都成立。
+
+**解出时间形式**
+
+最优状态满足
+
+$$
+\frac1{r_{t+1}^*}=\frac1{r_t^*}+\frac{h^2}{\sigma^2}.
+$$
+
+记 $c=\sigma^2/(h^2r_0)$，于是
+
+$$
+r_t^*=\frac{\sigma^2}{h^2(t+c)}.
+$$
+
+代回步长，得到这个特殊模型中、无预设 warmup 与末次零步长约束的精确最优解：
+
+$$
+\boxed{
+\eta_t^* =\frac{\sigma}{h\sqrt k} \frac1{\sqrt{(t+c)(t+c+1)}},\qquad \mathbb E f(W_N)_{\min} =\frac{\sigma^2}{2h(N+c)}.
+}
+$$
+
+它没有在预定终点归零，且当 $t\gg c$ 时，
+
+$$
+\eta_t^*\sim\frac{\sigma}{h\sqrt k}\frac1t.
+$$
+
+矩阵宽度 $k$ 的因子来自 $\|U_t\|_F^2=k$。若实现使用 $sU_t$、$s>0$ 为固定倍率，则对应学习率为 $\eta_t^*/s$。
+
+由于梯度的奇异值相等，极分解在这里等价于整体归一化。若改用同一个随机梯度做 SGD，相同位移对应
+
+$$
+\eta_t^{\rm SGD}
+=\frac{\sqrt k}{\sqrt{h^2r_t+\sigma^2}}\eta_t^{\rm Muon}.
+$$
+
+在最优轨迹上，它化为 $\eta_t^{\rm SGD}=1/[h(t+c+1)]$。两种优化器能走出同一条参数轨迹，但对应的外部学习率并不相同。一般矩阵的奇异值不相等时，极分解会分别改变各个谱方向，这个标量换算就不再成立。
+
+取 $h=\sigma^2=r_0=1$、$k=4$，执行 $N=100$ 次更新。精确解为 $\eta_t^*=1/[2\sqrt{(t+1)(t+2)}]$。作为比较，Linear、Cosine 和 Constant 分别取 $\alpha(1-t/N)$、$\alpha[1+\cos(\pi t/N)]/2$ 和 $\alpha$，索引均为 $t=0,\ldots,N-1$。对每组分别在峰值 $\alpha\in[0,1/\sqrt k]$ 内优化真实终点损失。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg">
+  <img src="/images/lr-schedules/muon-quadratic-desktop.svg" alt="可解矩阵 Muon 模型的最优学习率及终点损失，与分别调节峰值的 Linear、Cosine 和 Constant 比较。" loading="lazy" width="1200">
+</picture>
+<figcaption>同一个矩阵 Muon 模型、相同预算下的精确递推。各组比较分别搜索峰值；纵轴为对数刻度。</figcaption>
+</figure>
+
+| LR Schedule | 最优或搜索得到的峰值 | 第 100 步期望损失 |
+| --- | --- | --- |
+| 精确最优 | $\eta_0^*=1/(2\sqrt2)$ | $0.0049505$ |
+| Linear | $\alpha\approx0.0367602$ | $0.0064220$ |
+| Cosine | $\alpha\approx0.0366828$ | $0.0071489$ |
+| Constant | $\alpha\approx0.0158727$ | $0.0092292$ |
+
+这个精确解依赖等奇异值与正交噪声假设。各向异性梯度、动量或近似正交化都会改变递推，$1/t$ 的渐近形状也不再由上述证明保证。
+
+在这个特殊模型中，固定 warmup 前缀只会改变后续推导的初始状态 $r_\tau$，不会改变配方和单调性证明。若 $\eta_N=0$ 只是预算结束后不再执行的边界值，它不影响终点损失；若要求最后一次实际更新 $\eta_{N-1}=0$，则其前仍按上述公式优化，末步保持参数不变。固定 warmup 和终点归零本身，并不能推出中间必须是一条直线。
+
+</details>
 
 <details class="technical-note">
 <summary>补充：一步下降上界，以及 Hyperball 的步长换算</summary>
