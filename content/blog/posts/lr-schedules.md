@@ -2,8 +2,8 @@
 title: "不同优化器的最优 LR 与 ELR Schedule"
 date: "2026-10-31T00:00:00+08:00"
 author: ["Jiwen Jiang"]
-description: "五篇文献的 LR/ELR Schedule：公式、warmup、非零终点，以及实验配方与理论最优解的区别。"
-summary: "对照 nGPT、混元 ELR、PuRo、AIR 与 Hyperball 的 schedule，再讨论 SGD、Adafactor、Adam 和 Muon 的最优性条件。"
+description: "从 SGD 到 MuonH：最优 LR/ELR 的条件、球面对齐模型中的反平方根解，以及带零终点约束的线性收尾。"
+summary: "对照五篇文献的 schedule，推导 SGD、Adafactor、Adam、Muon 的最优性条件，再求解 MuonH 球面对齐模型中的反平方根与线性收尾。"
 tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
@@ -1505,6 +1505,142 @@ $$
 
 </details>
 
+## 五、MuonH：反平方根解与线性收尾
+
+MuonH 将带动量的 Muon 更新包在固定范数投影中。因而，普通 Muon 的欧氏收敛界不能直接决定 MuonH 的最优 ELR。下面从球面递推求解：先给出一个可精确求解的方向统计模型，再加入末步归零的约束。
+
+### 带动量 MuonH 的精确更新
+
+考虑一个半径固定为 $R\gt 0$、不另加解耦权重衰减的矩阵块，记 $w_j=W_j/R$、$\|w_j\|_F=1$。以 Nesterov 动量和五步 Newton–Schulz 为例，方向的计算是
+
+$$
+B_{j+1}=\beta B_j+(1-\beta)G_j,\qquad M_j=(1-\beta)G_j+\beta B_{j+1},\qquad D_j=\frac{\Phi_5(M_j)}{\|\Phi_5(M_j)\|_F}.
+$$
+
+$0\leq\beta\lt 1$，$G_j$ 是随机梯度，$\Phi_5$ 包含输入归一化和五步矩阵迭代；普通动量版本将 $M_j$ 换成 $B_{j+1}$。假设方向非零，MuonH 的更新可精确写成{{< cite 9 14 >}}
+
+$$
+\boxed{w_{j+1}=\frac{w_j-\varepsilon_jD_j}{q_j},\qquad q_j=\sqrt{1-2\varepsilon_jc_j+\varepsilon_j^2},\qquad c_j=\langle w_j,D_j\rangle_F.}
+$$
+
+这里 $\varepsilon_j$ 是投影前位移除以参数范数，即本文使用的 ELR；MuonH 已归一化更新长度，所以它也就是该矩阵块的学习率。$q_j\gt 0$ 时公式成立。动量没有被去掉，它通过 $B_j$ 影响 $D_j$，而 $B_j$ 累积历史梯度，梯度又随之前的参数更新变化。
+
+选一个固定单位目标方向 $V$，令 $z_j=\langle w_j,V\rangle_F$。真正需要分析的是
+
+$$
+z_{j+1}=\frac{z_j-\varepsilon_j\langle D_j,V\rangle_F}{\sqrt{1-2\varepsilon_jc_j+\varepsilon_j^2}}.
+$$
+
+归一化只固定 $\|D_j\|_F$，没有固定径向分量 $c_j$，也没有固定方向与 $V$ 的对齐。它们正是决定 schedule 的量。
+
+### 切向对齐模型：反平方根是全程最优解
+
+沿用 AIR 的对齐建模思路{{< cite 18 >}}，先固定 warmup 及其结束时的状态分布，只优化之后 $N$ 步的确定性 ELR 序列。以下结论需要三个条件：
+
+- 每条轨迹上，更新方向都在当前球面的切空间中，即 $c_j=0$。
+- 对齐漂移 $a_j=-\mathbb E\langle D_j,V\rangle_F\gt 0$ 是预先给定的序列，且对所有候选 schedule 都相同。
+- 优化目标是终点的期望对齐损失 $\mathbb E\ell_N$，其中 $\ell_j=1-\langle w_j,V\rangle_F$；warmup 后 $m_0=\mathbb E z_0\gt 0$。
+
+第二个条件尤其强：改变 schedule 通常会改变动量与后续梯度，从而改变 $a_j$。单独测出某次训练的 $a_j$，再将它用于所有候选曲线，并不能验证这个条件。切向性也不由 Newton–Schulz 归一化自动保证。
+
+在这些条件下，期望对齐 $m_j=\mathbb E z_j$ 满足**精确递推**
+
+$$
+m_{j+1}=F_j(m_j,\varepsilon_j):=\frac{m_j+a_j\varepsilon_j}{\sqrt{1+\varepsilon_j^2}}.
+$$
+
+因为 $\varepsilon_j$ 是确定性的、分母与随机方向无关，这一步不需要小步长展开。对任意非负 $\varepsilon$，有恒等式
+
+$$
+\boxed{m^2+a_j^2-F_j(m,\varepsilon)^2=\frac{(m\varepsilon-a_j)^2}{1+\varepsilon^2}\geq0.}
+$$
+
+因此任意候选序列都满足 $m_N^2\leq m_0^2+\sum_{j=0}^{N-1}a_j^2$。逐步取 $\varepsilon_j=a_j/m_j$，每一步都能取到等号，故同时达到了终点对齐的全局上界：
+
+$$
+\boxed{\varepsilon_j^*=\frac{a_j}{\sqrt{m_0^2+\sum_{s\lt j}a_s^2}},\qquad m_j^{*2}=m_0^2+\sum_{s\lt j}a_s^2.}
+$$
+
+这证明的是整个有限区间上的最优序列，而不仅是某一步的驻点。由于 $\mathbb E\ell_N=1-m_N$，它也最小化了这里指定的期望损失。换成一般交叉熵后，这个等价关系需要重新证明。
+
+若对齐漂移恒定为 $a\gt 0$，记 $E=a/m_0$，解就变成
+
+$$
+\boxed{\varepsilon_j^*=\frac{E}{\sqrt{1+E^2j}}.}
+$$
+
+所以，**恒定对齐漂移模型给出的形状是反平方根衰减**。在本文 ELR 定义下，更新长度已经吸收到 $\varepsilon$ 中，分母的系数不是一个可以另行调节的噪声参数。理论区间还必须满足几何可实现性；例如 $m_0^2+Na^2\leq1$ 是最优标量轨迹不越过单位对齐的必要检查，不能替代对方向统计假设的验证。
+
+### 要求末步为零：什么时候出现线性收尾？
+
+反平方根解在有限的 $j$ 上始终为正。若仅在最后一次更新之后记录一个未使用的零学习率，优化问题没有改变；若要求最后一次实际更新取零，则是在可行集中加入了一个约束。这个约束本身不会自动产生 AIR，也不会自动产生一段平滑的线性衰减。
+
+下面进一步求解这个标量模型的约束问题：warmup 接到峰值 $E=a/m_0$，余下 $N\geq2$ 次实际更新单调衰减，末步为零，每步最多下降 $\delta$。即
+
+$$
+\varepsilon_0=E,\qquad \varepsilon_{N-1}=0,\qquad 0\leq\varepsilon_j-\varepsilon_{j+1}\leq\delta\quad(0\leq j\lt N-1).
+$$
+
+这里 $\delta$ 是额外指定的调度约束，不能由 MuonH 的定义推出。在恒定 $a$ 的对齐模型下，如果
+
+$$
+\delta(N-1)\geq E,\qquad \delta\geq E-\frac{E}{\sqrt{1+E^2}},
+$$
+
+则上述约束问题有显式全局最优解
+
+$$
+\boxed{\varepsilon_j^*=\min\!\left\{\frac{E}{\sqrt{1+E^2j}},\ \delta(N-1-j)\right\}.}
+$$
+
+它先沿反平方根衰减，再接到斜率为 $-\delta$ 的直线，以零结束。某些参数下，一段可能退化。
+
+**证明。** 由末步为零和最大下降幅度可知，任意可行序列都必须满足 $\varepsilon_j\leq u_j:=\delta(N-1-j)$。先只保留这些逐步上限，暂时放宽相邻步之间的约束。
+
+对这个放宽后的问题，有
+
+$$
+\frac{\partial F(m,\varepsilon)}{\partial\varepsilon}=\frac{a-m\varepsilon}{(1+\varepsilon^2)^{3/2}},\qquad \frac{\partial F(m,\varepsilon)}{\partial m}=\frac1{\sqrt{1+\varepsilon^2}}\gt 0.
+$$
+
+故当前最大可达对齐对应 $\varepsilon=\min\{a/m,u_j\}$。由于后续递推对输入状态单调递增，较大的当前对齐不会损害任何后续选择；逐步最大化便得到全程最大终点对齐。
+
+记无约束解为 $h_j=E/\sqrt{1+E^2j}$。它的逐步下降量满足 $h_j-h_{j+1}\leq h_0-h_1\leq\delta$，所以 $u_j-h_j$ 单调不增，两条曲线至多切换一次。在上限尚未激活时，最优序列就是 $h_j$。上限激活后，由前面的平方恒等式，任何轨迹都有 $m_j\leq\sqrt{m_0^2+ja^2}$，从而
+
+$$
+u_j\leq h_j=\frac{a}{\sqrt{m_0^2+ja^2}}\leq\frac{a}{m_j}.
+$$
+
+因此之后一直由上限决定，即 $\varepsilon_j=u_j$。得到的序列为 $\min\{h_j,u_j\}$。
+
+最后检查被放宽的条件。反平方根段的单步下降不超过 $\delta$，直线段的下降等于 $\delta$；若在 $j$ 切换，则 $u_{j-1}\geq h_{j-1}$ 且 $u_j\leq h_j\lt h_{j-1}$，于是 $0\leq h_{j-1}-u_j\leq\delta$。首尾也满足要求。这条放宽问题的最优解本身属于原可行集，所以就是原问题的全局最优解。
+
+这个证明没有覆盖任意峰值或更小的 $\delta$。若 warmup 的峰值不是 $a/m_0$，或规定的下降幅度不满足条件，就需要求解相应的新约束问题。
+
+<picture class="schedule-figure">
+  <source media="(max-width: 680px)" srcset="/images/lr-schedules/muonh-alignment-mobile.svg">
+  <img src="/images/lr-schedules/muonh-alignment-desktop.svg" alt="切向对齐模型中的最优 ELR：共同 warmup 后先反平方根衰减，再线性降至零；与相同峰值和终点的 Linear、Cosine、AIR 对比。" loading="lazy">
+</picture>
+
+图中共 3200 步，前 160 步使用相同的线性 warmup。之后取 $m_0=0.25$、$a=0.0075$、$E=0.03$、$\delta=6\times10^{-5}$；四条曲线的末次实际更新都为零，且都满足同一个最大下降幅度约束。AIR 使用 $\alpha=(N-1)/8$。右图画的是精确递推的模型损失 $1-m_j$，不是 LLM 训练损失。warmup 固定，不参与最优性比较。
+
+### 这是否已经证明了实际 MuonH 的最优曲线？
+
+以上证明确定了两个条件性答案：无端点限制时为反平方根；加入指定的单调性、零终点和下降幅度约束后，为反平方根接线性。第二个结果来自上面求解的约束问题，不能据此宣称 PuRo 的完整配方或 AIR 的仿射变换也已被证明最优。
+
+实际 MuonH 还需要处理 $c_j\ne0$、随训练变化的对齐漂移，以及动量对整条轨迹的依赖。仅靠“使用了 MuonH”无法固定这些量。一个保留动量和有限步 Newton–Schulz 的例子就能说明这一点。
+
+令损失为 $L(W)=-\langle A,W\rangle_F$，其中 $A$ 是单位 Frobenius 范数的秩一矩阵，初始对齐 $r_0=\langle w_0,A\rangle_F\in[0,1)$。梯度恒为 $-A$，零初始动量在普通或 Nesterov 更新中都保持在同一条射线上；五步 Newton–Schulz 也保持该方向[^muonh-ray]，故归一化后始终有 $D_j=-A$。此时精确递推是
+
+$$
+r_{j+1}=\frac{r_j+\varepsilon_j}{\sqrt{1+2\varepsilon_jr_j+\varepsilon_j^2}},\qquad \frac{\partial r_{j+1}}{\partial\varepsilon_j}=\frac{1-r_j^2}{(1+2\varepsilon_jr_j+\varepsilon_j^2)^{3/2}}\gt 0.
+$$
+
+它对输入对齐也单调递增，因为 $\partial r_{j+1}/\partial r_j=(1+\varepsilon_jr_j)/(1+2\varepsilon_jr_j+\varepsilon_j^2)^{3/2}\gt 0$。于是每一步都应取允许的最大步长：只有峰值上限时，最优解是常数；若保留上一节的峰值、单调性、最大下降幅度和零终点约束，最优解就是 $\min\{E,\delta(N-1-j)\}$，也就是平台接线性。该例不满足切向假设，因此与反平方根定理并不冲突。
+
+要把反平方根定理用于实际预训练，需要建立对应训练目标下的方向统计模型，尤其是 $c_j$ 与 $-\mathbb E\langle D_j,V\rangle_F$ 如何随动量、噪声和 schedule 改变。现有实验中 Linear 或 Cosine 被其他曲线超过，足以说明它们在那些比较中不是最佳；它并未替这些尚未验证的假设提供证明。
+
+
 ## 引用本文
 
 {{< cite_article >}}
@@ -1519,3 +1655,5 @@ $$
 [^muon-ray]: 对正标量单位阵输入，Newton–Schulz 的每个奇异值按 $\varphi(x)=x(3.4445-4.775x^2+2.0315x^4)$ 更新。括号作为 $x^2$ 的二次式，首项系数为正且判别式为 $-5.189382<0$，因此对 $x>0$ 输出仍为正。初始范数归一化同样保留正方向；配合 $\bar\varepsilon<1$，整个有限轨迹上的参数和更新范数都非零。
 
 [^air-domain]: 该对齐模型要求 $m_0>0$、更新范数恒定，且 $a,b$ 对比较的候选 schedule 共同固定。若理论区间执行 $N$ 次更新，还需满足球面几何的可行条件 $m_0^2+Na^2/(2b)\leq1$。理论最优序列没有联合优化 warmup，也没有证明加上任意峰值、终点约束后的仿射 AIR 仍是同一问题的最优解。
+
+[^muonh-ray]: 对秩一输入 $xA$，Newton–Schulz 仍在 $A$ 张成的射线上，沿 $A$ 方向的标量系数按 $x(3.4445-4.775x^2+2.0315x^4)$ 更新。括号对所有实数 $x$ 都为正，因此输入的正负方向保持不变。梯度恒定时，$0\leq\beta<1$ 的动量、Nesterov 组合及范数归一化也保持同一方向。
