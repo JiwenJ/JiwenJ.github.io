@@ -90,11 +90,11 @@ def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
     fig, ax = plt.subplots(figsize=(5.4, 6.4) if mobile else (11.2, 5.4))
     fig.subplots_adjust(left=.19 if mobile else .09, right=.965 if mobile else .975,
                         bottom=.20 if mobile else .19, top=.65 if mobile else .69)
-    title = f"{spec['name']} with a prescribed warmup"
-    display_title = f"{spec['name']}\nwith a prescribed warmup" if mobile else title
+    title = f"Constant-bound illustration: {spec['name']}"
+    display_title = f"Constant-bound illustration\n{spec['name']}" if mobile else title
     fig.suptitle(display_title, x=.5, y=.975, fontsize=16 if mobile else 17, linespacing=1.25)
-    subtitle = ("Constant energy and residual bounds" if spec["residual"] else
-                "Constant energy bound")
+    subtitle = ("Assumed constant energy and residual bounds" if spec["residual"] else
+                "Assumed constant energy bound")
     subtitle += "\n5% prescribed warmup" if mobile else " · 5% prescribed warmup"
     fig.text(.5, .85 if mobile else .875, subtitle, ha="center", va="top",
              fontsize=11, color=MUTED, linespacing=1.5)
@@ -103,7 +103,7 @@ def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
     ax.axvspan(0.0, WARMUP, color=WARMUP_FILL, zorder=0)
     ax.axvline(WARMUP, color=WARMUP_EDGE, ls=(0, (3, 3)), lw=.85, zorder=1)
     ax.plot(progress, normalized_elr(progress), color=INK, ls="-", lw=2.25,
-            label="Bound-optimal tail", zorder=3)
+            label="Constant-bound solution", zorder=3)
     ax.annotate("Warmup", xy=(WARMUP, 1.0), xytext=(.18, 1.09),
                 fontsize=9, color=MUTED,
                 arrowprops={"arrowstyle": "-", "color": MUTED, "lw": .7})
@@ -123,18 +123,18 @@ def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
     fig.legend(*ax.get_legend_handles_labels(), loc="center", frameon=False,
                bbox_to_anchor=(.52, .735 if mobile else .80), fontsize=10.5, handlelength=2.6)
 
-    footer = ("Conditional tail optimum under fixed bounds; warmup length and peak are prescribed, "
-              "not jointly optimized.")
+    footer = ("Surrogate-bound solution; no claim of optimal training loss. "
+              "Warmup is prescribed.")
     if mobile:
-        footer = ("Conditional tail optimum under fixed bounds.\n"
-                  "Warmup length and peak are not jointly optimized.")
+        footer = ("Surrogate-bound solution.\n"
+                  "No claim of optimal training loss; prescribed warmup.")
     fig.text(.5, .04, footer, ha="center", va="bottom", fontsize=10.5,
              color=MUTED, linespacing=1.5)
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, metadata={"Date": None, "Title": title,
-        "Description": f"Direct ELR conditional terminal-bound optimum for {spec['name']}, with common constant energy bounds" +
+        "Description": f"Constant-bound surrogate illustration for {spec['name']}, assuming common constant energy bounds" +
         (" and residual bounds" if spec["residual"] else "") +
-        ". Fixed illustrative 5% warmup, normalized peak one, linear tail to zero. All axes linear. Warmup is not jointly optimized; no measured training results or universal optimality claim."})
+        ". Prescribed illustrative 5% warmup, normalized peak one, linear tail to zero. All axes linear. This is a surrogate-bound solution, with no claim of optimal training loss; warmup is not jointly optimized."})
     output.write_text("\n".join(line.rstrip() for line in output.read_text().splitlines()) + "\n")
     if preview_dir:
         preview_dir.mkdir(parents=True, exist_ok=True)

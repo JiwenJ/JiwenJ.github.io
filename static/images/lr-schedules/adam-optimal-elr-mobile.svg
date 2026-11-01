@@ -2,13 +2,13 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="388.8pt" height="460.8pt" viewBox="0 0 388.8 460.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
- <title>Adam with a prescribed warmup</title>
+ <title>Constant-bound illustration: Adam</title>
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Adam with a prescribed warmup</dc:title>
-    <dc:description>Direct ELR conditional terminal-bound optimum for Adam, with common constant energy bounds and residual bounds. Fixed illustrative 5% warmup, normalized peak one, linear tail to zero. All axes linear. Warmup is not jointly optimized; no measured training results or universal optimality claim.</dc:description>
+    <dc:title>Constant-bound illustration: Adam</dc:title>
+    <dc:description>Constant-bound surrogate illustration for Adam, assuming common constant energy bounds and residual bounds. Prescribed illustrative 5% warmup, normalized peak one, linear tail to zero. All axes linear. This is a surrogate-bound solution, with no claim of optimal training loss; warmup is not jointly optimized.</dc:description>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -1554,68 +1554,37 @@ z
    </g>
   </g>
   <g id="text_15">
-   <!-- Adam -->
-   <g style="fill: #383832" transform="translate(173.27125 23.36) scale(0.16 -0.16)">
+   <!-- Constant-bound illustration -->
+   <g style="fill: #383832" transform="translate(95.53625 23.36) scale(0.16 -0.16)">
     <defs>
-     <path id="SourceSerif4-Regular-41" d="M 32 0
-L 32 262
-L 570 346
-L 1933 4320
-L 2336 4320
-L 3699 320
-L 4179 262
-L 4179 0
-L 2438 0
-L 2438 262
-L 3066 339
-L 2714 1389
-L 1229 1389
-L 877 346
-L 1498 262
-L 1498 0
-L 32 0
-z
-M 1331 1690
-L 2618 1690
-L 1978 3590
-L 1331 1690
-z
-" transform="scale(0.015625)"/>
-    </defs>
-    <use xlink:href="#SourceSerif4-Regular-41"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="66.399994"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="123.099991"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="173.999985"/>
-   </g>
-   <!-- with a prescribed warmup -->
-   <g style="fill: #383832" transform="translate(100.225 42) scale(0.16 -0.16)">
-    <defs>
-     <path id="SourceSerif4-Regular-77" d="M 3654 2790
-L 3654 3040
-L 4826 3040
-L 4826 2790
-L 4480 2707
-L 3546 -38
-L 3309 -38
-L 2477 2234
-L 1632 -38
-L 1395 -38
-L 365 2726
-L 0 2790
-L 0 3040
-L 1459 3040
-L 1459 2790
-L 960 2714
-L 1619 755
-L 2336 2714
-L 1862 2790
-L 1862 3040
-L 3277 3040
-L 3277 2790
-L 2803 2707
-L 3526 755
-L 4128 2701
-L 3654 2790
+     <path id="SourceSerif4-Regular-43" d="M 2470 -96
+Q 1824 -96 1334 189
+Q 845 474 573 979
+Q 301 1485 301 2144
+Q 301 2630 464 3040
+Q 627 3450 918 3750
+Q 1210 4051 1603 4217
+Q 1997 4384 2464 4384
+Q 2726 4384 3052 4323
+Q 3379 4262 3699 4077
+L 3725 3149
+L 3328 3149
+L 3200 3891
+Q 3027 3987 2864 4025
+Q 2701 4064 2547 4064
+Q 2118 4064 1766 3843
+Q 1414 3622 1206 3196
+Q 998 2771 998 2144
+Q 998 1517 1190 1088
+Q 1382 659 1724 441
+Q 2067 224 2502 224
+Q 2688 224 2883 265
+Q 3078 307 3264 397
+L 3392 1139
+L 3789 1139
+L 3763 211
+Q 3469 51 3139 -22
+Q 2810 -96 2470 -96
 z
 " transform="scale(0.015625)"/>
      <path id="SourceSerif4-Regular-74" d="M 1312 -83
@@ -1640,6 +1609,13 @@ Q 1594 250 1693 294
 Q 1792 339 1914 422
 L 2067 256
 Q 1805 -83 1312 -83
+z
+" transform="scale(0.015625)"/>
+     <path id="SourceSerif4-Regular-2d" d="M 256 1376
+L 256 1792
+L 1741 1792
+L 1741 1376
+L 256 1376
 z
 " transform="scale(0.015625)"/>
      <path id="SourceSerif4-Regular-62" d="M 192 0
@@ -1680,66 +1656,72 @@ Q 2374 2758 2016 2758
 z
 " transform="scale(0.015625)"/>
     </defs>
-    <use xlink:href="#SourceSerif4-Regular-77"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="76.399994"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="106.199982"/>
-    <use xlink:href="#SourceSerif4-Regular-68" x="138.699966"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="198.799957"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="222.099945"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="272.999939"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="296.299927"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="354.599915"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="396.899902"/>
-    <use xlink:href="#SourceSerif4-Regular-73" x="447.899887"/>
-    <use xlink:href="#SourceSerif4-Regular-63" x="491.299881"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="540.099869"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="582.399857"/>
-    <use xlink:href="#SourceSerif4-Regular-62" x="612.199844"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="669.899841"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="720.899826"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="777.599823"/>
-    <use xlink:href="#SourceSerif4-Regular-77" x="800.899811"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="877.299805"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="928.199799"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="970.499786"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="1060.599777"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="1118.899765"/>
+    <use xlink:href="#SourceSerif4-Regular-43"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="63.099991"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="117.999985"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="178.599976"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="221.999969"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="254.499954"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="305.399948"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="365.999939"/>
+    <use xlink:href="#SourceSerif4-Regular-2d" x="398.499924"/>
+    <use xlink:href="#SourceSerif4-Regular-62" x="429.699921"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="487.399918"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="542.299911"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="600.599899"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="661.19989"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="717.899887"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="741.199875"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="770.999863"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="800.79985"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="830.599838"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="888.899826"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="932.29982"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="964.799805"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="1007.099792"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="1057.999786"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="1090.499771"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="1120.299759"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1175.199753"/>
+   </g>
+   <!-- Adam -->
+   <g style="fill: #383832" transform="translate(173.27125 42) scale(0.16 -0.16)">
+    <defs>
+     <path id="SourceSerif4-Regular-41" d="M 32 0
+L 32 262
+L 570 346
+L 1933 4320
+L 2336 4320
+L 3699 320
+L 4179 262
+L 4179 0
+L 2438 0
+L 2438 262
+L 3066 339
+L 2714 1389
+L 1229 1389
+L 877 346
+L 1498 262
+L 1498 0
+L 32 0
+z
+M 1331 1690
+L 2618 1690
+L 1978 3590
+L 1331 1690
+z
+" transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#SourceSerif4-Regular-41"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="66.399994"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="123.099991"/>
+    <use xlink:href="#SourceSerif4-Regular-6d" x="173.999985"/>
    </g>
   </g>
   <g id="text_16">
-   <!-- Constant energy and residual bounds -->
-   <g style="fill: #74746c" transform="translate(103.012344 77.26) scale(0.11 -0.11)">
+   <!-- Assumed constant energy and residual bounds -->
+   <g style="fill: #74746c" transform="translate(80.005156 77.26) scale(0.11 -0.11)">
     <defs>
-     <path id="SourceSerif4-Regular-43" d="M 2470 -96
-Q 1824 -96 1334 189
-Q 845 474 573 979
-Q 301 1485 301 2144
-Q 301 2630 464 3040
-Q 627 3450 918 3750
-Q 1210 4051 1603 4217
-Q 1997 4384 2464 4384
-Q 2726 4384 3052 4323
-Q 3379 4262 3699 4077
-L 3725 3149
-L 3328 3149
-L 3200 3891
-Q 3027 3987 2864 4025
-Q 2701 4064 2547 4064
-Q 2118 4064 1766 3843
-Q 1414 3622 1206 3196
-Q 998 2771 998 2144
-Q 998 1517 1190 1088
-Q 1382 659 1724 441
-Q 2067 224 2502 224
-Q 2688 224 2883 265
-Q 3078 307 3264 397
-L 3392 1139
-L 3789 1139
-L 3763 211
-Q 3469 51 3139 -22
-Q 2810 -96 2470 -96
-z
-" transform="scale(0.015625)"/>
      <path id="SourceSerif4-Regular-79" d="M 2029 2810
 L 2029 3040
 L 3277 3040
@@ -1771,44 +1753,82 @@ L 2029 2810
 z
 " transform="scale(0.015625)"/>
     </defs>
-    <use xlink:href="#SourceSerif4-Regular-43"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="63.099991"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="117.999985"/>
-    <use xlink:href="#SourceSerif4-Regular-73" x="178.599976"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="221.999969"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="254.499954"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="305.399948"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="365.999939"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="398.499924"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="421.799911"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="472.799896"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="533.399887"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="584.399872"/>
-    <use xlink:href="#SourceSerif4-Regular-67" x="626.69986"/>
-    <use xlink:href="#SourceSerif4-Regular-79" x="678.499847"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="729.699844"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="752.999832"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="803.899826"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="864.499817"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="921.199814"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="944.499802"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="986.799789"/>
-    <use xlink:href="#SourceSerif4-Regular-73" x="1037.799774"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="1081.199768"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="1110.999756"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="1167.699753"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="1225.999741"/>
-    <use xlink:href="#SourceSerif4-Regular-6c" x="1276.899734"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1306.699722"/>
-    <use xlink:href="#SourceSerif4-Regular-62" x="1329.99971"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="1387.699707"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="1442.599701"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="1500.899689"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="1561.49968"/>
-    <use xlink:href="#SourceSerif4-Regular-73" x="1618.199677"/>
+    <use xlink:href="#SourceSerif4-Regular-41"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="66.399994"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="109.799988"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="153.199982"/>
+    <use xlink:href="#SourceSerif4-Regular-6d" x="211.499969"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="301.59996"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="352.599945"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="409.299942"/>
+    <use xlink:href="#SourceSerif4-Regular-63" x="432.59993"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="481.399918"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="536.299911"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="596.899902"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="640.299896"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="672.799881"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="723.699875"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="784.299866"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="816.79985"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="840.099838"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="891.099823"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="951.699814"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="1002.699799"/>
+    <use xlink:href="#SourceSerif4-Regular-67" x="1044.999786"/>
+    <use xlink:href="#SourceSerif4-Regular-79" x="1096.799774"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1147.999771"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="1171.299759"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1222.199753"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="1282.799744"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1339.499741"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="1362.799728"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="1405.099716"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="1456.099701"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="1499.499695"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="1529.299683"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="1585.99968"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="1644.299667"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="1695.199661"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1724.999649"/>
+    <use xlink:href="#SourceSerif4-Regular-62" x="1748.299637"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="1805.999634"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="1860.899628"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1919.199615"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="1979.799606"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="2036.499603"/>
    </g>
    <!-- 5% prescribed warmup -->
    <g style="fill: #74746c" transform="translate(137.079688 92.22) scale(0.11 -0.11)">
+    <defs>
+     <path id="SourceSerif4-Regular-77" d="M 3654 2790
+L 3654 3040
+L 4826 3040
+L 4826 2790
+L 4480 2707
+L 3546 -38
+L 3309 -38
+L 2477 2234
+L 1632 -38
+L 1395 -38
+L 365 2726
+L 0 2790
+L 0 3040
+L 1459 3040
+L 1459 2790
+L 960 2714
+L 1619 755
+L 2336 2714
+L 1862 2790
+L 1862 3040
+L 3277 3040
+L 3277 2790
+L 2803 2707
+L 3526 755
+L 4128 2701
+L 3654 2790
+z
+" transform="scale(0.015625)"/>
+    </defs>
     <use xlink:href="#SourceSerif4-Regular-35"/>
     <use xlink:href="#SourceSerif4-Regular-25" x="49.999985"/>
     <use xlink:href="#SourceSerif4-Regular-20" x="137.999969"/>
@@ -1832,8 +1852,74 @@ z
    </g>
   </g>
   <g id="text_17">
-   <!-- Conditional tail optimum under fixed bounds. -->
-   <g style="fill: #74746c" transform="translate(86.614219 425.568) scale(0.105 -0.105)">
+   <!-- Surrogate-bound solution. -->
+   <g style="fill: #74746c" transform="translate(132.864258 425.5155) scale(0.105 -0.105)">
+    <defs>
+     <path id="SourceSerif4-Regular-53" d="M 1504 -96
+Q 1146 -96 813 3
+Q 480 102 256 243
+L 294 1139
+L 691 1139
+L 819 384
+Q 966 301 1123 262
+Q 1280 224 1485 224
+Q 1939 224 2208 425
+Q 2477 627 2477 998
+Q 2477 1306 2288 1475
+Q 2099 1645 1690 1805
+L 1440 1907
+Q 947 2099 643 2406
+Q 339 2714 339 3200
+Q 339 3571 528 3833
+Q 717 4096 1043 4240
+Q 1370 4384 1779 4384
+Q 2099 4384 2361 4294
+Q 2624 4205 2829 4051
+L 2790 3213
+L 2400 3213
+L 2266 3936
+Q 2029 4064 1741 4064
+Q 1376 4064 1126 3881
+Q 877 3699 877 3341
+Q 877 3046 1065 2851
+Q 1254 2656 1600 2522
+L 1856 2426
+Q 2483 2182 2752 1878
+Q 3021 1574 3021 1120
+Q 3021 742 2825 470
+Q 2630 198 2291 51
+Q 1952 -96 1504 -96
+z
+" transform="scale(0.015625)"/>
+    </defs>
+    <use xlink:href="#SourceSerif4-Regular-53"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="51.199997"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="109.499985"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="151.799973"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="194.09996"/>
+    <use xlink:href="#SourceSerif4-Regular-67" x="248.999954"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="300.799942"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="351.699936"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="384.199921"/>
+    <use xlink:href="#SourceSerif4-Regular-2d" x="435.199905"/>
+    <use xlink:href="#SourceSerif4-Regular-62" x="466.399902"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="524.099899"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="578.999893"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="637.299881"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="697.899872"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="754.599869"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="777.899857"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="821.29985"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="876.199844"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="905.999832"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="964.29982"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="996.799805"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="1026.599792"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1081.499786"/>
+    <use xlink:href="#SourceSerif4-Regular-2e" x="1142.099777"/>
+   </g>
+   <!-- No claim of optimal training loss; prescribed warmup. -->
+   <g style="fill: #74746c" transform="translate(67.094063 439.848) scale(0.105 -0.105)">
     <defs>
      <path id="SourceSerif4-Regular-66" d="M 230 0
 L 230 230
@@ -1870,289 +1956,122 @@ L 1882 0
 L 230 0
 z
 " transform="scale(0.015625)"/>
-     <path id="SourceSerif4-Regular-78" d="M 2022 2790
-L 2022 3040
-L 3219 3040
-L 3219 2790
-L 2842 2720
-L 1926 1594
-L 2816 320
-L 3302 230
-L 3302 0
-L 1741 0
-L 1741 230
-L 2195 314
-L 1568 1222
-L 1203 755
-L 864 314
-L 1344 230
-L 1344 0
-L 64 0
-L 64 230
-L 474 307
-L 1408 1466
-L 550 2720
-L 109 2790
-L 109 3040
-L 1536 3040
-L 1536 2790
-L 1146 2720
-L 1760 1830
-L 2138 2317
-L 2445 2707
-L 2022 2790
+     <path id="SourceSerif4-Regular-3b" d="M 384 -1133
+L 288 -896
+Q 595 -749 764 -582
+Q 934 -416 1018 -160
+L 800 -32
+Q 518 141 518 371
+Q 518 550 624 675
+Q 730 800 947 800
+Q 1050 800 1146 761
+Q 1242 723 1338 621
+Q 1370 518 1379 403
+Q 1389 288 1389 179
+Q 1389 -141 1251 -400
+Q 1114 -659 886 -844
+Q 659 -1030 384 -1133
+z
+M 960 2093
+Q 768 2093 637 2227
+Q 506 2362 506 2547
+Q 506 2739 637 2873
+Q 768 3008 960 3008
+Q 1152 3008 1283 2873
+Q 1414 2739 1414 2547
+Q 1414 2362 1283 2227
+Q 1152 2093 960 2093
 z
 " transform="scale(0.015625)"/>
     </defs>
-    <use xlink:href="#SourceSerif4-Regular-43"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="63.099991"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="117.999985"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="178.599976"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="235.299973"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="265.09996"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="297.599945"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="327.399933"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="382.299927"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="442.899918"/>
-    <use xlink:href="#SourceSerif4-Regular-6c" x="493.799911"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="523.599899"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="546.899887"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="579.399872"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="630.299866"/>
-    <use xlink:href="#SourceSerif4-Regular-6c" x="660.099854"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="689.899841"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="713.199829"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="768.099823"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="826.399811"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="858.899796"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="888.699783"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="978.799774"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="1037.099762"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1127.199753"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="1150.499741"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="1208.799728"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="1269.399719"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="1326.099716"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="1377.099701"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1419.399689"/>
-    <use xlink:href="#SourceSerif4-Regular-66" x="1442.699677"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="1478.09967"/>
-    <use xlink:href="#SourceSerif4-Regular-78" x="1507.899658"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="1560.499649"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="1611.499634"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1668.199631"/>
-    <use xlink:href="#SourceSerif4-Regular-62" x="1691.499619"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="1749.199615"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="1804.099609"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="1862.399597"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="1922.999588"/>
-    <use xlink:href="#SourceSerif4-Regular-73" x="1979.699585"/>
-    <use xlink:href="#SourceSerif4-Regular-2e" x="2023.099579"/>
-   </g>
-   <!-- Warmup length and peak are not jointly optimized. -->
-   <g style="fill: #74746c" transform="translate(74.413711 439.743) scale(0.105 -0.105)">
-    <defs>
-     <path id="SourceSerif4-Regular-6b" d="M 160 0
-L 160 230
-L 672 320
-Q 678 576 681 835
-Q 685 1094 685 1344
-L 685 4154
-L 160 4218
-L 160 4448
-L 1158 4736
-L 1248 4685
-L 1222 3770
-L 1222 1536
-L 1818 2157
-L 2317 2675
-L 1843 2790
-L 1843 3040
-L 3334 3040
-L 3334 2790
-L 2733 2701
-L 2029 1978
-L 3078 307
-L 3501 230
-L 3501 0
-L 2630 0
-L 1645 1587
-L 1222 1152
-Q 1222 947 1225 736
-Q 1229 525 1235 320
-L 1747 230
-L 1747 0
-L 160 0
-z
-" transform="scale(0.015625)"/>
-     <path id="SourceSerif4-Regular-6a" d="M 38 -1600
-Q -250 -1600 -387 -1475
-Q -525 -1350 -531 -1229
-Q -448 -966 -154 -966
-Q -26 -966 89 -1014
-Q 205 -1062 326 -1158
-L 474 -1267
-Q 525 -1216 576 -1094
-Q 653 -890 681 -477
-Q 710 -64 710 653
-L 710 1645
-Q 710 1907 707 2083
-Q 704 2259 691 2451
-L 186 2509
-L 186 2733
-L 1152 3123
-L 1248 3059
-L 1229 2189
-L 1229 640
-Q 1229 122 1203 -236
-Q 1178 -595 1091 -835
-Q 1005 -1075 832 -1248
-Q 666 -1414 493 -1507
-Q 320 -1600 38 -1600
-z
-M 947 3770
-Q 768 3770 643 3885
-Q 518 4000 518 4179
-Q 518 4358 643 4473
-Q 768 4589 947 4589
-Q 1133 4589 1254 4473
-Q 1376 4358 1376 4179
-Q 1376 4000 1254 3885
-Q 1133 3770 947 3770
-z
-" transform="scale(0.015625)"/>
-    </defs>
-    <use xlink:href="#SourceSerif4-Regular-57"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="96.199982"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="147.099976"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="189.399963"/>
-    <use xlink:href="#SourceSerif4-Regular-75" x="279.499954"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="337.799942"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="396.09993"/>
-    <use xlink:href="#SourceSerif4-Regular-6c" x="419.399918"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="449.199905"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="500.19989"/>
-    <use xlink:href="#SourceSerif4-Regular-67" x="560.799881"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="612.599869"/>
-    <use xlink:href="#SourceSerif4-Regular-68" x="645.099854"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="705.199844"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="728.499832"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="779.399826"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="839.999817"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="896.699814"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="919.999802"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="978.299789"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="1029.299774"/>
-    <use xlink:href="#SourceSerif4-Regular-6b" x="1080.199768"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1134.899765"/>
-    <use xlink:href="#SourceSerif4-Regular-61" x="1158.199753"/>
-    <use xlink:href="#SourceSerif4-Regular-72" x="1209.099747"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="1251.399734"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1302.399719"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="1325.699707"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="1386.299698"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="1441.199692"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1473.699677"/>
-    <use xlink:href="#SourceSerif4-Regular-6a" x="1496.999664"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="1524.699661"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="1579.599655"/>
-    <use xlink:href="#SourceSerif4-Regular-6e" x="1609.399643"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="1669.999634"/>
-    <use xlink:href="#SourceSerif4-Regular-6c" x="1702.499619"/>
-    <use xlink:href="#SourceSerif4-Regular-79" x="1732.299606"/>
-    <use xlink:href="#SourceSerif4-Regular-20" x="1783.499603"/>
-    <use xlink:href="#SourceSerif4-Regular-6f" x="1806.799591"/>
-    <use xlink:href="#SourceSerif4-Regular-70" x="1861.699585"/>
-    <use xlink:href="#SourceSerif4-Regular-74" x="1919.999573"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="1952.499557"/>
-    <use xlink:href="#SourceSerif4-Regular-6d" x="1982.299545"/>
-    <use xlink:href="#SourceSerif4-Regular-69" x="2072.399536"/>
-    <use xlink:href="#SourceSerif4-Regular-7a" x="2102.199524"/>
-    <use xlink:href="#SourceSerif4-Regular-65" x="2147.799515"/>
-    <use xlink:href="#SourceSerif4-Regular-64" x="2198.7995"/>
-    <use xlink:href="#SourceSerif4-Regular-2e" x="2255.499496"/>
+    <use xlink:href="#SourceSerif4-Regular-4e"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="73.499985"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="128.399979"/>
+    <use xlink:href="#SourceSerif4-Regular-63" x="151.699966"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="200.499954"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="230.299942"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="281.199936"/>
+    <use xlink:href="#SourceSerif4-Regular-6d" x="310.999924"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="401.099915"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="424.399902"/>
+    <use xlink:href="#SourceSerif4-Regular-66" x="479.299896"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="514.69989"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="537.999878"/>
+    <use xlink:href="#SourceSerif4-Regular-70" x="592.899872"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="651.19986"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="683.699844"/>
+    <use xlink:href="#SourceSerif4-Regular-6d" x="713.499832"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="803.599823"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="854.499817"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="884.299805"/>
+    <use xlink:href="#SourceSerif4-Regular-74" x="907.599792"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="940.099777"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="982.399765"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="1033.299759"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1063.099747"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="1123.699738"/>
+    <use xlink:href="#SourceSerif4-Regular-6e" x="1153.499725"/>
+    <use xlink:href="#SourceSerif4-Regular-67" x="1214.099716"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1265.899704"/>
+    <use xlink:href="#SourceSerif4-Regular-6c" x="1289.199692"/>
+    <use xlink:href="#SourceSerif4-Regular-6f" x="1318.99968"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="1373.899673"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="1417.299667"/>
+    <use xlink:href="#SourceSerif4-Regular-3b" x="1460.699661"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1490.699646"/>
+    <use xlink:href="#SourceSerif4-Regular-70" x="1513.999634"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="1572.299622"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="1614.599609"/>
+    <use xlink:href="#SourceSerif4-Regular-73" x="1665.599594"/>
+    <use xlink:href="#SourceSerif4-Regular-63" x="1708.999588"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="1757.799576"/>
+    <use xlink:href="#SourceSerif4-Regular-69" x="1800.099564"/>
+    <use xlink:href="#SourceSerif4-Regular-62" x="1829.899551"/>
+    <use xlink:href="#SourceSerif4-Regular-65" x="1887.599548"/>
+    <use xlink:href="#SourceSerif4-Regular-64" x="1938.599533"/>
+    <use xlink:href="#SourceSerif4-Regular-20" x="1995.29953"/>
+    <use xlink:href="#SourceSerif4-Regular-77" x="2018.599518"/>
+    <use xlink:href="#SourceSerif4-Regular-61" x="2094.999512"/>
+    <use xlink:href="#SourceSerif4-Regular-72" x="2145.899506"/>
+    <use xlink:href="#SourceSerif4-Regular-6d" x="2188.199493"/>
+    <use xlink:href="#SourceSerif4-Regular-75" x="2278.299484"/>
+    <use xlink:href="#SourceSerif4-Regular-70" x="2336.599472"/>
+    <use xlink:href="#SourceSerif4-Regular-2e" x="2394.89946"/>
    </g>
   </g>
   <g id="legend_1">
    <g id="line2d_18">
-    <path d="M 140.372836 121.062
-L 154.022836 121.062
-L 167.672836 121.062
+    <path d="M 126.292172 121.062
+L 139.942172 121.062
+L 153.592172 121.062
 " style="fill: none; stroke: #383832; stroke-width: 2.25; stroke-linecap: square"/>
    </g>
    <g id="text_18">
-    <!-- Bound-optimal tail -->
-    <g style="fill: #383832" transform="translate(176.072836 124.737) scale(0.105 -0.105)">
-     <defs>
-      <path id="SourceSerif4-Regular-42" d="M 1843 2067
-L 1491 2067
-Q 1491 1562 1494 1136
-Q 1498 710 1504 301
-L 1894 301
-Q 2509 301 2809 525
-Q 3110 749 3110 1171
-Q 3110 1619 2809 1843
-Q 2509 2067 1843 2067
-z
-M 1946 3994
-L 1504 3994
-Q 1498 3578 1494 3158
-Q 1491 2739 1491 2362
-L 1824 2362
-Q 2406 2362 2668 2563
-Q 2931 2765 2931 3200
-Q 2931 3635 2684 3814
-Q 2438 3994 1946 3994
-z
-M 282 4026
-L 282 4288
-L 2138 4288
-Q 2803 4288 3168 3993
-Q 3533 3699 3533 3245
-Q 3533 2906 3302 2621
-Q 3072 2336 2541 2227
-Q 3181 2138 3465 1850
-Q 3750 1562 3750 1171
-Q 3750 883 3580 614
-Q 3411 346 3033 173
-Q 2656 0 2042 0
-L 282 0
-L 282 262
-L 870 333
-Q 883 736 883 1152
-Q 883 1568 883 1984
-L 883 2298
-Q 883 2714 883 3130
-Q 883 3546 870 3955
-L 282 4026
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceSerif4-Regular-2d" d="M 256 1376
-L 256 1792
-L 1741 1792
-L 1741 1376
-L 256 1376
-z
-" transform="scale(0.015625)"/>
-     </defs>
-     <use xlink:href="#SourceSerif4-Regular-42"/>
-     <use xlink:href="#SourceSerif4-Regular-6f" x="62.899994"/>
-     <use xlink:href="#SourceSerif4-Regular-75" x="117.799988"/>
-     <use xlink:href="#SourceSerif4-Regular-6e" x="176.099976"/>
-     <use xlink:href="#SourceSerif4-Regular-64" x="236.699966"/>
-     <use xlink:href="#SourceSerif4-Regular-2d" x="293.399963"/>
-     <use xlink:href="#SourceSerif4-Regular-6f" x="324.59996"/>
-     <use xlink:href="#SourceSerif4-Regular-70" x="379.499954"/>
-     <use xlink:href="#SourceSerif4-Regular-74" x="437.799942"/>
-     <use xlink:href="#SourceSerif4-Regular-69" x="470.299927"/>
-     <use xlink:href="#SourceSerif4-Regular-6d" x="500.099915"/>
-     <use xlink:href="#SourceSerif4-Regular-61" x="590.199905"/>
-     <use xlink:href="#SourceSerif4-Regular-6c" x="641.099899"/>
-     <use xlink:href="#SourceSerif4-Regular-20" x="670.899887"/>
-     <use xlink:href="#SourceSerif4-Regular-74" x="694.199875"/>
-     <use xlink:href="#SourceSerif4-Regular-61" x="726.69986"/>
-     <use xlink:href="#SourceSerif4-Regular-69" x="777.599854"/>
-     <use xlink:href="#SourceSerif4-Regular-6c" x="807.399841"/>
+    <!-- Constant-bound solution -->
+    <g style="fill: #383832" transform="translate(161.992172 124.737) scale(0.105 -0.105)">
+     <use xlink:href="#SourceSerif4-Regular-43"/>
+     <use xlink:href="#SourceSerif4-Regular-6f" x="63.099991"/>
+     <use xlink:href="#SourceSerif4-Regular-6e" x="117.999985"/>
+     <use xlink:href="#SourceSerif4-Regular-73" x="178.599976"/>
+     <use xlink:href="#SourceSerif4-Regular-74" x="221.999969"/>
+     <use xlink:href="#SourceSerif4-Regular-61" x="254.499954"/>
+     <use xlink:href="#SourceSerif4-Regular-6e" x="305.399948"/>
+     <use xlink:href="#SourceSerif4-Regular-74" x="365.999939"/>
+     <use xlink:href="#SourceSerif4-Regular-2d" x="398.499924"/>
+     <use xlink:href="#SourceSerif4-Regular-62" x="429.699921"/>
+     <use xlink:href="#SourceSerif4-Regular-6f" x="487.399918"/>
+     <use xlink:href="#SourceSerif4-Regular-75" x="542.299911"/>
+     <use xlink:href="#SourceSerif4-Regular-6e" x="600.599899"/>
+     <use xlink:href="#SourceSerif4-Regular-64" x="661.19989"/>
+     <use xlink:href="#SourceSerif4-Regular-20" x="717.899887"/>
+     <use xlink:href="#SourceSerif4-Regular-73" x="741.199875"/>
+     <use xlink:href="#SourceSerif4-Regular-6f" x="784.599869"/>
+     <use xlink:href="#SourceSerif4-Regular-6c" x="839.499863"/>
+     <use xlink:href="#SourceSerif4-Regular-75" x="869.29985"/>
+     <use xlink:href="#SourceSerif4-Regular-74" x="927.599838"/>
+     <use xlink:href="#SourceSerif4-Regular-69" x="960.099823"/>
+     <use xlink:href="#SourceSerif4-Regular-6f" x="989.899811"/>
+     <use xlink:href="#SourceSerif4-Regular-6e" x="1044.799805"/>
     </g>
    </g>
   </g>
