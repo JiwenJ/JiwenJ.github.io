@@ -2,8 +2,8 @@
 title: "不同优化器的最优 LR 与 ELR Schedule"
 date: "2026-10-31T00:00:00+08:00"
 author: ["Jiwen Jiang"]
-description: "从终点损失上界出发，分别推导 SGD、Adafactor、Adam 和带动量 Muon 的 LR 与 ELR Schedule。"
-summary: "推导 SGD、Adafactor、Adam 和带动量 Muon 的 LR 与 ELR 上界，辨析线性解的条件，并给出最优尾段为常数的解析反例。"
+description: "五篇文献的 LR/ELR Schedule：公式、warmup、非零终点，以及实验配方与理论最优解的区别。"
+summary: "对照 nGPT、混元 ELR、PuRo、AIR 与 Hyperball 的 schedule，再讨论 SGD、Adafactor、Adam 和 Muon 的最优性条件。"
 tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
@@ -85,6 +85,41 @@ references:
     authors: "Keller Jordan et al."
     source: "GitHub"
     url: "https://github.com/KellerJordan/Muon/blob/master/muon.py"
+  - id: 15
+    title: "Training nGPT"
+    authors: "Ilya Loshchilov, Boris Ginsburg"
+    source: "arXiv:2608.01284v1, 2026; §2.2, §4.1"
+    url: "https://arxiv.org/abs/2608.01284v1"
+  - id: 16
+    title: "From LR to ELR: A Better Heuristic for Pretraining Dynamics"
+    authors: "Zhanpeng Zhou, Wenjie Zhou, Yufei Gu et al."
+    source: "腾讯混元, 2026-08-11"
+    url: "https://hy.tencent.com/research/elr"
+  - id: 17
+    title: "PuRo-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090"
+    authors: "Kairong Luo, Jiarui Cui, Yaorui Yin, Shengqi Chen et al."
+    source: "arXiv:2608.27370v2, 2026; §3.3, Appendix C/F/H"
+    url: "https://arxiv.org/abs/2608.27370v2"
+  - id: 18
+    title: "Your LR Schedule May Not Be Principled: Effective Learning Rate Scheduling in Weight-Normalized Training"
+    authors: "Qifan Yu, Xinyu Ma, Xingyan Bin, Di He"
+    source: "arXiv:2610.40362v1, 2026; §3–4, Appendix B/C"
+    url: "https://arxiv.org/abs/2610.40362v1"
+  - id: 19
+    title: "Hyperball May Not Be a Free Lunch"
+    authors: "Yihao Xiao, Jialong Sun, Zitian Gao et al."
+    source: "arXiv:2607.22444v1, 2026; §2.3–2.4, §4.3"
+    url: "https://arxiv.org/abs/2607.22444v1"
+  - id: 20
+    title: "Hyperball May Not Be a Free Lunch: Reproducibility Guide"
+    authors: "论文作者"
+    source: "官方代码库，Figure 4 配置"
+    url: "https://github.com/mangocrazz/hyperball-may-not-be-a-free-lunch/blob/main/docs/REPRODUCIBILITY.md"
+  - id: 21
+    title: "Hyperball: SuperExp schedule implementation"
+    authors: "论文作者"
+    source: "官方代码库，三阶段 Schedule"
+    url: "https://github.com/mangocrazz/hyperball-may-not-be-a-free-lunch/blob/main/experiments/schedules/superexp_schedule_trainer.py"
 ---
 
 
@@ -95,6 +130,89 @@ references:
 一般凸问题可以先优化终点误差上界；在可解的二次模型中，则能直接最小化真实终点损失。SGD 的 Linear Decay 来自前一种分析{{< cite 1 2 >}}，并不是所有优化器、所有目标下的统一答案。
 
 **上界最小化与训练损失最小化是不同的目标。** 本文的常数界图只说明所构造上界的线性最小解，没有证明带动量 Muon 的真实最优 ELR 是 Linear Decay。尤其不能把四张相同形状的示意图当作四种优化器具有相同最优调度的证据。
+
+## 五篇文献中的 LR 与 ELR Schedule
+
+先看近期工作实际提出或使用了什么。下表中的“理论解”指相应论文所定义的问题；训练配方的实验收益另列，不能仅凭曲线形状判断优劣。
+
+| 文献 | 提出或使用的 Schedule | 控制量与证据 |
+| --- | --- | --- |
+| Training nGPT{{< cite 15 >}} | 对数衰减（logarithmic decay） | GatedAdam 的标量 LR；归一化模型完整配方的实验 |
+| From LR to ELR{{< cite 16 >}} | 负平方根、分段线性 | MuonH 的 ELR；nanoGPT 与 MoE scaling ladder 实验 |
+| PuRo-2B{{< cite 17 >}} | 反平方根接线性；CMA 分支末段恒定 | MuonH 与辅助 AdamW 共用 base schedule，组间倍率不同 |
+| Your LR Schedule May Not Be Principled{{< cite 18 >}} | AIR：仿射反平方根衰减 | 标量对齐模型的反平方根理论解；AIR 的 MoE 实验 |
+| Hyperball May Not Be a Free Lunch{{< cite 19 >}} | Linear、指数/幂衰减与 SuperExp | MuonH 的 schedule 比较；关注早期与后期表现的取舍 |
+
+这些文章的 **ELR 定义并不完全相同**。混元和 PuRo 使用投影前的相对更新幅度 $\varepsilon=\eta\|u\|/\|W\|$；AIR 使用 $e=\eta/\|W\|$，两者相差更新范数。最后一篇定义角度 ELR 为 $\Delta\phi/\|U\|_F$，其中 $\Delta\phi$ 是实际转角；它还计入参数与更新的夹角。只有补齐这些条件，才可以比较它们所说的 ELR{{< cite 16 17 18 19 >}}。
+
+下面用 $r\in[0,1]$ 表示相应衰减区间的进度。标为 $s(r)$ 的形状函数起终点为 $1,0$；实际 LR 可以通过 $\eta=\eta_{\min}+(\eta_{\rm peak}-\eta_{\min})s(r)$ 保留非零终点。各文的 warmup 与分段时间仍以原始配置为准。
+
+### Training nGPT：对数衰减
+
+论文 §2.2 提出以下形状，实际配方取 $\rho=0.05${{< cite 15 >}}：
+
+$$
+s_{\log}(r)=1-\frac{\log(1+r/\rho)}{\log(1+1/\rho)},\qquad \rho=0.05.
+$$
+
+nGPT 使用 GatedAdam，全局峰值为 $0.24/\sqrt{d_{\rm model}}$，末端降到零；部分参数另有倍率和前 10% 的 warmup，角步长上限也在该区间内升高。图 3 的统一 10% warmup 是曲线比较设置，不能当作所有参数的共同配置。AdamW 基线采用 WSD，经过 1B tokens warmup，最终降至峰值的 1%。两组还改变了参数化与优化器，因此整体收益不能单独归因于 logarithmic decay。
+
+### 混元 ELR：负平方根与分段线性
+
+混元从普通 Muon 的 AUS 轨迹出发，观察到短 warmup、高峰值、前期快速下降及后期平缓下降，据此为 MuonH 设计{{< cite 16 >}}
+
+$$
+s_{\rm msqrt}(r)=1-\sqrt r,\qquad r=\frac{t-T_w}{T-T_w}.
+$$
+
+Track 3 配方采用 100 步 warmup、峰值 $0.03$，在 3175 步达到验证损失 3.28；原 linear 配方需要 3250 步。峰值与 warmup 同时经过调整，这个结果比较的是配方。MoE scaling ladder 也在测量预算内显示收益，但原文提醒其优势未必延续到更大的预算。
+
+另一方案是**分段线性**：warmup 后从 $(0,1)$ 快速降到中间点 $(r_c,h)$，再线性降到 $(1,0)$。它将早期下降与尾段分开调节；nanoGPT 实验中优于该文的 linear 和负平方根配置，中间点的跨规模迁移仍待验证。
+
+### PuRo：反平方根接线性，保留非零终点
+
+PuRo v2 附录 C 给出了生产配方。Phase 1 的 base LR 先用 1000 步线性 warmup 到 $5\times10^{-3}$，随后采用{{< cite 17 >}}
+
+$$
+\eta_{\rm base}(k)=5\times10^{-4}+4.5\times10^{-3}\sqrt{1000/k},\qquad k>1000.
+$$
+
+Phase 2 从共同 checkpoint 的 $\eta_0\approx1.04\times10^{-3}$ 开始，按该分支已消耗的样本比例 $r$ 线性衰减：
+
+$$
+\eta_{\rm base}(r)=\eta_0+(10^{-5}-\eta_0)r.
+$$
+
+生产配置的 MuonH 矩阵组使用 $10\eta_{\rm base}$，即其投影前 ELR；其余组的 AdamW 使用 base LR。最终 CMA 分支在 global step 218000 改为恒定 base LR $4.08\times10^{-5}$，续训最后约 29B tokens 并平均 checkpoint。其 WSD 消融支持较长衰减区间，但没有证明反平方根指数或生产拼接点最优。
+
+### AIR：对齐模型中的反平方根解
+
+AIR 先分析固定目标方向、切向更新以及恒定对齐统计下的标量模型。若 $m_k$ 表示对齐程度、$a,b>0$ 为固定系数，其递推与最优序列为{{< cite 18 >}}
+
+$$
+m_{k+1}=\frac{m_k+a\eta_k}{\sqrt{1+2b\eta_k^2}},\qquad \eta_k^*=\frac{\eta_0}{\sqrt{1+2b\eta_0^2k}},\qquad \eta_0=\frac{a}{2bm_0}.
+$$
+
+这个结果最优化的是该模型的最终对齐程度[^air-domain]。为了满足有限预算内指定的峰值与终点，实际 AIR 对反平方根函数再做仿射调整：
+
+$$
+q(k)=(1+k/\alpha)^{-1/2},\qquad \eta_{\rm AIR}(k)=\eta_{\min}+(\eta_{\rm peak}-\eta_{\min})\frac{q(k)-q(K)}{1-q(K)},\qquad \alpha=K/8.
+$$
+
+实验共 32047 步，前 3040 步 warmup，$\eta_{\min}=10^{-5}$。在 WN Muon 的 128B-token MoE 实验中，匹配累计 LR 后，AIR 的终点 loss 比 cosine 低约 $0.01$。理论最优性属于原始对齐模型，尚未覆盖仿射校准后的首尾约束，也不是实际 Muon 终点训练损失的全局最优性证明。
+
+### Hyperball May Not Be a Free Lunch：更早下降的代价
+
+该文 §4.3 列出 linear、归一化指数和幂衰减，并实验比较多种 MuonH 配方；后两种形状写为{{< cite 19 >}}
+
+$$
+s_{\exp}(r)=\frac{e^{-\lambda r}-e^{-\lambda}}{1-e^{-\lambda}},\quad \lambda>0;\qquad s_{\rm pow}(r)=1-r^p,\quad p\in\{0.5,0.4\}.
+$$
+
+$p=0.5$ 就是负平方根。作者的 $p=0.4$ 复现配置用 100 步 warmup、100 步 hold、峰值 $0.03$，再衰减到 $10^{-5}$；这与论文公式的零终点需要区分{{< cite 20 >}}。另有非零起点 warmup—超指数下降—线性归零的三阶段 SuperExp 实现，并非上式的归一化指数函数{{< cite 21 >}}。实验显示，更激进的下降可以改善早期表现，却可能损害后期表现。这不是一条跨训练预算通用的最优曲线。
+
+**负平方根与反平方根是两种函数**：混元的 $1-\sqrt r$ 属于前者；PuRo 的 $(1+cr)^{-1/2}$ 型片段和 AIR 的基础函数属于后者。PuRo 通过拼接阶段控制终点，AIR 通过仿射变换控制终点，不能把它们当成同一条 schedule。
+
 
 ## 直接把 ELR 作为优化变量
 
@@ -1399,3 +1517,5 @@ $$
 
 
 [^muon-ray]: 对正标量单位阵输入，Newton–Schulz 的每个奇异值按 $\varphi(x)=x(3.4445-4.775x^2+2.0315x^4)$ 更新。括号作为 $x^2$ 的二次式，首项系数为正且判别式为 $-5.189382<0$，因此对 $x>0$ 输出仍为正。初始范数归一化同样保留正方向；配合 $\bar\varepsilon<1$，整个有限轨迹上的参数和更新范数都非零。
+
+[^air-domain]: 该对齐模型要求 $m_0>0$、更新范数恒定，且 $a,b$ 对比较的候选 schedule 共同固定。若理论区间执行 $N$ 次更新，还需满足球面几何的可行条件 $m_0^2+Na^2/(2b)\leq1$。理论最优序列没有联合优化 warmup，也没有证明加上任意峰值、终点约束后的仿射 AIR 仍是同一问题的最优解。
