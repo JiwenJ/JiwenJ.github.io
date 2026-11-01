@@ -136,95 +136,66 @@
         99
       ]
     },
-    "amplitude_interval": [
-      0.0,
-      0.5
-    ],
-    "derivative_grids": [
-      32769,
-      65537
-    ],
-    "central_difference_check": {
-      "step": 1e-06,
-      "absolute_tolerance": 2e-08
+    "warmup": {
+      "updates": 5,
+      "formula": "eta_t=peak*t/5, t=0,...,4",
+      "common_peak": 0.16705127873067704,
+      "state_after_warmup": 0.3945444947155653,
+      "selection": "peak=optimal_rate(r_5(peak)) ensures continuous join",
+      "fixed_prefix_optimized": false
     },
-    "tuning_method": "dense derivative scan; bisect all sign changes; compare roots and endpoints",
-    "formal_global_root_certificate": false,
+    "remaining_updates": 95,
+    "conditional_exact_formula": "eta_(5+j)=1/(sqrt(k)*sqrt((j+c_w)*(j+c_w+1))), c_w=1/r_5",
+    "conditional_closed_final_loss": 0.005126387580477992,
     "baseline_formulas": {
-      "linear": "alpha*(1-t/N)",
-      "cosine": "alpha*(1+cos(pi*t/N))/2",
-      "constant": "alpha"
+      "linear": "peak*(1-j/95)",
+      "cosine": "peak*(1+cos(pi*j/95))/2",
+      "constant": "peak"
     },
+    "baseline_amplitudes_tuned": false,
     "all_baselines_above_exact_at_every_iterate": true,
     "schedules": {
       "exact": {
-        "formula": "1/(sqrt(k)*sqrt((t+1)*(t+2)))",
-        "final_loss": 0.004950495049504952,
-        "closed_form_final_loss": 0.0049504950495049506,
+        "common_peak": 0.16705127873067704,
+        "final_loss": 0.005126387580477996,
         "ratio_to_exact": 1.0
       },
       "linear": {
-        "optimal_alpha": 0.03676020111255962,
-        "final_loss": 0.00642195796790896,
-        "ratio_to_exact": 1.2972355095176096,
-        "stationary_points_found": [
-          0.03676020111255962
-        ],
-        "derivative_at_alpha": 1.365021377180975e-14,
-        "central_difference_at_alpha": -5.93275428784068e-10,
-        "best_dense_grid_loss": 0.0064219579935924035,
-        "endpoint_losses": [
-          0.4999999999999999,
-          0.022533710688323733
-        ]
+        "common_peak": 0.16705127873067704,
+        "final_loss": 0.013266912342622141,
+        "ratio_to_exact": 2.5879651380914717
       },
       "cosine": {
-        "optimal_alpha": 0.03668281375353377,
-        "final_loss": 0.007148912101574526,
-        "ratio_to_exact": 1.4440802445180538,
-        "stationary_points_found": [
-          0.03668281375353377
-        ],
-        "derivative_at_alpha": 7.000860293229511e-15,
-        "central_difference_at_alpha": -5.984795992119984e-10,
-        "best_dense_grid_loss": 0.0071489121052609374,
-        "endpoint_losses": [
-          0.4999999999999999,
-          0.01838856881202488
-        ]
+        "common_peak": 0.16705127873067704,
+        "final_loss": 0.012803191552155613,
+        "ratio_to_exact": 2.497507523799403
       },
       "constant": {
-        "optimal_alpha": 0.015872734807167,
-        "final_loss": 0.009229208783749688,
-        "ratio_to_exact": 1.864300174317436,
-        "stationary_points_found": [
-          0.015872734807167
-        ],
-        "derivative_at_alpha": -2.7200464103316335e-15,
-        "central_difference_at_alpha": -1.4156210925708734e-08,
-        "best_dense_grid_loss": 0.009229210134504411,
-        "endpoint_losses": [
-          0.4999999999999999,
-          0.32019410160110384
-        ]
+        "common_peak": 0.16705127873067704,
+        "final_loss": 0.0907930250575705,
+        "ratio_to_exact": 17.710917021436906
       }
     },
     "errors": {
-      "plotted_exact_closed_form": {
-        "max_absolute_error": 4.163336342344337e-17,
-        "max_scaled_error": 4.163336342344337e-17
-      },
-      "coarse_vs_fine_amplitude": {
+      "identical_warmup_rates": {
         "max_absolute_error": 0.0,
         "max_scaled_error": 0.0
       },
-      "sensitivity_vs_trajectory_loss": {
+      "identical_warmup_states": {
         "max_absolute_error": 0.0,
         "max_scaled_error": 0.0
       },
-      "stationary_amplitude_derivative": {
-        "max_absolute_error": 1.365021377180975e-14,
-        "max_scaled_error": 1.365021377180975e-14
+      "continuous_warmup_join": {
+        "max_absolute_error": 8.326672684688674e-17,
+        "max_scaled_error": 8.326672684688674e-17
+      },
+      "conditional_optimum_closed_tail": {
+        "max_absolute_error": 5.551115123125783e-17,
+        "max_scaled_error": 5.551115123125783e-17
+      },
+      "conditional_optimum_greedy_rates": {
+        "max_absolute_error": 2.7755575615628914e-17,
+        "max_scaled_error": 2.7755575615628914e-17
       }
     }
   },

@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "scope": "Exact expected-loss recurrence for one scalar noisy quadratic; no sampled data",
+  "scope": "Exact expected loss on one scalar noisy quadratic, with a common fixed warmup and common peak; no sampled data",
   "model": {
     "objective": "f(x)=x^2/2",
     "initial_second_moment": 1.0,
@@ -12,83 +12,65 @@
       99
     ]
   },
-  "tuning": {
-    "alpha_interval": [
+  "warmup": {
+    "updates": 5,
+    "fraction": 0.05,
+    "formula": "eta_t=peak*t/W for t=0,...,W-1",
+    "common_peak": 0.27218139907431516,
+    "post_warmup_second_moment": 0.37396873167041617,
+    "peak_selection": "peak=r_W/(1+r_W), to join the optimal tail continuously; not a warmup optimization",
+    "rates": [
       0.0,
-      1.0
+      0.054436279814863035,
+      0.10887255962972607,
+      0.1633088394445891,
+      0.21774511925945214
     ],
-    "objective": "expected loss after all 100 updates",
-    "method": "scan derivative; bisect every sign change; compare all roots and both endpoints",
-    "grids": [
-      32769,
-      65537
-    ],
-    "formal_global_certificate": false
+    "fixed_for_all_schedules": true
+  },
+  "comparison": {
+    "same_peak": true,
+    "amplitude_tuning": false,
+    "objective": "expected loss after all 100 updates, including the fixed warmup",
+    "optimality_scope": "optimal tail conditional on the common fixed warmup"
   },
   "schedules": {
     "exact": {
-      "formula": "eta_t=1/(t+2)",
-      "final_loss": 0.004950495049504951,
-      "closed_form_final_loss": 0.0049504950495049506,
+      "tail_formula": "eta_(W+j)=r_W/(1+(j+1)*r_W)",
+      "final_loss": 0.005119068491203909,
+      "closed_form_final_loss": 0.005119068491203911,
       "ratio_to_exact": 1.0
     },
     "linear": {
-      "formula": "alpha*(1-t/T)",
-      "optimal_alpha": 0.06844812709771109,
-      "final_loss": 0.006260858252862524,
-      "ratio_to_exact": 1.2646933670782294,
-      "stationary_points_found": [
-        0.06844812709771109
-      ],
-      "derivative_at_alpha": 9.920712458456014e-16,
-      "coarse_vs_fine_alpha_difference": 0.0,
-      "best_dense_grid_loss": 0.0062608582695650285,
-      "endpoint_losses": {
-        "alpha_0": 0.5,
-        "alpha_1": 0.023071778143700948
-      }
+      "tail_formula": "peak*(1-(t-W)/(T-W))",
+      "common_peak": 0.27218139907431516,
+      "final_loss": 0.012110246974845562,
+      "ratio_to_exact": 2.3657130190101165
     },
     "cosine": {
-      "formula": "alpha*(1+cos(pi*t/T))/2",
-      "optimal_alpha": 0.06809185851222121,
-      "final_loss": 0.006995940652770975,
-      "ratio_to_exact": 1.4131800118597366,
-      "stationary_points_found": [
-        0.06809185851222121
-      ],
-      "derivative_at_alpha": 2.4853434133434083e-15,
-      "coarse_vs_fine_alpha_difference": 0.0,
-      "best_dense_grid_loss": 0.006995940759967766,
-      "endpoint_losses": {
-        "alpha_0": 0.5,
-        "alpha_1": 0.018747239216345593
-      }
+      "tail_formula": "peak*(1+cos(pi*(t-W)/(T-W)))/2",
+      "common_peak": 0.27218139907431516,
+      "final_loss": 0.012004601517529294,
+      "ratio_to_exact": 2.345075385913822
     },
     "constant": {
-      "formula": "alpha",
-      "optimal_alpha": 0.02945335293834095,
-      "final_loss": 0.008719954294570814,
-      "ratio_to_exact": 1.761430767503304,
-      "stationary_points_found": [
-        0.02945335293834095
-      ],
-      "derivative_at_alpha": 2.1153218066061186e-14,
-      "coarse_vs_fine_alpha_difference": 0.0,
-      "best_dense_grid_loss": 0.00871995469719523,
-      "endpoint_losses": {
-        "alpha_0": 0.5,
-        "alpha_1": 0.5
-      }
+      "tail_formula": "peak",
+      "common_peak": 0.27218139907431516,
+      "final_loss": 0.0787644602646635,
+      "ratio_to_exact": 15.386482990021406
     }
   },
   "checks": {
-    "exact_schedule_vs_closed_form_max_abs_error": 5.551115123125783e-17,
-    "recurrence_vs_unrolled_product_max_abs_error": 2.2551405187698492e-17,
-    "constant_schedule_vs_closed_form_max_abs_error": 3.885780586188048e-16,
-    "exact_schedule_vs_greedy_formula_max_abs_error": 5.551115123125783e-17,
-    "every_baseline_above_exact_at_every_iterate": true,
+    "warmup_conditional_optimum_vs_closed_form_max_abs_error": 2.7755575615628914e-17,
+    "recurrence_vs_unrolled_product_max_abs_error": 1.3877787807814457e-17,
+    "constant_tail_vs_closed_form_max_abs_error": 5.551115123125783e-17,
+    "optimal_tail_vs_greedy_formula_max_abs_error": 2.7755575615628914e-17,
+    "warmup_to_tail_join_max_abs_error": 0.0,
+    "unconstrained_model_closed_form_max_abs_error": 5.551115123125783e-17,
+    "every_baseline_above_optimal_tail_at_every_iterate": true,
+    "identical_warmup_for_every_curve": true,
     "all_learning_rates_in_unit_interval": true,
-    "refined_tuning_matches_on_both_grids": true
+    "all_100_updates_include_warmup": true
   },
   "csv_rows": 404
 }

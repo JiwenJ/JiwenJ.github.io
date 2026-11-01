@@ -29,13 +29,13 @@ For r0 > 0, c = sigma2/(h^2 r0), the closed forms are
     eta_t = sqrt(sigma2)/(h sqrt(k) sqrt((t+c)(t+c+1))).
 
 The figure uses h=sigma2=r0=1, k=4 and N=100 actual updates, t=0,...,99.
-Each linear, cosine, and constant baseline independently tunes its amplitude
-alpha in [0,1/sqrt(k)] for the exact loss AFTER all N updates. Linear and
-cosine have a formal zero at t=N, which is not an applied update. Tuning
-scans two dense derivative grids, bisects all bracketed stationary points,
-and compares with both endpoints. This is a numerical tuning check, not a
-formal root isolation certificate. Matrix QA uses fixed-seed orthogonal
-bases and paired signs, not stochastic loss estimates.
+All four curves share five prescribed warmup updates, eta_t=peak*t/5.
+The common peak solves peak=eta_star(r_5(peak)), so the exact optimal tail
+joins the warmup without a jump. The other tails are linear, cosine, and
+constant at the same peak, over the remaining 95 updates. The optimum is
+conditional on this fixed prefix; the prefix and peak are not optimized.
+Linear and cosine reach zero at the unused t=N budget boundary. Matrix QA
+uses fixed-seed orthogonal bases and paired signs, not sampled loss estimates.
 
 This optimality statement is ONLY for this isotropic tangent-noise matrix
 model, with no momentum and an exact polar factor. It does not establish
@@ -60,14 +60,14 @@ import numpy as np
 STATIC = Path(__file__).resolve().parents[1]
 OUTPUT = STATIC / "images/lr-schedules"
 SEED = 20261101
-N, K = 100, 4
+N, K, WARMUP = 100, 4, 5
 ATOL, RTOL = 3e-12, 3e-11
 INK, SECONDARY, GRID = "#383832", "#74746c", "#e7e8e2"
 STYLES = {
-    "exact": {"label": "Model optimum", "color": INK, "ls": "-", "lw": 2.25},
-    "linear": {"label": "Linear (tuned)", "color": "#b56b30", "ls": (0, (5, 2)), "lw": 2.0},
-    "cosine": {"label": "Cosine (tuned)", "color": "#517b8b", "ls": (0, (5, 2, 1, 2)), "lw": 2.0},
-    "constant": {"label": "Constant (tuned)", "color": "#94826d", "ls": (0, (1, 2)), "lw": 2.0},
+    "exact": {"label": "Optimal tail", "color": INK, "ls": "-", "lw": 2.25},
+    "linear": {"label": "Linear", "color": "#b56b30", "ls": (0, (5, 2)), "lw": 2.0},
+    "cosine": {"label": "Cosine", "color": "#517b8b", "ls": (0, (5, 2, 1, 2)), "lw": 2.0},
+    "constant": {"label": "Constant", "color": "#94826d", "ls": (0, (1, 2)), "lw": 2.0},
 }
 
 
@@ -195,96 +195,71 @@ def verify_closed_forms():
             "errors": errors}
 
 
-def shapes():
-    t = np.arange(N, dtype=np.float64)
-    return {"linear": 1.0-t/N, "cosine": 0.5*(1.0+np.cos(np.pi*t/N)), "constant": np.ones(N)}
+def warmup_peak():
+    """Prescribe a prefix whose endpoint joins the conditional optimum."""
+    def gap(peak):
+        prefix = peak * np.arange(WARMUP, dtype=float) / WARMUP
+        return peak - optimal_rate(trajectory(prefix)[-1])
 
-
-def final_loss_and_derivative(alpha, shape):
-    """Exact forward sensitivity includes the evolving r at every update."""
-    alpha = np.asarray(alpha, dtype=np.float64)
-    r, derivative = np.ones_like(alpha), np.zeros_like(alpha)
-    for coefficient in shape:
-        eta = alpha * coefficient
-        denominator = r + 1.0
-        partial_r = 1.0 - eta * np.sqrt(K) * (r + 2.0) / denominator**1.5
-        partial_eta = -2.0 * np.sqrt(K) * r / np.sqrt(denominator) + 2.0 * K * eta
-        derivative = partial_r * derivative + partial_eta * coefficient
-        r = step(r, eta)
-    return r / 2.0, derivative / 2.0
-
-
-def tune(shape, grid_points):
-    grid = np.linspace(0.0, 1.0/np.sqrt(K), grid_points)
-    losses, derivatives = final_loss_and_derivative(grid, shape)
-    roots = []
-    for index in np.flatnonzero(derivatives[:-1] * derivatives[1:] <= 0.0):
-        left, right = float(grid[index]), float(grid[index+1])
-        f_left = float(derivatives[index])
-        if f_left == 0.0:
-            roots.append(left)
-            continue
-        if float(derivatives[index+1]) == 0.0:
-            roots.append(right)
-            continue
-        for _ in range(80):
-            middle = (left + right) / 2.0
-            f_middle = float(final_loss_and_derivative(middle, shape)[1])
-            if f_middle == 0.0 or right-left <= 2e-15:
-                break
-            if (f_middle < 0.0) == (f_left < 0.0):
-                left, f_left = middle, f_middle
-            else:
-                right = middle
-        roots.append(middle)
-    candidates = [0.0, 1.0/np.sqrt(K), *roots]
-    values = [float(final_loss_and_derivative(alpha, shape)[0]) for alpha in candidates]
-    best = int(np.argmin(values))
-    return {"alpha": candidates[best], "final_loss": values[best], "roots": roots,
-            "best_grid_loss": float(np.min(losses)), "endpoint_losses": values[:2]}
+    left, right = 0.0, 1.0 / np.sqrt(K)
+    assert gap(left) < 0.0 < gap(right)
+    for _ in range(80):
+        middle = (left + right) / 2.0
+        if gap(middle) > 0.0:
+            right = middle
+        else:
+            left = middle
+    return (left + right) / 2.0
 
 
 def compare_schedules():
-    t = np.arange(N, dtype=np.float64)
-    eta = 1.0 / (np.sqrt(K) * np.sqrt((t+1.0)*(t+2.0)))
-    records = {"exact": {"alpha": None, "eta": eta, "r": trajectory(eta)}}
-    report = {"exact": {"formula": "1/(sqrt(k)*sqrt((t+1)*(t+2)))",
-                         "final_loss": float(records["exact"]["r"][-1]/2),
-                         "closed_form_final_loss": 1.0/(2*(N+1)), "ratio_to_exact": 1.0}}
-    errors = {}
-    check(records["exact"]["r"], 1.0/(np.arange(N+1)+1), "plotted_exact_closed_form", errors)
-    for name, shape in shapes().items():
-        coarse, fine = tune(shape, 32769), tune(shape, 65537)
-        check(coarse["alpha"], fine["alpha"], "coarse_vs_fine_amplitude", errors)
-        alpha = fine["alpha"]
-        eta = alpha * shape
+    peak = warmup_peak()
+    prefix = peak * np.arange(WARMUP, dtype=float) / WARMUP
+    warm_squares = trajectory(prefix)
+    r_warm = warm_squares[-1]
+    tail_steps = N - WARMUP
+    j = np.arange(tail_steps, dtype=float)
+    c_warm = 1.0 / r_warm
+    tail_exact = 1.0 / (np.sqrt(K) * np.sqrt((j+c_warm)*(j+c_warm+1.0)))
+    shapes = {"exact": tail_exact / peak,
+              "linear": 1.0 - j/tail_steps,
+              "cosine": .5 * (1.0 + np.cos(np.pi*j/tail_steps)),
+              "constant": np.ones(tail_steps)}
+    records, schedules, errors = {}, {}, {}
+    closed_tail = 1.0 / (c_warm + np.arange(tail_steps+1))
+    for name, shape in shapes.items():
+        eta = np.concatenate((prefix, peak * shape))
         r = trajectory(eta)
-        loss, derivative = final_loss_and_derivative(alpha, shape)
-        check(loss, r[-1]/2.0, "sensitivity_vs_trajectory_loss", errors)
-        check(derivative, 0.0, "stationary_amplitude_derivative", errors)
-        assert float(loss) <= fine["best_grid_loss"] + 1e-15
-        assert np.all(r >= records["exact"]["r"] - 1e-14)
-        assert np.all((eta >= 0.0) & (eta <= 1.0/np.sqrt(K)))
-        # A central finite difference independently checks the sensitivity code.
-        delta = 1e-6
-        finite_difference = (trajectory((alpha+delta)*shape)[-1] - trajectory((alpha-delta)*shape)[-1]) / (4.0*delta)
-        assert abs(finite_difference) < 2e-8
-        records[name] = {"alpha": alpha, "eta": eta, "r": r}
-        report[name] = {"optimal_alpha": alpha, "final_loss": float(r[-1]/2.0),
-                        "ratio_to_exact": float(r[-1]/records["exact"]["r"][-1]),
-                        "stationary_points_found": fine["roots"],
-                        "derivative_at_alpha": float(derivative),
-                        "central_difference_at_alpha": float(finite_difference),
-                        "best_dense_grid_loss": fine["best_grid_loss"],
-                        "endpoint_losses": fine["endpoint_losses"]}
+        check(eta[:WARMUP], prefix, "identical_warmup_rates", errors)
+        check(r[:WARMUP+1], warm_squares, "identical_warmup_states", errors)
+        check(eta[WARMUP], peak, "continuous_warmup_join", errors)
+        assert len(eta) == N and np.all(np.isfinite(eta))
+        assert np.all((eta >= 0.0) & (eta <= peak + 1e-14))
+        records[name] = {"alpha": peak, "eta": eta, "r": r}
+        schedules[name] = {"common_peak": peak,
+                           "final_loss": float(r[-1]/2.0)}
+    check(records["exact"]["r"][WARMUP:], closed_tail,
+          "conditional_optimum_closed_tail", errors)
+    check(records["exact"]["eta"][WARMUP:],
+          optimal_rate(records["exact"]["r"][WARMUP:-1]),
+          "conditional_optimum_greedy_rates", errors)
+    for name, data in records.items():
+        assert np.all(data["r"] >= records["exact"]["r"] - 1e-14)
+        schedules[name]["ratio_to_exact"] = float(data["r"][-1] / records["exact"]["r"][-1])
     return records, {"parameters": {"h": 1.0, "sigma2": 1.0, "r0": 1.0, "k": K,
                                      "updates": N, "update_indices": [0, N-1]},
-                      "amplitude_interval": [0.0, 1.0/np.sqrt(K)], "derivative_grids": [32769, 65537],
-                      "central_difference_check": {"step": 1e-6, "absolute_tolerance": 2e-8},
-                      "tuning_method": "dense derivative scan; bisect all sign changes; compare roots and endpoints",
-                      "formal_global_root_certificate": False,
-                      "baseline_formulas": {"linear": "alpha*(1-t/N)", "cosine": "alpha*(1+cos(pi*t/N))/2", "constant": "alpha"},
-                      "all_baselines_above_exact_at_every_iterate": True, "schedules": report, "errors": errors}
+                      "warmup": {"updates": WARMUP, "formula": "eta_t=peak*t/5, t=0,...,4",
+                                 "common_peak": peak, "state_after_warmup": float(r_warm),
+                                 "selection": "peak=optimal_rate(r_5(peak)) ensures continuous join",
+                                 "fixed_prefix_optimized": False},
+                      "remaining_updates": tail_steps,
+                      "conditional_exact_formula": "eta_(5+j)=1/(sqrt(k)*sqrt((j+c_w)*(j+c_w+1))), c_w=1/r_5",
+                      "conditional_closed_final_loss": float(closed_tail[-1]/2.0),
+                      "baseline_formulas": {"linear": "peak*(1-j/95)",
+                                            "cosine": "peak*(1+cos(pi*j/95))/2", "constant": "peak"},
+                      "baseline_amplitudes_tuned": False,
+                      "all_baselines_above_exact_at_every_iterate": True,
+                      "schedules": schedules, "errors": errors}
 
 
 def write_csv(path, records):
@@ -320,13 +295,21 @@ def configure_plotting():
 def make_figure(path, records, mobile, preview_dir):
     import matplotlib.pyplot as plt
     from matplotlib.ticker import FuncFormatter, NullFormatter
-    fig, axes = plt.subplots(2, 1, figsize=(5.4, 9.7) if mobile else (9.0, 8.5))
-    fig.subplots_adjust(left=0.19 if mobile else 0.12, right=0.965,
-                        top=0.755 if mobile else 0.765, bottom=0.16, hspace=0.48)
-    fig.suptitle("An exactly solvable Muon model", y=0.977, fontsize=16 if mobile else 17)
-    subtitle = (r"$f(W)=\frac{1}{2}\|W\|_F^2$ · $k=4$" + "\n" + r"$\sigma^2=r_0=1$ · $100$ updates" if mobile
-                else r"$f(W)=\frac{1}{2}\|W\|_F^2$ · $k=4$ · $\sigma^2=r_0=1$ · $100$ updates")
-    fig.text(0.5, 0.922, subtitle, ha="center", va="top", fontsize=11, color=SECONDARY, linespacing=1.6)
+    if mobile:
+        fig, axes = plt.subplots(2, 1, figsize=(5.4, 9.5))
+        fig.subplots_adjust(left=0.19, right=0.965, top=0.775, bottom=0.15, hspace=0.43)
+        title_y, subtitle_y, legend_y = 0.977, 0.925, 0.85
+        subtitle = r"$f(W)=\frac{1}{2}\|W\|_F^2$ · $k=4$" + "\n" + r"$\sigma^2=r_0=1$ · $100$ updates"
+        footer = "Shared 5-step warmup and peak; 95 tail updates.\nOptimal tail conditional on the fixed prefix.\nExact polar update · no momentum · this model only."
+    else:
+        fig, axes = plt.subplots(1, 2, figsize=(11.2, 5.4))
+        fig.subplots_adjust(left=0.09, right=0.975, top=0.69, bottom=0.22, wspace=0.28)
+        title_y, subtitle_y, legend_y = 0.975, 0.875, 0.80
+        subtitle = r"$f(W)=\frac{1}{2}\|W\|_F^2$ · $k=4$ · $\sigma^2=r_0=1$ · $100$ updates"
+        footer = "Shared 5-step warmup and peak; optimal tail conditional on the fixed prefix.\nExact polar update · no momentum · isotropic tangent noise · this matrix model only."
+    fig.suptitle("A solvable Muon model with warmup", y=title_y, fontsize=16 if mobile else 17)
+    fig.text(0.5, subtitle_y, subtitle, ha="center", va="top", fontsize=11, color=SECONDARY, linespacing=1.6)
+    peak = records["exact"]["alpha"]
     for loss, ax in enumerate(axes):
         curves = {}
         for name, data in records.items():
@@ -337,6 +320,8 @@ def make_figure(path, records, mobile, preview_dir):
                 values = np.append(values, boundary)
             curves[name] = values
             ax.plot(np.arange(len(values)), values, **STYLES[name])
+        ax.axvspan(0, WARMUP, color="#f0f0ec", zorder=0)
+        ax.axvline(WARMUP, color="#b7bbb1", ls=(0, (3, 3)), lw=.8, zorder=1)
         ax.set_yscale("linear")
         ax.set_xlim(0, N)
         ax.set_xticks([0, 25, 50, 75, 100])
@@ -346,9 +331,12 @@ def make_figure(path, records, mobile, preview_dir):
             ax.set_yticks(np.arange(0, .51, .1))
             ax.set_ylabel(r"Expected loss $\mathbb{E}[f(W_t)]$", labelpad=8)
         else:
-            ax.set_ylim(0, .375)
-            ax.set_yticks([0, .1, .2, .3])
+            ax.set_ylim(0, peak * 1.18)
+            ax.set_yticks([0, .05, .1, .15])
             ax.set_ylabel(r"Learning rate $\eta_t$", labelpad=8)
+            ax.annotate("Warmup ends", xy=(WARMUP, peak), xytext=(15, peak*1.10),
+                        fontsize=9, color=SECONDARY, va="center",
+                        arrowprops={"arrowstyle": "-", "color": SECONDARY, "lw": .7})
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
         ax.yaxis.set_minor_formatter(NullFormatter())
         ax.tick_params(which="minor", length=0)
@@ -357,30 +345,29 @@ def make_figure(path, records, mobile, preview_dir):
         ax.set_axisbelow(True)
         ax.spines[["top", "right"]].set_visible(False)
         ax.set_title("(b) Expected loss" if loss else "(a) Learning-rate schedules", loc="left", fontsize=12, pad=13)
-        zoom = ax.inset_axes([.37, .43, .60, .48])
-        for name, values in curves.items():
-            zoom.plot(np.arange(len(values)), values, **{**STYLES[name], "lw": 1.5})
-        zoom.set_yscale("linear")
-        zoom.set_xlim(50 if loss else 0, N)
-        zoom.set_ylim(0, .045 if loss else .04)
-        zoom.set_xticks([50, 75, 100] if loss else [0, 50, 100])
-        zoom.set_yticks([0, .02, .04] if loss else [0, .02, .04])
-        zoom.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
-        zoom.tick_params(labelsize=8, length=2)
-        zoom.set_title("Late loss (linear zoom)" if loss else "LR (linear zoom)", fontsize=9, pad=5)
-        zoom.grid(axis="y", color=GRID, linewidth=.5)
-        zoom.set_axisbelow(True)
-        zoom.spines[["top", "right"]].set_visible(False)
+        # The full LR range now resolves every curve; zoom only the late loss.
+        if loss:
+            zoom = ax.inset_axes([.39, .44, .58, .47])
+            for name, values in curves.items():
+                zoom.plot(np.arange(len(values)), values, **{**STYLES[name], "lw": 1.5})
+            zoom.set_xlim(50, N)
+            zoom.set_ylim(0, .1)
+            zoom.set_xticks([50, 75, 100])
+            zoom.set_yticks([0, .05, .1])
+            zoom.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:g}"))
+            zoom.tick_params(labelsize=8, length=2)
+            zoom.set_title("Late loss (linear zoom)", fontsize=9, pad=5)
+            zoom.grid(axis="y", color=GRID, linewidth=.5)
+            zoom.set_axisbelow(True)
+            zoom.spines[["top", "right"]].set_visible(False)
     handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc="center", bbox_to_anchor=(0.52, 0.835 if mobile else 0.847),
+    fig.legend(handles, labels, loc="center", bbox_to_anchor=(0.52, legend_y),
                ncol=2 if mobile else 4, frameon=False, fontsize=10.5, handlelength=2.6,
                columnspacing=1.7, labelspacing=0.9)
-    footer = ("Exact polar update · no momentum\nIsotropic tangent noise · this matrix model only\nEach baseline is tuned for the final loss." if mobile
-              else "Exact polar update · no momentum · isotropic tangent noise\nEach baseline is tuned for the final loss on this matrix model only.")
     fig.text(0.5, 0.035, footer, ha="center", fontsize=10.5, color=SECONDARY, linespacing=1.5)
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, metadata={"Date": None, "Title": "Solvable isotropic matrix model of a Muon polar update",
-        "Description": "Exact polar update with no momentum and isotropic tangent noise. Independently tuned baseline schedules; exact pathwise loss recurrence, no Monte Carlo. All axes are linear, including zooms. Learning rates extend to the unused t=100 budget boundary. Optimality applies only to this matrix model, not neural-network training."})
+    fig.savefig(path, metadata={"Date": None, "Title": "Solvable Muon matrix model with a common warmup",
+        "Description": "Exact polar update with no momentum and isotropic tangent noise. Shared prescribed five-step linear warmup and common peak, followed by 95 updates. The exact tail is optimal conditional on this prefix; other tail shapes share the same peak and are not amplitude tuned. All axes are linear. Learning rates extend to the unused t=100 budget boundary. Optimality applies only to this matrix model, not neural-network training."})
     path.write_text("".join(line.rstrip() + "\n" for line in path.read_text(encoding="utf-8").splitlines()),
                     encoding="utf-8")
     if preview_dir is not None:

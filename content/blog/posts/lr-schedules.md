@@ -200,8 +200,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-warmup-linear-mobile.svg">
-  <img src="/images/lr-schedules/sgd-warmup-linear-desktop.svg" alt="SGD 的 Warmup 加 Linear Decay：固定前 5% 训练进度线性升至峰值 1，随后直接线性降到 0，纵轴为线性刻度。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-warmup-linear-mobile.svg?v=warmup-20261101">
+  <img src="/images/lr-schedules/sgd-warmup-linear-desktop.svg?v=warmup-20261101" alt="SGD 的 Warmup 加 Linear Decay：固定前 5% 训练进度线性升至峰值 1，随后直接线性降到 0，纵轴为线性刻度。" loading="lazy" width="1200">
 </picture>
 <figcaption>SGD 的两段式 LR Schedule。warmup 占比取 5% 作示意，纵轴除以峰值学习率；常数梯度界支持后半段的线性形状。</figcaption>
 </figure>
@@ -283,35 +283,32 @@ $$
 
 ### 与 Linear 和 Cosine 比较
 
-取 $h=\sigma^2=r_0=1$，执行 $N=100$ 次更新。精确最优 LR Schedule 是 $\eta_t=1/(t+2)$。另外三组 LR Schedule 分别为
+取 $h=\sigma^2=r_0=1$，总预算 $N=100$ 次更新，其中前 $W=5$ 次使用共同的线性 warmup：$\eta_t=a\,t/W$，$t=0,\ldots,W-1$。选择共同峰值 $a$，使其等于 warmup 后的一步最优率 $r_W/(1+r_W)$，这样后续曲线连续衔接；这只是峰值的选取规则，并未联合优化 warmup。
+
+记 $j=t-W$，剩余 $95$ 次更新的四条曲线为
 
 $$
-\begin{aligned}
-\eta_t^{\rm linear}&=\alpha(1-t/N),\\
-\eta_t^{\rm cosine}&=\tfrac\alpha2[1+\cos(\pi t/N)],\\
-\eta_t^{\rm constant}&=\alpha,
-\qquad t=0,\ldots,N-1.
-\end{aligned}
+\eta_t^*=\frac{r_W}{1+(j+1)r_W},\quad \eta_t^{\rm linear}=a\left(1-\frac j{95}\right),\quad \eta_t^{\rm cosine}=\frac a2\left[1+\cos\frac{\pi j}{95}\right],\quad \eta_t^{\rm constant}=a.
 $$
 
-对每一组分别在 $\alpha\in[0,1]$ 内搜索使终点损失最小的幅值。下图直接计算期望误差递推，没有抽样噪声。
+数值上 $a\approx0.2721813991$、$r_W\approx0.3739687317$。四组从同一个 warmup 状态出发，共用峰值；下图直接递推期望误差，包含 warmup 的损失变化。深灰曲线的最优性只针对固定前缀后的尾段。
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg?v=linear">
-  <img src="/images/lr-schedules/quadratic.svg?v=linear" alt="带噪一维二次损失下四种 LR Schedule 及其精确期望损失，反比 LR Schedule 达到解析最优，其他 LR Schedule 分别调节幅值。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg?v=warmup-20261101">
+  <img src="/images/lr-schedules/quadratic.svg?v=warmup-20261101" alt="带噪一维二次损失下，四种 LR Schedule 共用前 5 步 warmup 和相同峰值；图中展示完整学习率曲线及重新计算的期望损失，深灰曲线为固定 warmup 后的最优尾段。" loading="lazy" width="1200">
 </picture>
-<figcaption>四条曲线使用同一个损失、噪声方差和更新预算，所有坐标轴均为线性刻度；小图放大学习率和后半程损失。学习率曲线延伸至不再执行更新的预算边界 $t=N$。比较的是这个二次模型的终点损失。</figcaption>
+<figcaption>前 5 步 warmup 计入总共 100 步预算，四条曲线共用峰值，所有坐标轴均为线性刻度；小图放大后半程损失。曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
 </figure>
 
-| LR Schedule | 最优或搜索得到的幅值 | 第 100 步期望损失 |
+| LR Schedule | 共同峰值 | 第 100 步期望损失 |
 | --- | --- | --- |
-| 精确最优 $1/(t+2)$ | 由解析式确定 | $0.0049505$ |
-| Linear | $\alpha\approx0.068448$ | $0.0062609$ |
-| Cosine | $\alpha\approx0.068092$ | $0.0069959$ |
-| Constant | $\alpha\approx0.029453$ | $0.0087200$ |
+| 固定 warmup 后的最优解 | $0.2721814$ | $0.0051191$ |
+| Linear | $0.2721814$ | $0.0121102$ |
+| Cosine | $0.2721814$ | $0.0120046$ |
+| Constant | $0.2721814$ | $0.0787645$ |
 
-在这个二次模型中，Linear 的终点损失低于 Cosine 和 Constant，但高于精确的反比衰减解。前面推导的 Linear Decay 最小化一般凸问题的统一上界；这里利用二次结构求解真实终点损失，得到不同的最优形状。
+在这个共同峰值的比较中，Cosine 的终点损失略低于 Linear，两者都高于最优尾段；这不代表各自重新调节峰值后的排名。前面推导的 Linear Decay 最小化一般凸问题的统一上界；这里利用二次结构求解固定 warmup 后的真实终点损失，得到不同的最优形状。
 
 ## 二、Adafactor
 
@@ -697,20 +694,20 @@ $$
 
 外部 LR 线性下降，并不意味着 ELR 也线性下降。苏剑林在《从参数对称性到有效学习率》中，先选取 Linear Decay 作为外部 LR，再用 Adam 的更新尺度和权重范数近似推算 ELR；最后提出相似渐近形状可以推广到 Muon{{< cite 13 >}}。这一步讨论的是 LR 到 ELR 的映射。
 
-以 warmup 结束为起点，令 $\tau\in[0,1]$ 表示后续衰减进度。采用给定的 $\eta(\tau)=\eta_{\rm pk}(1-\tau)$，并用 $q(\tau)\approx q_0$、$r^2(\tau)\approx r_\infty^2(1-c_0e^{-\kappa\tau})$ 描述范数增长，就有
+令 $s=t/T\in[0,1]$ 表示完整训练进度，warmup 占比为 $w=0.05$。外部 LR 取 $\eta(s)=\eta_{\rm pk}\min\{s/w,(1-s)/(1-w)\}$。在整个区间上采用 $q(s)\approx q_0$、$r^2(s)\approx r_\infty^2(1-c_0e^{-\kappa s})$ 的范数增长模型，并按 warmup 结束时的值归一化：
 
 $$
-\boxed{\frac{\mathrm{ELR}(\tau)}{\mathrm{ELR}(0)}\approx(1-\tau)\sqrt{\frac{1-c_0}{1-c_0e^{-\kappa\tau}}}},\qquad 0\lt c_0\lt1,\ \kappa\gt0.
+\boxed{\frac{\mathrm{ELR}(s)}{\mathrm{ELR}(w)}\approx\frac{\eta(s)}{\eta_{\rm pk}}\sqrt{\frac{1-c_0e^{-\kappa w}}{1-c_0e^{-\kappa s}}}},\qquad 0\lt c_0\lt1,\ \kappa\gt0.
 $$
 
-分子随外部 LR 线性减小，分母随权重范数增大，因此 ELR 早期下降更快；范数接近平台后，它才近似按直线下降。这里的单指数范数模型是参考近似，$c_0,\kappa$ 需要由具体训练确定，不能从优化器名称直接读出。
+warmup 期间，外部 LR 线性升高，ELR 还受到增长的权重范数影响。进入衰减段后，分子随外部 LR 线性减小，分母随权重范数增大，因此 ELR 在衰减前期下降更快；范数接近平台后，它才近似按直线下降。这里的单指数范数模型是参考近似，$c_0,\kappa$ 需要由具体训练确定，不能从优化器名称直接读出。
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-lr-elr-mobile.svg">
-  <img src="/images/lr-schedules/muon-lr-elr-desktop.svg" alt="带动量 Muon 的外部 LR 与 ELR：外部 LR 给定为线性衰减，在更新 RMS 近似稳定且权重 RMS 增长的模型下，ELR 前期下降更快、后期接近线性。两条曲线均除以各自起点，纵轴线性。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-lr-elr-mobile.svg?v=warmup-20261101">
+  <img src="/images/lr-schedules/muon-lr-elr-desktop.svg?v=warmup-20261101" alt="带动量 Muon 的完整 LR 与 ELR 曲线：前 5% 为 warmup，随后外部 LR 线性衰减至 0；范数增长模型下的 ELR 在衰减前期下降更快、后期接近线性。两者分别按 warmup 结束时的值归一化，坐标轴为线性刻度。" loading="lazy" width="1200">
 </picture>
-<figcaption>示意取 $c_0=0.9,\kappa=5$，只画 warmup 后的衰减阶段。橙色是给定的外部 LR，蓝色是范数增长近似下的 ELR；两者分别按起点归一化。</figcaption>
+<figcaption>完整训练区间，灰色区域为前 5% 的 warmup。橙色是给定的外部 LR，蓝色是范数增长近似下的 ELR；示意取 $c_0=0.9,\kappa=5$，两者分别按 warmup 结束时的峰值归一化。</figcaption>
 </figure>
 
 Muon 的常数不能直接照搬 Adam。例如精确极分解下，若 $W_t\in\mathbb R^{m\times n}$、$\operatorname{rank}(M_t)=k$，则 $q_t^2=s_t^2k/(mn)$。动量会影响更新方向的时间相关性，而不只是给这个幅度乘一个 Adam 式的因子。带权重衰减时，范数严格满足
@@ -1072,22 +1069,24 @@ $$
 
 在最优轨迹上，它化为 $\eta_t^{\rm SGD}=1/[h(t+c+1)]$。两种优化器能走出同一条参数轨迹，但对应的外部学习率并不相同。一般矩阵的奇异值不相等时，极分解会分别改变各个谱方向，这个标量换算就不再成立。
 
-取 $h=\sigma^2=r_0=1$、$k=4$，执行 $N=100$ 次更新。精确解为 $\eta_t^*=1/[2\sqrt{(t+1)(t+2)}]$。作为比较，Linear、Cosine 和 Constant 分别取 $\alpha(1-t/N)$、$\alpha[1+\cos(\pi t/N)]/2$ 和 $\alpha$，索引均为 $t=0,\ldots,N-1$。对每组分别在峰值 $\alpha\in[0,1/\sqrt k]$ 内优化真实终点损失。
+取 $h=\sigma^2=r_0=1$、$k=4$，总预算 $N=100$ 次更新。与 SGD 图相同，前 $W=5$ 次更新固定为共同 warmup：$\eta_t=a\,t/W$。共同峰值通过 $a=r_W/[2\sqrt{1+r_W}]$ 选择，使最优尾段与 warmup 连续衔接；数值为 $a\approx0.1670512787$、$r_W\approx0.3945444947$。
+
+令 $j=t-W$、$c_W=1/r_W$，固定 warmup 后的精确最优尾段为 $\eta_t^*=1/[2\sqrt{(j+c_W)(j+c_W+1)}]$。Linear、Cosine 和 Constant 分别使用 $a(1-j/95)$、$a[1+\cos(\pi j/95)]/2$ 和 $a$。四组共用峰值，损失从训练起点重新递推；这里没有分别搜索幅值，也没有优化 warmup 本身。
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg?v=linear">
-  <img src="/images/lr-schedules/muon-quadratic-desktop.svg?v=linear" alt="可解矩阵 Muon 模型的最优学习率及终点损失，与分别调节峰值的 Linear、Cosine 和 Constant 比较。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg?v=warmup-20261101">
+  <img src="/images/lr-schedules/muon-quadratic-desktop.svg?v=warmup-20261101" alt="无动量精确极分解的矩阵 Muon 模型：四种曲线共用前 5 步 warmup 和相同峰值，展示完整 LR Schedule 与重新计算的损失；深灰曲线是固定 warmup 后的最优尾段。" loading="lazy" width="1200">
 </picture>
-<figcaption>同一个矩阵 Muon 模型、相同预算下的精确递推。各组比较分别搜索峰值；所有坐标轴均为线性刻度，小图放大学习率和后半程损失。学习率曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
+<figcaption>无动量、精确极分解的可解矩阵模型。前 5 步 warmup 计入总共 100 步预算，四组共用峰值；所有坐标轴均为线性刻度，小图放大后半程损失。曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
 </figure>
 
-| LR Schedule | 最优或搜索得到的峰值 | 第 100 步期望损失 |
+| LR Schedule | 共同峰值 | 第 100 步期望损失 |
 | --- | --- | --- |
-| 精确最优 | $\eta_0^*=1/(2\sqrt2)$ | $0.0049505$ |
-| Linear | $\alpha\approx0.0367602$ | $0.0064220$ |
-| Cosine | $\alpha\approx0.0366828$ | $0.0071489$ |
-| Constant | $\alpha\approx0.0158727$ | $0.0092292$ |
+| 固定 warmup 后的最优解 | $0.1670513$ | $0.0051264$ |
+| Linear | $0.1670513$ | $0.0132669$ |
+| Cosine | $0.1670513$ | $0.0128032$ |
+| Constant | $0.1670513$ | $0.0907930$ |
 
 这个精确解依赖等奇异值与正交噪声假设。各向异性梯度、动量或近似正交化都会改变递推，$1/t$ 的渐近形状也不再由上述证明保证。
 
