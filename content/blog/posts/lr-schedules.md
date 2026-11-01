@@ -1,9 +1,9 @@
 ---
-title: "不同优化器的最优 LR Schedule"
+title: "不同优化器的最优 LR 与 ELR Schedule"
 date: "2026-10-31T00:00:00+08:00"
 author: ["Jiwen Jiang"]
-description: "从终点损失出发，依次推导 SGD、Adafactor、Adam 和 Muon 的 LR Schedule。"
-summary: "SGD 的线性上界与反比精确解，Adafactor 的相对步长，Adam 的动量修正，以及带动量 Muon 的 LR 与 ELR。"
+description: "从终点损失上界出发，分别推导 SGD、Adafactor、Adam 和带动量 Muon 的 LR 与 ELR Schedule。"
+summary: "直接优化相对更新幅度：四种优化器的 ELR 推导、动量与预条件修正，以及带 warmup 的条件最优曲线。"
 tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
@@ -93,6 +93,74 @@ references:
 统一把更新写成 $\theta_{t+1}=\theta_t-\eta_tu_t$。$u_t$ 包含预条件、动量或矩阵正交化，$\eta_t$ 是外部标量学习率。要优化的是固定预算后的 $\mathbb E[f(\theta_T)-f_*]$，其中 $f_*=f(\theta_*)$。
 
 一般凸问题可以先优化终点误差上界；在可解的二次模型中，则能直接最小化真实终点损失。SGD 的 Linear Decay 来自前一种分析{{< cite 1 2 >}}，并不是所有优化器、所有目标下的统一答案。
+
+## 直接把 ELR 作为优化变量
+
+本文采用相对更新幅度的定义 $\varepsilon_t=\mathrm{ELR}_t=\eta_t\|u_t\|/\|\theta_t\|${{< cite 13 >}}。向量用二范数，矩阵用 Frobenius 范数；同一个参数块中，两者的 RMS 比值与范数比值相同。这个定义不包含解耦权重衰减，也不要求损失具有尺度不变性；只有更新近似垂直于参数且步长足够小时，它才近似角向更新幅度。
+
+**给定 LR 后计算 ELR，与直接优化 ELR，是两个不同的问题。** 要直接控制 $\varepsilon_t$，定义范数比 $\gamma_t$ 和归一化方向 $d_t$：
+
+$$
+\gamma_t=\frac{\|u_t\|}{\|\theta_t\|},\qquad d_t=\frac{u_t}{\gamma_t},\qquad \theta_{t+1}=\theta_t-\varepsilon_td_t,\qquad \eta_t=\frac{\varepsilon_t}{\gamma_t}.
+$$
+
+以下考虑参数与更新范数均非零的单个参数块。除另有说明外，凸终点上界均假设实际更新不使用权重衰减。外部 LR 现在会根据当前参数、梯度及优化器状态反馈调整；它通常不是一条预先给定的时间曲线。若使用尺度下限或给外部 LR 设上限，就需要将这些约束另外放进优化问题。
+
+### 从相对更新推导终点上界
+
+固定 warmup 前缀后，保留实际参数与优化器状态，只将证明中的后续区间重新编号为 $t=1,\ldots,N$。实际步数不重置：Adam 的偏差修正、Adafactor 的时间相关系数仍使用全局训练步数。定义非负权重 $w_t$、$S=\sum_tw_t>0$，构造
+
+$$
+\varepsilon_t=\frac{w_t\sum_{s>t}w_s}{S},\qquad z_{t+1}=z_t-w_td_t,\qquad z_1=\theta_1.
+$$
+
+它满足终点转换所需的关系 $\theta_{t+1}-\theta_t=(\sum_{s>t}w_s/S)(z_{t+1}-z_t)$。终点转换允许任意辅助更新方向，因此在凸目标、当前原始梯度 $g_t$ 条件无偏、权重确定的条件下，仍然有{{< cite 1 >}}
+
+$$
+\mathbb E[f(\theta_N)-f_*]\leq\frac1S\mathbb E\sum_tw_t\langle g_t,z_t-\theta_*\rangle.
+$$
+
+接下来的归一化度量是本文在该转换上的推导。为每种优化器选择半正定矩阵 $K_t$，令 $E_t=z_t-\theta_*$、$\delta_t=g_t-K_td_t$。距离展开给出
+
+$$
+2w_t\langle g_t,E_t\rangle=\|E_t\|_{K_t}^2-\|E_{t+1}\|_{K_t}^2+w_t^2\langle d_t,K_td_t\rangle+2w_t\langle\delta_t,E_t\rangle.
+$$
+
+假设 $\|E_t\|\leq R$。令 $\Lambda_N(K)=\lambda_{\max}(K_1)+\sum_{t=2}^N[\lambda_{\max}(K_t-K_{t-1})]_+$，并取对**所有候选 ELR 反馈轨迹**都成立的确定性界：
+
+$$
+A\geq R^2\mathbb E\Lambda_N(K),\qquad a_t\geq\mathbb E\langle d_t,K_td_t\rangle,\qquad b_t\geq R\,\mathbb E\|\delta_t\|,\qquad A,a_t>0.
+$$
+
+求和并控制末项，就得到直接关于 ELR 权重的终点上界：
+
+$$
+\boxed{\mathbb E[f(\theta_N)-f_*]\leq\mathcal B_{\rm ELR}(w)=\frac{A+\sum_ta_tw_t^2+2\sum_tb_tw_t}{2\sum_tw_t}.}
+$$
+
+令 $[x]_+=\max(x,0)$，由单调标量方程 $\sum_t(\lambda-b_t)_+^2/a_t=A$ 确定唯一的 $\lambda>\min_tb_t$，最优解为
+
+$$
+\boxed{w_t^*=\frac{(\lambda-b_t)_+}{a_t},\qquad \varepsilon_t^*=w_t^*\frac{\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \mathcal B_{\rm ELR,min}=\lambda.}
+$$
+
+配方可直接验证全局最优性：
+
+$$
+2S(\mathcal B_{\rm ELR}-\lambda)=\sum_ta_t(w_t-w_t^*)^2+2\sum_t(b_t-\lambda)_+w_t\geq0.
+$$
+
+这里的全局最优针对这个固定上界的权重优化；求出的权重还须属于共同界成立的候选集合，否则要在该集合内重新优化。零权重步骤的处理见脚注[^bias]。如果 $A,a_t,b_t$ 来自某一次训练记录，而没有控制更换调度后的变化，上述式子只能作为依赖旧统计的近似。
+
+### 图中采用的常数界
+
+取 $a_t=a$、$b_t=b$ 时，$\lambda=b+\sqrt{Aa/N}$，所以
+
+$$
+\boxed{\varepsilon_t^*=\sqrt{\frac A{aN}}\left(1-\frac tN\right),\qquad \mathcal B_{\rm ELR,min}=b+\sqrt{\frac{Aa}{N}}.}
+$$
+
+下面四张 ELR 图都展示这个**共同常数界下的最优衰减形状**，并补上固定 5% 的 ELR warmup；纵轴除以各自峰值。四种优化器在这个假设下具有相同的归一化形状，但 $K_t,a_t,b_t$、峰值和对应的外部 LR 不同。warmup 的长度与峰值没有联合优化，实际训练的终点损失也不等于这个上界。
 
 ## 一、SGD
 
@@ -187,6 +255,30 @@ $$
 $$
 
 线性来自“剩余权重的占比”：每一步的权重相等，剩余权重就与剩余步数成正比。这个速率达到一般凸随机优化的最优最坏情况阶{{< cite 1 >}}。实际训练通常不知道 $D$ 和 $G$，因此会保留线性形状，另外搜索峰值学习率。
+
+### SGD 的最优 ELR
+
+SGD 的方向为 $u_t=g_t$，所以 $\gamma_t=\|g_t\|/\|\theta_t\|$、$d_t=g_t/\gamma_t$。取 $K_t=\gamma_t I$，便有 $K_td_t=g_t$，残差为零，而归一化能量变为
+
+$$
+\langle d_t,K_td_t\rangle=\frac{\|g_t\|^2}{\gamma_t}=\|\theta_t\|\,\|g_t\|.
+$$
+
+因此要控制的是 $a_t\geq\mathbb E[\|\theta_t\|\,\|g_t\|]$，而不是外部 LR 分析中的 $\mathbb E\|g_t\|^2$。取 $b_t=0$、$Q_t=\sum_{s\leq t}a_s^{-1}$，直接 ELR 上界的最优解为
+
+$$
+\boxed{\varepsilon_t^{\rm SGD,*}=\sqrt{\frac A{Q_N}}\frac1{a_t}\left(1-\frac{Q_t}{Q_N}\right),\qquad \eta_t^*=\varepsilon_t^{\rm SGD,*}\frac{\|\theta_t\|}{\|g_t\|}.}
+$$
+
+若 $a_t=a$，ELR 的最优尾段是 $\sqrt{A/(aN)}(1-t/N)$；对应的外部 LR 还乘着不断变化的范数比。前一节的线性 LR 与这里的线性 ELR 分别优化不同的上界，不能把两组结论同时无条件套在同一条训练轨迹上。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-optimal-elr-mobile.svg">
+  <img src="/images/lr-schedules/sgd-optimal-elr-desktop.svg" alt="SGD 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
+</picture>
+<figcaption>SGD 的条件最优 ELR 形状。能量界控制 $\mathbb E[\|\theta_t\|\,\|g_t\|]$；灰色 warmup 为固定示意，外部 LR 由当前范数比反馈换算。</figcaption>
+</figure>
 
 ### Warmup 后线性降到 0
 
@@ -436,6 +528,38 @@ $$
 
 这个结果优化的是固定界 $A,a_t$ 下的终点误差上界，求出的调度还须属于这些界成立的候选集合。实际的 $s_t,\kappa_t,\widehat V_t$ 会随调度改变；直接把某次训练的统计量代入，并不能得到原训练问题的全局最优解。要让上界趋于零，还需 $A/Q_T\to0$，仅有每一步的 $H_t$ 有界并不足够。
 
+### Adafactor 的最优 ELR
+
+Adafactor 的实际相对更新量为 $\varepsilon_t=\rho_ts_t\|D_t\|_F/\|W_t\|_F$。即使参数尺度下限没有触发，也只有 $\operatorname{RMS}(D_t)=1$ 时才有 $\varepsilon_t=\rho_t$；相对步长 $\rho_t$ 不能直接当作实测 ELR。
+
+记裁剪前的方向仍为 $U_t=G_t\oslash\sqrt{\widehat V_t}$。在直接控制 ELR 时，整体参数尺度与 RMS 裁剪因子从归一化方向中抵消：
+
+$$
+d_t=\frac{\|W_t\|_F}{\|U_t\|_F}U_t,\qquad K_t=\frac{\|U_t\|_F}{\|W_t\|_F}\operatorname{diag}(\operatorname{vec}\sqrt{\widehat V_t}).
+$$
+
+矩阵按向量展平后，$K_td_t=g_t$，所以 $b_t=0$。对应的能量是
+
+$$
+\langle d_t,K_td_t\rangle=\frac{\|W_t\|_F}{\|U_t\|_F}\sum_{i,j}\frac{G_{t,ij}^2}{\sqrt{\widehat V_{t,ij}}}.
+$$
+
+对这个量采用共同界 $a_t$，并控制 $K_t$ 的累计变化 $A$，令 $Q_t=\sum_{s\leq t}a_s^{-1}$，便得到
+
+$$
+\boxed{\varepsilon_t^{\rm Ada,*}=\sqrt{\frac A{Q_N}}\frac1{a_t}\left(1-\frac{Q_t}{Q_N}\right),\qquad \rho_t^*=\varepsilon_t^{\rm Ada,*}\frac{\|W_t\|_F}{s_t\|D_t\|_F}.}
+$$
+
+在常数 $a_t=a$ 下，最优 ELR 尾段仍是线性；因子化二阶矩进入 $a$ 和 $A$，并没有消失。实现这个 ELR 控制会通过 $\rho_t$ 补偿标量裁剪；如果另外限制 $\rho_t$ 或更新幅度，就必须在该可行集合内重新优化。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adafactor-optimal-elr-mobile.svg">
+  <img src="/images/lr-schedules/adafactor-optimal-elr-desktop.svg" alt="Adafactor 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化预条件能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
+</picture>
+<figcaption>Adafactor 的条件最优 ELR 形状。这里优化的是实际相对更新幅度，$\rho_t$ 需同时考虑参数尺度和裁剪后更新的 RMS。</figcaption>
+</figure>
+
 
 <details class="technical-note">
 <summary>补充：AdaGrad 的单调预条件与外部线性衰减</summary>
@@ -648,6 +772,32 @@ $$
 
 共同的常数能量界与偏差界给出了这个线性解，求出的权重还须属于这些界成立的候选集合。若 $b$ 不随训练预算减小，上界还会留下一个误差底；这并不是 Adam 自动收敛到最优点的证明。
 
+### Adam 的最优 ELR
+
+对 Adam 取 $u_t=H_t^{-1}\widehat m_t$、$\gamma_t=\|u_t\|/\|\theta_t\|$。直接 ELR 的归一化度量是 $K_t=\gamma_tH_t$，因而
+
+$$
+K_td_t=\widehat m_t,\qquad \langle d_t,K_td_t\rangle=\frac{\widehat m_t^\top H_t^{-1}\widehat m_t}{\gamma_t},\qquad \delta_t=g_t-\widehat m_t.
+$$
+
+这次的能量界应取 $a_t\geq\mathbb E[\widehat m_t^\top H_t^{-1}\widehat m_t/\gamma_t]$，动量偏差界仍为 $b_t\geq R\,\mathbb E\|g_t-\widehat m_t\|$。$A$ 要控制的是 $K_t$ 的变化，而非原来的 $H_t$。
+
+由 $\sum_t(\lambda-b_t)_+^2/a_t=A$ 求出 $\lambda$ 后，最优 ELR 和实际外部 LR 为
+
+$$
+\boxed{w_t^*=\frac{(\lambda-b_t)_+}{a_t},\qquad \varepsilon_t^{\rm Adam,*}=\frac{w_t^*\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \eta_t^*=\frac{\varepsilon_t^{\rm Adam,*}}{\gamma_t}.}
+$$
+
+只有再取共同常数界 $a_t=a,b_t=b$，才得到线性 ELR；时间变化的动量偏差会改变最优权重。这里没有用某个平稳噪声模型下的 update RMS 常数替代实际 $\gamma_t$，偏差修正也保留在 $\widehat m_t$ 中。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adam-optimal-elr-mobile.svg">
+  <img src="/images/lr-schedules/adam-optimal-elr-desktop.svg" alt="Adam 直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化能量界与动量偏差界下，最优 ELR 尾段线性衰减至 0。" loading="lazy" width="1200">
+</picture>
+<figcaption>Adam 的条件最优 ELR 形状。常数动量偏差界抬高上界，但不改变最优尾段的形状；若偏差界随时间变化，就要重新求解权重。</figcaption>
+</figure>
+
 ### 直接优化真实终点：把矩估计也纳入状态
 
 对于实际非凸训练，可以把每一步学习率作为变量，沿完整训练过程求导{{< cite 11 >}}。以 AdamW 为例，更新额外包含解耦权重衰减{{< cite 7 >}}：
@@ -684,7 +834,40 @@ $$
 
 普通动量版本取 $M_t=B_t$。$\Phi$ 表示实际采用的矩阵变换，$s_t$ 包含矩阵倍率。外部 LR 出现在参数更新中：$W_{t+1}=(1-\eta_t\lambda_{\rm wd})W_t-\eta_tU_t$。
 
-### 外部 LR 与 ELR 是两条曲线
+### 带动量 Muon 的最优 ELR
+
+直接 ELR 分析先取 $\lambda_{\rm wd}=0$，保留动量与有限次 Newton–Schulz。记 $P_t=\Phi(M_t)$、$L_t=(M_tM_t^\top)^{1/2}$。对 $U_t=s_tP_t$ 进行相对归一化后，矩阵倍率 $s_t>0$ 抵消，得到
+
+$$
+d_t=\frac{\|W_t\|_F}{\|P_t\|_F}P_t,\qquad K_t=\frac{\|P_t\|_F}{\|W_t\|_F}L_t,\qquad K_td_t=L_tP_t.
+$$
+
+于是归一化能量与残差分别为
+
+$$
+\mathcal E_t=\frac{\|W_t\|_F}{\|P_t\|_F}\operatorname{tr}(P_t^\top L_tP_t),\qquad \delta_t=G_t-L_tP_t.
+$$
+
+令 $a_t\geq\mathbb E\mathcal E_t$、$b_t\geq R\,\mathbb E\|\delta_t\|_F$，并用 $A$ 控制归一化度量 $K_t$ 的累计变化。完整残差同时包含动量滞后和有限次矩阵迭代误差：$\delta_t=(G_t-M_t)+(M_t-L_tP_t)$。求解 $\sum_t(\lambda-b_t)_+^2/a_t=A$ 后，得到
+
+$$
+\boxed{w_t^*=\frac{(\lambda-b_t)_+}{a_t},\qquad \varepsilon_t^{\rm Muon,*}=\frac{w_t^*\sum_{s>t}w_s^*}{\sum_sw_s^*},\qquad \eta_t^*=\varepsilon_t^{\rm Muon,*}\frac{\|W_t\|_F}{s_t\|P_t\|_F}.}
+$$
+
+如果用非零奇异值对应的紧致 SVD 构造精确部分极分解，不对零奇异值方向作正交补全，且 $\operatorname{rank}(M_t)=k_t>0$，则 $\|P_t\|_F=\sqrt{k_t}$、$L_tP_t=M_t$，能量简化为 $\mathcal E_t=\|W_t\|_F\|M_t\|_*/\sqrt{k_t}$；动量偏差 $G_t-M_t$ 仍须保留。实际使用有限次 Newton–Schulz 时，应使用前面的完整能量与残差，不能直接代入这个简式。
+
+在共同常数界 $a_t=a,b_t=b$ 下，Muon 的最优 ELR 尾段同样是 $\sqrt{A/(aN)}(1-t/N)$。这个结果来自直接优化 ELR 上界；没有把 Muon 换成无动量算法，也没有将 Adam 的 RMS 因子照搬过来。时间变化的梯度谱、动量滞后和正交化误差，都可以通过 $a_t,b_t$ 改变最优曲线。
+
+<figure>
+<picture>
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-optimal-elr-mobile.svg">
+  <img src="/images/lr-schedules/muon-optimal-elr-desktop.svg" alt="带动量 Muon 的直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化谱能量界和完整残差界下，最优 ELR 尾段线性衰减至 0；残差保留动量及有限次 Newton–Schulz 误差。" loading="lazy" width="1200">
+</picture>
+<figcaption>带动量 Muon 的条件最优 ELR 形状。曲线对应常数能量与残差界；矩阵谱、动量和近似正交化共同决定这些界，峰值不具有普适数值。</figcaption>
+</figure>
+
+<details class="technical-note">
+<summary>补充：给定外部 LR 时，ELR 怎样变化</summary>
 
 记权重 RMS 为 $r_t$、非衰减更新 RMS 为 $q_t$，相对更新幅度定义为
 
@@ -718,7 +901,9 @@ $$
 
 动量和有限次 Newton–Schulz 都会影响右端，交叉项不能直接删去。因此，图中的弯曲 ELR 是特定渐近假设下的参考形状，尚未求出实际带动量 Muon 的全局最优外部 LR。若目标是让 ELR 服从某条指定曲线 $e_t$，需要设置 $\eta_t=e_t r_t/q_t$，并考虑 $r_t,q_t$ 也会随新调度改变。
 
-### 终点上界中为什么也会出现 Linear
+</details>
+
+### 外部 LR 的终点上界
 
 下面回到与 SGD 相同的凸终点上界问题。先用无动量、精确极分解说明矩阵能量的来源，再保留动量与有限次 Newton–Schulz 的影响。只有进一步采用共同常数界，才会再次得到线性形状；这与上面的 ELR 映射是不同的分析。
 
@@ -1191,4 +1376,4 @@ $$
 
 [^scalar]: 证明使用了单个状态 $r_t$ 和单调函数 $\phi$。多维二次损失用一个标量学习率时，不同特征方向的误差会耦合，一步最优一般不再自动意味着终点最优。这里也没有优化依赖当前样本或参数值的自适应反馈策略，只在确定性学习率序列中求最优。
 
-[^bias]: 正分支存在的条件是 $A>\sum_t(\max_s b_s-b_t)^2/a_t$。若只优化代数表达式并允许非负权重，一般解为 $w_t=(\lambda-b_t)_+/a_t$，其中 $\sum_t(\lambda-b_t)_+^2/a_t=A$。将零权重方案放回终点转换时，还要处理末端零权重或用正权重极限；正文采用正分支以保留统一的终点编号。
+[^bias]: 正分支存在的条件是 $A>\sum_t(\max_s b_s-b_t)^2/a_t$。允许非负权重时，一般解为 $w_t=(\lambda-b_t)_+/a_t$，其中 $\sum_t(\lambda-b_t)_+^2/a_t=A$。零权重时，辅助参数和实际参数都不移动；只保留正权重的位置，就得到相同终点的正权重转换，不必假设梯度随权重连续。中间的动量或二阶矩仍可更新，这只改变保留位置上的辅助方向，而转换本身允许任意辅助更新。
