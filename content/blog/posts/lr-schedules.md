@@ -1,9 +1,10 @@
 ---
 title: "不同优化器的最优 LR 与 ELR Schedule"
 date: "2026-10-31T00:00:00+08:00"
+lastmod: "2026-11-01T00:00:00+08:00"
 author: ["Jiwen Jiang"]
-description: "从 SGD 到 MuonH：最优 LR/ELR 的条件、球面对齐模型中的反平方根解，以及带零终点约束的线性收尾。"
-summary: "对照五篇文献的 schedule，推导 SGD、Adafactor、Adam、Muon 的最优性条件，再求解 MuonH 球面对齐模型中的反平方根与线性收尾。"
+description: "从 SGD 到 MuonH：LR/ELR 的最优性条件、对齐模型的受约束求解，以及真实语言模型训练中的 AIR 对照。"
+summary: "从四种优化器的 LR/ELR 推导到 MuonH 对齐模型，再用真实语言模型训练检验 DP 曲线与 AIR 的差异。"
 tags: ["Optimization", "Learning Rate", "SGD", "Adafactor", "Adam", "Muon"]
 categories: ["Deep Learning"]
 draft: false
@@ -84,7 +85,7 @@ references:
     title: "Muon 官方实现"
     authors: "Keller Jordan et al."
     source: "GitHub"
-    url: "https://github.com/KellerJordan/Muon/blob/master/muon.py"
+    url: "https://github.com/KellerJordan/Muon/blob/64560829f70a216f8263ea8ae0fefeac8b451d36/muon.py"
   - id: 15
     title: "Training nGPT"
     authors: "Ilya Loshchilov, Boris Ginsburg"
@@ -120,6 +121,11 @@ references:
     authors: "论文作者"
     source: "官方代码库，三阶段 Schedule"
     url: "https://github.com/mangocrazz/hyperball-may-not-be-a-free-lunch/blob/main/experiments/schedules/superexp_schedule_trainer.py"
+  - id: 22
+    title: "Tiny Shakespeare 数据集"
+    authors: "Andrej Karpathy"
+    source: "char-rnn / GitHub"
+    url: "https://github.com/karpathy/char-rnn/tree/master/data/tinyshakespeare"
 ---
 
 
@@ -1779,6 +1785,133 @@ $$
 $$
 
 这里补上的，是**给定端点与累计预算后，在 AIR 标量模型内直接求解最优序列**。图中的纵轴是模型损失，不是 LLM 训练结果。真实 MuonH 的方向漂移随 schedule 改变、径向分量以及对齐与交叉熵的关系，仍不能由这个动态规划自动解决。
+
+
+## 七、把模型推导的曲线放进真实 MuonH 训练
+
+上一节在固定漂移的对齐模型内求出了优于同预算 AIR 的序列。将它用于语言模型训练后，还能得到同样的排序吗？这里做了一个小规模对照：训练前固定曲线和比较规则，共完成 14 次训练，再用三个新的随机种子比较同一留出测试段上的交叉熵。
+
+结果是两次改善、一次退步。DP 曲线的平均 test CE 比 AIR 低 $0.016866$ nats/字符，但差异的不确定性仍然很大，尚不足以确认稳定优于 AIR。
+
+### 训练设置与比较对象
+
+数据使用 Tiny Shakespeare{{< cite 22 >}}，按原始字符位置连续划分为 90% 训练集、5% 验证集和 5% 测试集。词表只从训练段构建，模型学习预测下一个字符。
+
+| 项目 | 配置 |
+|---|---|
+| 模型 | 3 层 causal pre-LN Transformer，624,640 个参数 |
+| 隐藏维度与注意力 | 宽度 128，4 个 attention heads，QKV 融合为一个矩阵 |
+| MLP 与输出 | GELU，扩展倍数 4；输出头与输入嵌入不共享权重 |
+| 输入与 batch | context 128，batch size 8，无 dropout |
+| 每次训练 | 600 次更新，614,400 个字符 token，含 30 步 warmup |
+| 计算 | Apple M2 CPU，FP32 |
+
+隐藏的 attention 和 MLP 矩阵使用带 Nesterov 动量的 MuonH：$\beta=0.95$，五步 Newton–Schulz，保存每个矩阵的初始 Frobenius 范数，归一化更新后投回这个固定半径的球面{{< cite 9 14 >}}。没有额外的切向投影，也没有对这些矩阵施加 weight decay。梯度来自语言模型交叉熵的实际反向传播。
+
+嵌入、位置参数、输出头和 LayerNorm 参数使用独立的 AdamW，$\beta_1=0.9$、$\beta_2=0.95$、$\epsilon=10^{-8}$、weight decay 为零。它的峰值 LR 固定为 $10^{-3}$，两组都使用相同的 warmup → Cosine → 0。**两组之间改变的只有隐藏矩阵的 MuonH schedule。**
+
+<details>
+<summary>初始化、数值实现与评估细节</summary>
+
+Linear 和 Embedding 权重使用标准差 0.02 的正态初始化，attention output 与 MLP output 的标准差再除以 $\sqrt{2L}$，这里 $L=3$。所有受约束矩阵均非零初始化。融合的 QKV 作为一个矩阵计算动量、Newton–Schulz 和半径；没有分别归一化 Q、K、V。
+
+Newton–Schulz 使用系数 $(3.4445,-4.775,2.0315)$，输入先除以 Frobenius 范数加 $10^{-7}$。这里采用 FP32，官方 Muon 参考实现采用 BF16。没有 gradient clipping。学习率为零时仍计算当前 batch 的梯度并更新动量与 Adam 状态，但不移动参数。
+
+同一随机种子下，两条曲线共享完全相同的模型初始化和预生成 minibatch 索引。每 100 步评估一次完整验证段；测试集只在规定的最终 checkpoint 上评估。评估使用固定、连续的 context 窗口，各段除第一个字符外的每个目标字符只计分一次，不跨越数据切分边界，也不按验证曲线挑选中途 checkpoint。
+
+所有 14 次训练均完成。初始化、数据顺序、源码和配置经过核对；记录到的最大半径相对误差约为 $1.03\times10^{-6}$，实际投影前 ELR 与指定 ELR 的最大绝对差约为 $1.07\times10^{-7}$。
+
+</details>
+
+### 曲线如何迁移到 600 步
+
+下文的 **DP 曲线**指上一节 $K=256$ 网格求出的序列经过时间插值和峰值缩放后得到的训练候选。原来的 152 个尾段值先除以模型峰值 0.2，再线性重采样为 570 个值，前面接上共同的 30 步 warmup。这些选择均在观察训练结果前固定；没有根据验证或测试损失修改曲线形状。
+
+AIR 对照使用上一节的端点归一化公式。令尾段长度 $N=570$，仅通过调整 $\alpha$ 匹配 DP 曲线的离散累计 ELR，得到 $\alpha=71.31736502$。将两条完整曲线的峰值归一为 1 时，都有
+
+$$
+\sum_{t=0}^{599}\varepsilon_t/E=157.87893371.
+$$
+
+因此在最终选择的峰值 $E=0.1$ 下，两条曲线的累计 ELR 都是 $15.78789337$。它们共享 warmup、峰值、末次实际零更新、更新次数和累计 ELR，区别是这些步长在训练过程中的分配。
+
+上一节的 $3.632\times10^{-5}$ 误差证书约束的是原始标量优化问题。这里改变了时间长度、峰值和训练目标，不能继续用该证书把迁移后的曲线称为真实训练的最优解。
+
+### 峰值由 AIR 的验证结果选择
+
+先固定开发种子 2026，在共同峰值 $E\in\{0.01,0.03,0.1,0.3\}$ 上分别训练两条曲线，共 8 次。选择规则预先规定为：**只看 AIR 在第 600 步的验证损失，取其中最小者对应的峰值，再把这个峰值用于两组独立复测。** DP 的开发结果不参与峰值选择，这一阶段也不计算 test loss。
+
+以下是全部开发结果，CE 的单位均为 nats/字符。差值定义为 DP − AIR，负数表示 DP 更低。
+
+| 峰值 ELR | AIR 验证 CE | DP 验证 CE | DP − AIR |
+|---:|---:|---:|---:|
+| 0.01 | 2.409118 | 2.402964 | −0.006154 |
+| 0.03 | 2.332495 | 2.306886 | −0.025609 |
+| **0.1** | **2.276778** | **2.231361** | **−0.045417** |
+| 0.3 | 2.354757 | 2.448077 | +0.093321 |
+
+AIR 选择的峰值为 0.1，位于候选范围内部。在峰值 0.3 下，DP 的验证 CE 高出约 0.0933。即使累计 ELR 与峰值相同，曲线之间的排序也会随峰值改变。
+
+<details>
+<summary>四个候选峰值的比较图</summary>
+
+<img src="/images/lr-schedules/muonh-development-peaks.svg" alt="四个预设峰值的全部验证结果：DP 在 0.01、0.03、0.1 下更低，在 0.3 下更高；共同峰值按 AIR 的验证结果选为 0.1。" loading="lazy">
+
+横轴将四个候选作为等距类别展示；阴影标记 AIR 选中的峰值。图中没有使用测试集指标。
+
+</details>
+
+### 三个新种子的测试结果
+
+固定峰值 0.1 后，使用预先指定的种子 11、22、33 各训练一对模型，共 6 次。每对共享初始化和训练数据顺序；两种 schedule 都在第 600 步结束，随后评估同一份未参与调参的测试段。复测种子在开发阶段未使用，数据切分在所有训练中保持不变。
+
+| 随机种子 | AIR 测试 CE | DP 测试 CE | DP − AIR |
+|---:|---:|---:|---:|
+| 11 | 2.288026 | 2.246672 | −0.041353 |
+| 22 | 2.295548 | 2.312435 | +0.016886 |
+| 33 | 2.277770 | 2.251640 | −0.026129 |
+| 平均 | 2.287115 | 2.270249 | −0.016866 |
+
+DP 在种子 11 和 33 上更好，在种子 22 上更差。平均 test CE 降低了 $0.016866$。
+
+设配对差值为 $\Delta_s=L_s^{\mathrm{DP}}-L_s^{\mathrm{AIR}}$。三组结果的均值为 $\bar\Delta=-0.016866$，样本标准差为 $s_\Delta=0.030205$；按配对 $t$ 公式计算的描述性 95% 区间为
+
+$$
+\bar\Delta\pm t_{0.975,2}\frac{s_\Delta}{\sqrt3}=[-0.091898,\,+0.058167].
+$$
+
+这个区间同时覆盖改善和退步。只有三个种子，区间本身也很不稳定；它只反映当前数据、架构和预算下的种子差异，不涵盖更换数据集或模型带来的不确定性。本次结果尚不足以确认稳定收益。
+
+<picture class="schedule-figure">
+  <source media="(max-width: 680px)" srcset="/images/lr-schedules/muonh-real-training-mobile.svg">
+  <img src="/images/lr-schedules/muonh-real-training-desktop.svg" alt="真实 MuonH 训练对照：相同 warmup、峰值 0.1 和累计 ELR 下的 DP 与 AIR 曲线，以及三个独立种子的平均验证交叉熵。" loading="lazy">
+</picture>
+
+左图是实际使用的 MuonH ELR，右图是三组复测的平均 validation CE，阴影为正负一个样本标准差，不是置信区间。测试集只用于上表的终点比较。两条验证曲线的大部分区间接近，末段均值虽有分离，仍需结合逐种子的测试结果判断。
+
+### 为什么模型中的最优性没有直接转移
+
+首先，原问题优化的是 $1-m_N$，这里优化的是语言模型的交叉熵。没有证明“对某个固定方向的对齐更高”就意味着“验证或测试 CE 更低”。前节约 $0.04017$ 的改善与这里的 $0.016866$ 也不在同一个目标尺度上，不能用两者的比值衡量理论收益兑现了多少。
+
+其次，真实 MuonH 的方向统计依赖训练轨迹。忽略浮点舍入，对单个参数块记 $w_t=W_t/R$，沿用第五节的单位 Muon 方向 $D_t$，并定义 $c_t=\langle w_t,D_t\rangle_F$。更新满足
+
+$$
+w_{t+1}=\frac{w_t-\varepsilon_t D_t}{\sqrt{1-2\varepsilon_t c_t+\varepsilon_t^2}}.
+$$
+
+即使指定一个固定单位参考方向 $V$，记 $z_t=\langle w_t,V\rangle_F$，其期望仍是
+
+$$
+\mathbb E[z_{t+1}]=\mathbb E\!\left[\frac{z_t-\varepsilon_t\langle D_t,V\rangle_F}{\sqrt{1-2\varepsilon_t c_t+\varepsilon_t^2}}\right].
+$$
+
+固定权重范数并不使 $c_t$ 自动等于零。分母也可能与分子相关，不能把期望直接移入这个分式。改变 schedule 可能改变参数、梯度和动量缓存，进而影响 $D_t$、$c_t$ 以及参考方向上的漂移。它们没有跨 schedule 共同固定的保证，原来对所有候选共用同一个常数 $a$ 的递推不再自动成立。
+
+动态规划中的状态压缩同样依赖这些条件。在原模型里，相同已用预算下更大的对齐值支配更小的对齐值；在真实网络里，仅知道一个对齐标量，并不能确定参数和动量状态，更不能保证未来交叉熵的排序。
+
+本次训练记录了径向余弦和角向步长，但没有验证固定参考方向下的漂移能否在不同 schedule 间保持一致。这些是理论保证不能直接用于实训的原因；实验没有通过消融识别种子 22 退步的具体原因。
+
+因此，这里检验的是一个冻结的模型推导曲线能否迁移到一次具体训练。它既不是 AIR 论文的大规模实验复现，也不构成对 AIR 条件性定理的反驳。一个数据集、一个约 62 万参数的模型、一个训练长度和三组随机种子，还不足以确定实际 MuonH 的最优 schedule。
 
 
 ## 引用本文

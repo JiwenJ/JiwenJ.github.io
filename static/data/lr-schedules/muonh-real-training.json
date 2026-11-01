@@ -1,0 +1,257 @@
+{
+  "model": {
+    "layers": 3,
+    "width": 128,
+    "heads": 4,
+    "context": 128,
+    "parameters": 624640
+  },
+  "dtype": "FP32",
+  "updates_per_run": 600,
+  "batch_size": 8,
+  "training_character_tokens_per_run": 614400,
+  "total_training_character_tokens": 8601600,
+  "selection": {
+    "rule": "AIR-only final validation at development seed 2026",
+    "peak_elr": 0.1,
+    "grid_boundary": false
+  },
+  "schedule": {
+    "normalized_sum": 157.87893371045695,
+    "actual_elr_sum": 15.787893371045696,
+    "warmup_updates": 30,
+    "final_applied_rate": 0,
+    "air_alpha": 71.31736502218308,
+    "dp_description": "Frozen model-derived DP profile, linearly resampled in time; no real-training optimality certificate."
+  },
+  "development": [
+    {
+      "peak_elr": 0.01,
+      "air_validation_nll": 2.409118175506592,
+      "dp_validation_nll": 2.4029641151428223,
+      "delta_dp_minus_air": -0.006154060363769531,
+      "selected": false
+    },
+    {
+      "peak_elr": 0.03,
+      "air_validation_nll": 2.3324954509735107,
+      "dp_validation_nll": 2.3068861961364746,
+      "delta_dp_minus_air": -0.025609254837036133,
+      "selected": false
+    },
+    {
+      "peak_elr": 0.1,
+      "air_validation_nll": 2.27677845954895,
+      "dp_validation_nll": 2.231361150741577,
+      "delta_dp_minus_air": -0.04541730880737305,
+      "selected": true
+    },
+    {
+      "peak_elr": 0.3,
+      "air_validation_nll": 2.3547568321228027,
+      "dp_validation_nll": 2.448077440261841,
+      "delta_dp_minus_air": 0.09332060813903809,
+      "selected": false
+    }
+  ],
+  "confirmation": [
+    {
+      "seed": 11,
+      "air_validation_nll": 2.276160478591919,
+      "dp_validation_nll": 2.2236194610595703,
+      "validation_delta_dp_minus_air": -0.05254101753234863,
+      "air_test_nll": 2.2880256175994873,
+      "dp_test_nll": 2.2466721534729004,
+      "test_delta_dp_minus_air": -0.041353464126586914
+    },
+    {
+      "seed": 22,
+      "air_validation_nll": 2.285054922103882,
+      "dp_validation_nll": 2.2897729873657227,
+      "validation_delta_dp_minus_air": 0.00471806526184082,
+      "air_test_nll": 2.295548439025879,
+      "dp_test_nll": 2.312434673309326,
+      "test_delta_dp_minus_air": 0.016886234283447266
+    },
+    {
+      "seed": 33,
+      "air_validation_nll": 2.2605538368225098,
+      "dp_validation_nll": 2.2304325103759766,
+      "validation_delta_dp_minus_air": -0.030121326446533203,
+      "air_test_nll": 2.2777698040008545,
+      "dp_test_nll": 2.2516403198242188,
+      "test_delta_dp_minus_air": -0.026129484176635742
+    }
+  ],
+  "confirmation_means": {
+    "air_validation_nll": 2.27392307917277,
+    "air_test_nll": 2.2871146202087402,
+    "dp_validation_nll": 2.2479416529337564,
+    "dp_test_nll": 2.270249048868815
+  },
+  "paired_test": {
+    "n": 3,
+    "difference_definition": "DP minus AIR; negative favors DP",
+    "mean": -0.01686557133992513,
+    "sample_sd": 0.030204812174677784,
+    "standard_error": 0.017438756439872305,
+    "paired_t_95_interval": [
+      -0.09189848434219952,
+      0.05816734166234927
+    ],
+    "t_critical": 4.302652729911275,
+    "degrees_of_freedom": 2,
+    "interpretation": "descriptive and fragile with only three paired seeds"
+  },
+  "paired_validation": {
+    "n": 3,
+    "difference_definition": "DP minus AIR; negative favors DP",
+    "mean": -0.025981426239013672,
+    "sample_sd": 0.02885315790176399,
+    "standard_error": 0.016658378481554218,
+    "paired_t_95_interval": [
+      -0.09765664388856816,
+      0.04569379141054082
+    ],
+    "t_critical": 4.302652729911275,
+    "degrees_of_freedom": 2,
+    "interpretation": "descriptive and fragile with only three paired seeds"
+  },
+  "validation_curves": {
+    "steps": [
+      0,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600
+    ],
+    "band": "plus/minus one sample standard deviation across three seeds",
+    "air": {
+      "mean": [
+        4.187203407287598,
+        2.5474628607432046,
+        2.4719513257344565,
+        2.4302191734313965,
+        2.3601907889048257,
+        2.3062446117401123,
+        2.27392307917277
+      ],
+      "sample_sd": [
+        0.002720959552136132,
+        0.005277477740129987,
+        0.008142522615102983,
+        0.0046899204885237945,
+        0.009349326931047168,
+        0.01544453755865568,
+        0.01240283282608744
+      ],
+      "seeds": [
+        11,
+        22,
+        33
+      ],
+      "individual_curves": [
+        [
+          4.185728549957275,
+          2.5453851222991943,
+          2.4627418518066406,
+          2.4296109676361084,
+          2.369938611984253,
+          2.3084793090820312,
+          2.276160478591919
+        ],
+        [
+          4.190343379974365,
+          2.5534629821777344,
+          2.4749159812927246,
+          2.435183525085449,
+          2.359334945678711,
+          2.3204500675201416,
+          2.285054922103882
+        ],
+        [
+          4.185538291931152,
+          2.5435404777526855,
+          2.478196144104004,
+          2.425863027572632,
+          2.3512988090515137,
+          2.289804458618164,
+          2.2605538368225098
+        ]
+      ]
+    },
+    "dp": {
+      "mean": [
+        4.187203407287598,
+        2.5345677534739175,
+        2.46113650004069,
+        2.4327642917633057,
+        2.3790451685587564,
+        2.310847520828247,
+        2.2479416529337564
+      ],
+      "sample_sd": [
+        0.002720959552136132,
+        0.00724974240995639,
+        0.007365201405419832,
+        0.0016454626258493013,
+        0.0009207890148722674,
+        0.02445900941247468,
+        0.036386808262283646
+      ],
+      "seeds": [
+        11,
+        22,
+        33
+      ],
+      "individual_curves": [
+        [
+          4.185728549957275,
+          2.5359363555908203,
+          2.452847957611084,
+          2.433506965637207,
+          2.3790388107299805,
+          2.297142744064331,
+          2.2236194610595703
+        ],
+        [
+          4.190343379974365,
+          2.5410356521606445,
+          2.4636311531066895,
+          2.4308784008026123,
+          2.3781275749206543,
+          2.3390862941741943,
+          2.2897729873657227
+        ],
+        [
+          4.185538291931152,
+          2.526731252670288,
+          2.466930389404297,
+          2.4339075088500977,
+          2.3799691200256348,
+          2.296313524246216,
+          2.2304325103759766
+        ]
+      ]
+    }
+  },
+  "diagnostics": {
+    "max_relative_radius_error": 1.0300550457031932e-06,
+    "max_realized_elr_absolute_error": 1.0720743173764369e-07,
+    "all_sampled_states_finite": true,
+    "sampled_training_logs": 98
+  },
+  "frozen_inputs": {
+    "train.py": "b8756a1dc00dbbd5425de14a1c2962d0156e39a8327aef7a055fe959b9658984",
+    "schedules.json": "10137764ca1586d5b41232ba44896bd76a4accbf0ee8d572005e3b310a575593",
+    "theory-profile.json": "e657f17db8875aeb40c953ecf3ba76af6faa78a435858dacf611c8b6c7425442",
+    "input.txt": "86c4e6aa9db7c042ec79f339dcb96d42b0075e16b8fc2e86bf0ca57e2dc565ed",
+    "PROTOCOL.md": "6a87c7b0c85db1072b59ec0885a32d236d1056473571a61a650c7b33fb1e9423",
+    "run_experiment.py": "1af6dbdfd0d1013246dc1a36ebf7503b2ef09f8db1f92283ab6ec7f5ee40f5c6",
+    "device": "cpu"
+  },
+  "scope": "Local Tiny Shakespeare pilot; model-derived profile transfer, not large-scale AIR reproduction or an actual-training optimality proof.",
+  "data_source": "https://github.com/karpathy/char-rnn/tree/master/data/tinyshakespeare"
+}
