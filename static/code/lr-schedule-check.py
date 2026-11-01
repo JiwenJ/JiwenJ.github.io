@@ -202,22 +202,8 @@ def write_csv(path: Path, records: dict) -> int:
 
 
 def configure_plotting():
-    import matplotlib
-    matplotlib.use("Agg")
-    from matplotlib import font_manager
-    font = STATIC / "fonts/source-serif-4/SourceSerif4-Regular.ttf"
-    family = "DejaVu Serif"
-    if font.exists():
-        font_manager.fontManager.addfont(str(font))
-        family = font_manager.FontProperties(fname=str(font)).get_name()
-    matplotlib.rcParams.update({
-        "font.family": family, "font.size": 11, "mathtext.fontset": "stix",
-        "text.color": INK, "axes.labelcolor": INK, "xtick.color": SECONDARY,
-        "ytick.color": SECONDARY, "axes.edgecolor": "#c1c4bb", "axes.linewidth": 0.8,
-        "figure.facecolor": "white", "axes.facecolor": "white",
-        "svg.fonttype": "path", "svg.hashsalt": "lr-schedules-quadratic-20261031",
-        "savefig.facecolor": "white", "savefig.dpi": 160,
-    })
+    from schedule_plot_style import configure
+    configure("lr-schedules-quadratic-20261031")
 
 
 def draw_panel(ax, records: dict, loss: bool):

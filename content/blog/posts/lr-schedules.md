@@ -274,8 +274,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-optimal-elr-mobile.svg">
-  <img src="/images/lr-schedules/sgd-optimal-elr-desktop.svg" alt="SGD 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-optimal-elr-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/sgd-optimal-elr-desktop.svg?v=style-20261101" alt="SGD 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
 </picture>
 <figcaption>SGD 的条件最优 ELR 形状。能量界控制 $\mathbb E[\|\theta_t\|\,\|g_t\|]$；灰色 warmup 为固定示意，外部 LR 由当前范数比反馈换算。</figcaption>
 </figure>
@@ -292,8 +292,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-warmup-linear-mobile.svg?v=warmup-20261101">
-  <img src="/images/lr-schedules/sgd-warmup-linear-desktop.svg?v=warmup-20261101" alt="SGD 的 Warmup 加 Linear Decay：固定前 5% 训练进度线性升至峰值 1，随后直接线性降到 0，纵轴为线性刻度。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/sgd-warmup-linear-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/sgd-warmup-linear-desktop.svg?v=style-20261101" alt="SGD 的 Warmup 加 Linear Decay：固定前 5% 训练进度线性升至峰值 1，随后直接线性降到 0，纵轴为线性刻度。" loading="lazy" width="1200">
 </picture>
 <figcaption>SGD 的两段式 LR Schedule。warmup 占比取 5% 作示意，纵轴除以峰值学习率；常数梯度界支持后半段的线性形状。</figcaption>
 </figure>
@@ -387,8 +387,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg?v=warmup-20261101">
-  <img src="/images/lr-schedules/quadratic.svg?v=warmup-20261101" alt="带噪一维二次损失下，四种 LR Schedule 共用前 5 步 warmup 和相同峰值；图中展示完整学习率曲线及重新计算的期望损失，深灰曲线为固定 warmup 后的最优尾段。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/quadratic-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/quadratic.svg?v=style-20261101" alt="带噪一维二次损失下，四种 LR Schedule 共用前 5 步 warmup 和相同峰值；图中展示完整学习率曲线及重新计算的期望损失，深灰曲线为固定 warmup 后的最优尾段。" loading="lazy" width="1200">
 </picture>
 <figcaption>前 5 步 warmup 计入总共 100 步预算，四条曲线共用峰值，所有坐标轴均为线性刻度；小图放大后半程损失。曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
 </figure>
@@ -554,8 +554,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adafactor-optimal-elr-mobile.svg">
-  <img src="/images/lr-schedules/adafactor-optimal-elr-desktop.svg" alt="Adafactor 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化预条件能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adafactor-optimal-elr-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/adafactor-optimal-elr-desktop.svg?v=style-20261101" alt="Adafactor 直接 ELR 优化：固定 5% ELR warmup，随后在共同常数归一化预条件能量界下线性衰减至 0；纵轴为 ELR 除以峰值。" loading="lazy" width="1200">
 </picture>
 <figcaption>Adafactor 的条件最优 ELR 形状。这里优化的是实际相对更新幅度，$\rho_t$ 需同时考虑参数尺度和裁剪后更新的 RMS。</figcaption>
 </figure>
@@ -792,8 +792,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adam-optimal-elr-mobile.svg">
-  <img src="/images/lr-schedules/adam-optimal-elr-desktop.svg" alt="Adam 直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化能量界与动量偏差界下，最优 ELR 尾段线性衰减至 0。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/adam-optimal-elr-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/adam-optimal-elr-desktop.svg?v=style-20261101" alt="Adam 直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化能量界与动量偏差界下，最优 ELR 尾段线性衰减至 0。" loading="lazy" width="1200">
 </picture>
 <figcaption>Adam 的条件最优 ELR 形状。常数动量偏差界抬高上界，但不改变最优尾段的形状；若偏差界随时间变化，就要重新求解权重。</figcaption>
 </figure>
@@ -860,8 +860,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-optimal-elr-mobile.svg">
-  <img src="/images/lr-schedules/muon-optimal-elr-desktop.svg" alt="带动量 Muon 的直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化谱能量界和完整残差界下，最优 ELR 尾段线性衰减至 0；残差保留动量及有限次 Newton–Schulz 误差。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-optimal-elr-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/muon-optimal-elr-desktop.svg?v=style-20261101" alt="带动量 Muon 的直接 ELR 优化：固定 5% ELR warmup，在共同常数归一化谱能量界和完整残差界下，最优 ELR 尾段线性衰减至 0；残差保留动量及有限次 Newton–Schulz 误差。" loading="lazy" width="1200">
 </picture>
 <figcaption>带动量 Muon 的条件最优 ELR 形状。曲线对应常数能量与残差界；矩阵谱、动量和近似正交化共同决定这些界，峰值不具有普适数值。</figcaption>
 </figure>
@@ -887,8 +887,8 @@ warmup 期间，外部 LR 线性升高，ELR 还受到增长的权重范数影�
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-lr-elr-mobile.svg?v=warmup-20261101">
-  <img src="/images/lr-schedules/muon-lr-elr-desktop.svg?v=warmup-20261101" alt="带动量 Muon 的完整 LR 与 ELR 曲线：前 5% 为 warmup，随后外部 LR 线性衰减至 0；范数增长模型下的 ELR 在衰减前期下降更快、后期接近线性。两者分别按 warmup 结束时的值归一化，坐标轴为线性刻度。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-lr-elr-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/muon-lr-elr-desktop.svg?v=style-20261101" alt="带动量 Muon 的完整 LR 与 ELR 曲线：前 5% 为 warmup，随后外部 LR 线性衰减至 0；范数增长模型下的 ELR 在衰减前期下降更快、后期接近线性。两者分别按 warmup 结束时的值归一化，坐标轴为线性刻度。" loading="lazy" width="1200">
 </picture>
 <figcaption>完整训练区间，灰色区域为前 5% 的 warmup。橙色是给定的外部 LR，蓝色是范数增长近似下的 ELR；示意取 $c_0=0.9,\kappa=5$，两者分别按 warmup 结束时的峰值归一化。</figcaption>
 </figure>
@@ -1260,8 +1260,8 @@ $$
 
 <figure>
 <picture>
-  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg?v=warmup-20261101">
-  <img src="/images/lr-schedules/muon-quadratic-desktop.svg?v=warmup-20261101" alt="无动量精确极分解的矩阵 Muon 模型：四种曲线共用前 5 步 warmup 和相同峰值，展示完整 LR Schedule 与重新计算的损失；深灰曲线是固定 warmup 后的最优尾段。" loading="lazy" width="1200">
+  <source media="(max-width: 640px)" srcset="/images/lr-schedules/muon-quadratic-mobile.svg?v=style-20261101">
+  <img src="/images/lr-schedules/muon-quadratic-desktop.svg?v=style-20261101" alt="无动量精确极分解的矩阵 Muon 模型：四种曲线共用前 5 步 warmup 和相同峰值，展示完整 LR Schedule 与重新计算的损失；深灰曲线是固定 warmup 后的最优尾段。" loading="lazy" width="1200">
 </picture>
 <figcaption>无动量、精确极分解的可解矩阵模型。前 5 步 warmup 计入总共 100 步预算，四组共用峰值；所有坐标轴均为线性刻度，小图放大后半程损失。曲线延伸至不再执行更新的预算边界 $t=N$。</figcaption>
 </figure>

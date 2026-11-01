@@ -27,18 +27,19 @@ import numpy as np
 import matplotlib
 
 matplotlib.use("Agg")
-from matplotlib import font_manager, pyplot as plt
+from matplotlib import pyplot as plt
 from matplotlib.ticker import PercentFormatter
+from schedule_plot_style import GRID, INK, MUTED, WARMUP_EDGE, WARMUP_FILL
+from schedule_plot_style import configure as configure_style
 
 
 STATIC = Path(__file__).resolve().parents[1]
-INK, MUTED, GRID = "#383832", "#74746c", "#e7e8e2"
 WARMUP = 0.05
 OPTIMIZERS = {
-    "sgd": {"name": "SGD", "color": INK, "ls": "-", "residual": False},
-    "adafactor": {"name": "Adafactor", "color": "#b56b30", "ls": (0, (5, 2)), "residual": False},
-    "adam": {"name": "Adam", "color": "#517b8b", "ls": (0, (5, 2, 1, 2)), "residual": True},
-    "muon": {"name": "Momentum Muon", "color": "#94826d", "ls": (0, (1, 2)), "residual": True},
+    "sgd": {"name": "SGD", "residual": False},
+    "adafactor": {"name": "Adafactor", "residual": False},
+    "adam": {"name": "Adam", "residual": True},
+    "muon": {"name": "Momentum Muon", "residual": True},
 }
 
 
@@ -81,26 +82,16 @@ def verify_constant_bound():
 
 
 def configure():
-    font = STATIC / "fonts/source-serif-4/SourceSerif4-Regular.ttf"
-    font_manager.fontManager.addfont(str(font))
-    family = font_manager.FontProperties(fname=str(font)).get_name()
-    plt.rcParams.update({
-        "font.family": family, "font.size": 11, "mathtext.fontset": "stix",
-        "text.color": INK, "axes.labelcolor": INK, "xtick.color": MUTED,
-        "ytick.color": MUTED, "axes.edgecolor": "#c1c4bb", "axes.linewidth": .8,
-        "figure.facecolor": "white", "axes.facecolor": "white",
-        "savefig.facecolor": "white", "svg.fonttype": "path",
-        "svg.hashsalt": "direct-optimal-elr-20261101",
-    })
+    configure_style("direct-optimal-elr-20261101")
 
 
 def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
     spec = OPTIMIZERS[key]
     fig, ax = plt.subplots(figsize=(5.4, 6.4) if mobile else (11.2, 5.4))
-    fig.subplots_adjust(left=.17 if mobile else .12, right=.965,
-                        bottom=.25 if mobile else .19, top=.68 if mobile else .69)
-    title = f"{spec['name']}: optimal ELR under fixed bounds"
-    display_title = f"{spec['name']}\nOptimal ELR under fixed bounds" if mobile else title
+    fig.subplots_adjust(left=.19 if mobile else .09, right=.965 if mobile else .975,
+                        bottom=.20 if mobile else .19, top=.65 if mobile else .69)
+    title = f"{spec['name']} with a prescribed warmup"
+    display_title = f"{spec['name']}\nwith a prescribed warmup" if mobile else title
     fig.suptitle(display_title, x=.5, y=.975, fontsize=16 if mobile else 17, linespacing=1.25)
     subtitle = ("Constant energy and residual bounds" if spec["residual"] else
                 "Constant energy bound")
@@ -109,27 +100,22 @@ def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
              fontsize=11, color=MUTED, linespacing=1.5)
 
     progress = np.linspace(0.0, 1.0, 1001)
-    ax.axvspan(0.0, WARMUP, color="#f0f0ec", zorder=0)
-    ax.axvline(WARMUP, color="#c9cbc1", ls=(0, (3, 3)), lw=1, zorder=1)
-    ax.plot(progress, normalized_elr(progress), color=spec["color"], ls=spec["ls"],
-            lw=2.25 if key == "sgd" else 2.0, label="ELR (conditional bound optimum)", zorder=3)
-    ax.scatter([WARMUP, 1.0], [1.0, 0.0], color=spec["color"], s=15, zorder=4, clip_on=False)
-    ax.annotate("Warmup ends", xy=(WARMUP, 1.0), xytext=(.20, 1.055),
-                ha="left", va="center", fontsize=10, color=MUTED,
-                arrowprops={"arrowstyle": "-", "color": "#92988d", "lw": .85})
-    ax.text(.61, .79, r"$\dfrac{\varepsilon_t}{\varepsilon_{\rm peak}}=\dfrac{1-t/T}{1-0.05}$",
-            ha="center", va="center", fontsize=15, color=spec["color"])
-    ax.annotate(r"$\varepsilon(T)=0$", xy=(1.0, 0.0), xytext=(.77, .075),
-                ha="center", va="center", fontsize=11, color=INK,
-                arrowprops={"arrowstyle": "-", "color": "#92988d", "lw": .85})
+    ax.axvspan(0.0, WARMUP, color=WARMUP_FILL, zorder=0)
+    ax.axvline(WARMUP, color=WARMUP_EDGE, ls=(0, (3, 3)), lw=.85, zorder=1)
+    ax.plot(progress, normalized_elr(progress), color=INK, ls="-", lw=2.25,
+            label="Bound-optimal tail", zorder=3)
+    ax.annotate("Warmup", xy=(WARMUP, 1.0), xytext=(.18, 1.09),
+                fontsize=9, color=MUTED,
+                arrowprops={"arrowstyle": "-", "color": MUTED, "lw": .7})
     ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 1.13)
+    ax.set_ylim(0.0, 1.22)
     ax.set_xticks([0, .25, .5, .75, 1])
     ax.xaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=0))
     ax.set_yticks([0, .25, .5, .75, 1])
     ax.set_yticklabels(["0", "0.25", "0.5", "0.75", "1"])
     ax.set_xlabel("Training progress, $t/T$", labelpad=7)
     ax.set_ylabel(r"Normalized ELR $\varepsilon_t/\varepsilon_{\rm peak}$", labelpad=8)
+    ax.set_title("ELR schedule", loc="left", fontsize=12, pad=13)
     ax.tick_params(length=3, labelsize=10)
     ax.grid(axis="y", color=GRID, linewidth=.7)
     ax.set_axisbelow(True)
@@ -137,13 +123,12 @@ def draw(output: Path, key: str, mobile: bool, preview_dir: Path | None):
     fig.legend(*ax.get_legend_handles_labels(), loc="center", frameon=False,
                bbox_to_anchor=(.52, .735 if mobile else .80), fontsize=10.5, handlelength=2.6)
 
-    footer = ("Optimal tail for the stated convex terminal-loss bound with common fixed constants.\n"
-              "Warmup is prescribed; its length and peak are not jointly optimized.")
+    footer = ("Conditional tail optimum under fixed bounds; warmup length and peak are prescribed, "
+              "not jointly optimized.")
     if mobile:
-        footer = ("Conditional convex terminal-bound optimum.\n"
-                  "Common fixed bounds; warmup is prescribed.\n"
+        footer = ("Conditional tail optimum under fixed bounds.\n"
                   "Warmup length and peak are not jointly optimized.")
-    fig.text(.5, .035, footer, ha="center", va="bottom", fontsize=10,
+    fig.text(.5, .04, footer, ha="center", va="bottom", fontsize=10.5,
              color=MUTED, linespacing=1.5)
     output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output, metadata={"Date": None, "Title": title,
