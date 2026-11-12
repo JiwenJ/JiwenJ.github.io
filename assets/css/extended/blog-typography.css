@@ -91,7 +91,7 @@
 .post-single.blog-post .post-meta {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     justify-content: center;
     gap: 4px 9px;
     width: 100%;

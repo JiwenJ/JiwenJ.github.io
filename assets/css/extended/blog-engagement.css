@@ -29,6 +29,12 @@ body.dark .blog-engagement {
 
 .blog-post .post-meta .article-stats {
   margin-inline-start: 3px;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.blog-post .post-meta #busuanzi_container_page_pv > .article-stat {
+  display: flex;
 }
 
 .article-stat,
