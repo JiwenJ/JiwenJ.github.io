@@ -1,0 +1,11 @@
+{{- $config := site.Params.blogEngagement -}}
+{{- $hasBlogEntries := and (not .IsPage) (gt (len (where .RegularPages "Section" "blog")) 0) -}}
+{{- if and (or (eq .Section "blog") $hasBlogEntries) $config.enabled $config.serverURL -}}
+{{- with resources.Get "js/blog-engagement.js" -}}
+{{- $script := . | resources.Minify | fingerprint -}}
+<script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" data-engagement-server="{{ $config.serverURL }}"></script>
+{{- end -}}
+{{- if and (not hugo.IsProduction) $config.preview -}}
+<div class="engagement-preview-badge">界面预览 <span aria-hidden="true">·</span> 演示数据</div>
+{{- end -}}
+{{- end -}}

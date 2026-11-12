@@ -87,6 +87,7 @@
   {{- if not (.Param "hideMeta") }}
   <footer class="entry-footer">
     {{- partial "post_meta.html" . -}}
+    {{- partial "blog_engagement.html" (dict "page" . "mode" "list") -}}
   </footer>
   {{- end }}
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
@@ -117,5 +118,7 @@
 {{- end }}
 
 {{- end }}{{/* end profileMode */}}
+
+{{- partial "blog_engagement_script.html" . -}}
 
 {{- end }}{{- /* end main */ -}}

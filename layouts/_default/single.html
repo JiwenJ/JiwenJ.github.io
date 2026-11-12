@@ -37,6 +37,9 @@
           {{- if $author }}<span class="post-meta-separator" aria-hidden="true">·</span>{{ end }}
           <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date | time.Format (default ":date_long" site.Params.DateFormat) }}</time>
         {{- end }}
+        {{- if site.Params.blogEngagement.enabled }}
+          {{- partial "blog_engagement.html" (dict "page" . "mode" "meta") }}
+        {{- end }}
       {{- else }}
       {{- partial "post_meta.html" . -}}
       {{- partial "translation_list.html" . -}}
@@ -66,6 +69,8 @@
     {{- else }}{{ $articleContent | safeHTML }}{{ end }}
   </div>
   {{- end }}
+
+  {{- partial "blog_engagement.html" (dict "page" . "mode" "footer") }}
 
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
@@ -118,5 +123,7 @@
 <script defer src="{{ $citation.RelPermalink }}" integrity="{{ $citation.Data.Integrity }}" crossorigin="anonymous"></script>
 {{- end }}
 {{- end }}
+
+{{- partial "blog_engagement_script.html" . }}
 
 {{- end }}{{/* end main */}}

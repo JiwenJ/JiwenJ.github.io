@@ -1,0 +1,49 @@
+{{- $page := .page -}}
+{{- $mode := .mode | default "meta" -}}
+{{- $config := site.Params.blogEngagement -}}
+{{- if and (eq $page.Section "blog") $config.enabled -}}
+{{- $path := $page.RelPermalink -}}
+{{- if eq $mode "footer" }}
+{{- if $config.serverURL }}
+<section class="blog-engagement" data-engagement-path="{{ $path }}" data-engagement-current="true" aria-labelledby="engagement-title">
+  <div class="blog-engagement-copy">
+    <p class="blog-engagement-eyebrow">THANKS FOR READING</p>
+    <h2 id="engagement-title">这篇文章对你有帮助吗？</h2>
+    <p class="blog-engagement-description">留下一个赞，让我知道你的喜欢。</p>
+  </div>
+  <button class="like-action like-action-large" type="button" data-like-button aria-pressed="false" aria-label="为这篇文章点赞" disabled>
+    <svg class="engagement-heart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+    <span data-like-label>点赞</span>
+    <span class="like-action-divider" aria-hidden="true"></span>
+    <span class="engagement-count" data-like-count>—</span>
+  </button>
+  <p class="engagement-status" data-engagement-status role="status" aria-live="polite"></p>
+</section>
+{{- end }}
+{{- else }}
+{{- if or $config.serverURL (ne $mode "list") }}
+<span class="article-stats{{ if eq $mode "list" }} article-stats-list{{ end }}" data-engagement-path="{{ $path }}"{{ if and (eq $mode "meta") $page.IsPage }} data-engagement-current="true"{{ end }}>
+  {{- if not $config.serverURL }}<span id="busuanzi_container_page_pv" style="display: none">{{ end }}
+  <span class="article-stat" aria-label="文章浏览量">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+    <span class="engagement-count" {{ if not $config.serverURL }}id="busuanzi_value_page_pv"{{ else }}data-view-count{{ end }}>—</span><span>次阅读</span>
+  </span>
+  {{- if not $config.serverURL }}</span>{{ end }}
+  {{- if $config.serverURL }}
+  <span class="article-stats-separator" aria-hidden="true"></span>
+  {{- if eq $mode "list" }}
+  <span class="article-stat">
+    <svg class="engagement-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+    <span class="engagement-count" data-like-count>—</span><span>赞</span>
+  </span>
+  {{- else }}
+  <button class="like-action like-action-inline" type="button" data-like-button aria-pressed="false" aria-label="为这篇文章点赞" disabled>
+    <svg class="engagement-heart" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+    <span class="engagement-count" data-like-count>—</span><span>赞</span>
+  </button>
+  {{- end }}
+  {{- end }}
+</span>
+{{- end }}
+{{- end }}
+{{- end -}}
