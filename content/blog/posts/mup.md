@@ -76,6 +76,7 @@ references:
     url: "https://arxiv.org/abs/2310.02244"
   - id: 12
     title: "u-μP: The Unit-Scaled Maximal Update Parametrization"
+    mathTitle: 'u-$\mu\mathrm{P}$: The Unit-Scaled Maximal Update Parametrization'
     authors: "Charlie Blake et al."
     source: "ICLR 2025"
     url: "https://arxiv.org/abs/2407.17465"
@@ -94,6 +95,7 @@ references:
   - id: 15
     key: "zheng2026spectralconditionmupwidthdepth"
     title: "Spectral Condition for μP under Width-Depth Scaling"
+    mathTitle: 'Spectral Condition for $\mu\mathrm{P}$ under Width-Depth Scaling'
     authors: "Chenyu Zheng et al."
     source: "arXiv:2603.00541, 2026"
     url: "https://arxiv.org/abs/2603.00541"
@@ -112,6 +114,7 @@ references:
   - id: 18
     key: "chickering2026gqamupmaximalparameterizationupdate"
     title: "GQA-μP: The maximal parameterization update for grouped query attention"
+    mathTitle: 'GQA-$\mu\mathrm{P}$: The maximal parameterization update for grouped query attention'
     authors: "Kyle R. Chickering et al."
     source: "arXiv:2605.15290, 2026"
     url: "https://arxiv.org/abs/2605.15290"
@@ -124,6 +127,7 @@ references:
   - id: 20
     key: "gupta2026extendingmupspectralconditions"
     title: "Extending μP: Spectral Conditions for Feature Learning Across Optimizers"
+    mathTitle: 'Extending $\mu\mathrm{P}$: Spectral Conditions for Feature Learning Across Optimizers'
     authors: "Akshita Gupta et al."
     source: "arXiv:2602.20937, 2026"
     url: "https://arxiv.org/abs/2602.20937"
@@ -142,6 +146,7 @@ references:
   - id: 23
     key: "zhao2026principledmuonmumathsfpensuring"
     title: "Towards a Principled Muon under μP: Ensuring Spectral Conditions throughout Training"
+    mathTitle: 'Towards a Principled Muon under $\mu\mathrm{P}$: Ensuring Spectral Conditions throughout Training'
     authors: "John Zhao"
     source: "arXiv:2601.01306, 2026"
     url: "https://arxiv.org/abs/2601.01306"
@@ -166,6 +171,7 @@ references:
   - id: 27
     key: "malasnicki2025muparametrizationmixtureexperts"
     title: "μ-Parametrization for Mixture of Experts"
+    mathTitle: '$\mu$-Parametrization for Mixture of Experts'
     authors: "Jan Małaśnicki et al."
     source: "arXiv:2508.09752, 2025"
     url: "https://arxiv.org/abs/2508.09752"
@@ -178,6 +184,7 @@ references:
   - id: 29
     key: "vankadara2026scalemixtureofexpertsmupmaximally"
     title: "How to Scale Mixture-of-Experts: From muP to the Maximally Scale-Stable Parameterization"
+    mathTitle: 'How to Scale Mixture-of-Experts: From $\mu\mathrm{P}$ to the Maximally Scale-Stable Parameterization'
     authors: "Leena Chennuru Vankadara et al."
     source: "arXiv:2605.14200, 2026"
     url: "https://arxiv.org/abs/2605.14200"
@@ -213,6 +220,7 @@ references:
     url: "https://arxiv.org/abs/2608.20061"
   - id: 35
     title: "mup：最大更新参数化的 PyTorch 实现"
+    mathTitle: '$\mu\mathrm{P}$：最大更新参数化的 PyTorch 实现'
     authors: "Microsoft Research"
     source: "原作者代码与文档"
     url: "https://github.com/microsoft/mup"
@@ -514,7 +522,7 @@ Adam 按梯度的二阶矩归一化更新。在 $\epsilon$ 可忽略、梯度非
 读出层采用独立零均值初始化、标准差按 $1/n$ 缩放时，初始输出通常随宽度缩小，训练中的输出更新仍可保持常数量级。若使用全零读出初始化，第一步的隐藏层梯度会为零。
 
 <details class="technical-note">
-<summary>mup 的存储坐标与有效权重</summary>
+<summary>$\mu\mathrm{P}$ 的存储坐标与有效权重</summary>
 
 缩放因子可以放在存储参数或前向计算中。原作者公开的 `mup` 实现使用 `MuReadout`、`set_base_shapes` 和 `MuAdam` 配合工作{{< cite 35 >}}。
 

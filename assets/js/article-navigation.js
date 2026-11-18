@@ -71,7 +71,7 @@
                 note.classList.add("article-sidenote");
                 const backlink = note.querySelector("a");
                 const sourceLink = backlink.cloneNode(false);
-                const title = note.querySelector(".reference-title").textContent;
+                const title = note.dataset.title || note.querySelector(".reference-title").textContent;
                 sourceLink.className = "reference-source";
                 sourceLink.textContent = "原文 ↗";
                 sourceLink.title = "查看文献原文（新窗口）";

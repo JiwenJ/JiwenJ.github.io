@@ -98,10 +98,10 @@
     <h2 id="reference-sidebar-title">参考文献</h2>
     <ol>
       {{- range sort . "id" }}
-      <li id="ref-side-{{ .id }}" data-reference="{{ .id }}">
+      <li id="ref-side-{{ .id }}" data-reference="{{ .id }}" data-title="{{ .title }}">
         <a href="{{ .url | safeURL }}" target="_blank" rel="noopener noreferrer">
           <span class="reference-number">[{{ .id }}]</span>
-          <span class="reference-title">{{ .title }}</span>
+          <span class="reference-title">{{ .mathTitle | default .title }}</span>
         </a>
         <span class="reference-meta">{{ .authors }} · {{ .source }}</span>
       </li>
