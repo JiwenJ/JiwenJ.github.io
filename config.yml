@@ -82,6 +82,9 @@ params:
     - name: zhihu
       title: Zhihu
       url: "https://www.zhihu.com/people/JiwenJ"
+    - name: xiaohongshu
+      title: Xiaohongshu
+      url: "https://www.xiaohongshu.com/user/profile/63ead83e0000000026005257"
     # - name: orcid
     #   title: ORCID
     #   url: "https://orcid.org/0000-0000-0000-0000"
