@@ -1,5 +1,6 @@
 ---
 title: "Mosaic-μP: Hyperparameter Transfer for Large-Scale Modern LLMs"
+mathTitle: 'Mosaic-$\mu\mathrm{P}$: Hyperparameter Transfer for Large-Scale Modern LLMs'
 authors: ["Jiwen Jiang", "Junyuan Shang", "Shuohuan Wang", "Dianhai Yu"]
 venue: "ACL ARR"
 abbr: "ARR"

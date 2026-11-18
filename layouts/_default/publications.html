@@ -77,9 +77,9 @@
           </div>
           <h3 class="pub-card-title">
             {{- if $paperURL }}
-            <a href="{{ $paperURL }}" target="_blank" rel="noopener noreferrer">{{ .Title }}</a>
+            <a href="{{ $paperURL }}" target="_blank" rel="noopener noreferrer">{{ .Params.mathTitle | default .Title }}</a>
             {{- else }}
-            {{ .Title }}
+            {{ .Params.mathTitle | default .Title }}
             {{- end }}
           </h3>
           <p class="pub-card-authors">
