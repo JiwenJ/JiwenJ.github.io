@@ -1,12 +1,8 @@
-.profile-visitor-map {
-    display: flex;
-    flex: 0 0 320px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 320px;
-    height: 200px;
-    margin-left: auto;
+/* Visitor map, below the last section. Stays collapsed until the widget arrives. */
+.academic-home .visitor-map {
+    width: 320px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 @media (max-width: 768px) {
@@ -22,11 +18,5 @@
 
     .academic-home .profile-image {
         max-height: 120px;
-    }
-
-    .academic-home .profile-visitor-map {
-        flex: 0 1 100%;
-        max-width: 100%;
-        margin-inline: auto;
     }
 }

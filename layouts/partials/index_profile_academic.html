@@ -23,10 +23,6 @@
         {{- end }}
         {{- partial "social_icons.html" (dict) -}}
       </div>
-
-      <div class="profile-visitor-map">
-        <script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?cl=cc7d5e&w=a&t=tt&d=sDv9ILotjNEfFcEOFe4igfpL-XbEwa7Cli0t2c1brYk&co=f5f5f5&ct=896c6c"></script>
-      </div>
     </div>
     <div class="mobile-social">
       {{- partial "social_icons.html" (dict) -}}
@@ -189,7 +185,27 @@
   </section>
   {{- end }}
 
-  {{/* ===== Visitor Statistics Section ===== */}}
+  {{- /* Visitor map. The widget script is added only after the window load
+         event, so a slow or unreachable widget host cannot hold back the page. */}}
+  {{- with site.Params.visitorMap.src }}
+  <div class="visitor-map" data-visitor-map-src="{{ . }}"></div>
+  <script>
+    (function () {
+      var holder = document.querySelector("[data-visitor-map-src]");
+      if (!holder) return;
+      function load() {
+        var script = document.createElement("script");
+        // The widget looks itself up by this id and inserts the map right after it.
+        script.id = "mapmyvisitors";
+        script.async = true;
+        script.src = holder.getAttribute("data-visitor-map-src");
+        holder.appendChild(script);
+      }
+      if (document.readyState === "complete") load();
+      else window.addEventListener("load", load, { once: true });
+    })();
+  </script>
+  {{- end }}
 
     </div>
     {{- if site.Params.profileMode.showToc }}

@@ -66,6 +66,11 @@ params:
         description: "HKUST(GZ), Pretrain & Infra, with [Prof. Lei Chen](https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page/CHEN-Lei/leichen)"
     #######################
 
+  # Visitor map shown at the bottom of the home page. It is loaded after the
+  # page itself, so the page never waits for it. Remove `src` to hide the map.
+  visitorMap:
+    src: "https://mapmyvisitors.com/map.js?cl=cc7d5e&w=a&t=tt&d=sDv9ILotjNEfFcEOFe4igfpL-XbEwa7Cli0t2c1brYk&co=f5f5f5&ct=896c6c"
+
   socialIcons:
     # - name: email
     #   title: Email
