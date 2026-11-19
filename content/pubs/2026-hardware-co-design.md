@@ -6,7 +6,7 @@ venue: "NeurIPS"
 abbr: "NeurIPS"
 year: 2026
 full_text: "https://arxiv.org/abs/2602.10377"
-selected: false
+selected: true
 topics: ["Hardware Co-Design"]
 publication_status: "Poster"
 publication_kind: "published"
