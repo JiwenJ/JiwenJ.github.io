@@ -14,7 +14,9 @@
             let opener = null;
             let resetTimer = null;
             let session = 0;
-            const copyLabel = "复制标题和链接";
+            // Labels come from the page (data/article_ui.yaml) so they match the post's language.
+            const labels = dialog.dataset;
+            const copyLabel = copyButton.textContent;
 
             triggers.forEach((button) => {
                 button.hidden = false;
@@ -22,7 +24,7 @@
                     session += 1;
                     window.clearTimeout(resetTimer);
                     opener = button;
-                    text.value = [dialog.dataset.shareTitle, `原文：${dialog.dataset.shareUrl}`].join("\n\n");
+                    text.value = [dialog.dataset.shareTitle, `${labels.shareSourcePrefix ?? "原文："}${dialog.dataset.shareUrl}`].join("\n\n");
                     copyButton.disabled = false;
                     copyButton.textContent = copyLabel;
                     nativeButton.hidden = typeof navigator.share !== "function";
@@ -42,7 +44,7 @@
                     });
                 } catch (error) {
                     if (error.name !== "AbortError" && dialog.open && shareSession === session) {
-                        status.textContent = "无法打开系统分享，请复制链接。";
+                        status.textContent = labels.shareFailed || "无法打开系统分享，请复制链接。";
                     }
                 } finally {
                     nativeButton.disabled = false;
@@ -58,14 +60,14 @@
                     if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
                     await navigator.clipboard.writeText(payload);
                     if (!dialog.open || copySession !== session) return;
-                    copyButton.textContent = "已复制";
-                    status.textContent = "标题和链接已复制，可以粘贴分享。";
+                    copyButton.textContent = labels.shareCopied || "已复制";
+                    status.textContent = labels.shareCopiedStatus || "标题和链接已复制，可以粘贴分享。";
                     resetTimer = window.setTimeout(() => { copyButton.textContent = copyLabel; }, 2200);
                 } catch {
                     if (!dialog.open || copySession !== session) return;
                     text.focus();
                     text.select();
-                    status.textContent = "请手动复制已选中的内容：电脑按 ⌘C 或 Ctrl+C，手机可长按文字复制。";
+                    status.textContent = labels.shareManual || "请手动复制已选中的内容：电脑按 ⌘C 或 Ctrl+C，手机可长按文字复制。";
                 } finally {
                     if (dialog.open && copySession === session) copyButton.disabled = false;
                 }

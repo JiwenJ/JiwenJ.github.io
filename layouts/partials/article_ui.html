@@ -1,0 +1,2 @@
+{{- /* Interface text for a post, in the language the post is written in. See data/article_ui.yaml. */ -}}
+{{- return index hugo.Data.article_ui (cond (eq .Params.isCJKLanguage true) "zh" "en") -}}

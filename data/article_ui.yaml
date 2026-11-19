@@ -1,0 +1,47 @@
+# Interface text around a blog post: table of contents, reference list, view
+# counter and share dialog. A post written in Chinese sets `isCJKLanguage: true`
+# in its front matter and gets the `zh` strings; every other post gets `en`.
+zh:
+  lang: zh-CN
+  tocLabel: 文章目录
+  tocHeading: 目录
+  tocSummary: 目录
+  references: 参考文献
+  viewsLabel: 文章浏览量
+  viewsSuffix: 次阅读
+  shareTrigger: 分享…
+  shareTriggerLabel: 分享文章链接
+  shareTitle: 分享这篇文章
+  shareClose: 关闭分享窗口
+  shareDescription: 复制文章标题和链接，粘贴到聊天或动态中分享。
+  sharePreviewNote: 本地预览：分享地址指向正式网址，文章发布后可访问。
+  shareTextLabel: 分享内容
+  shareCopy: 复制标题和链接
+  shareNative: 更多应用
+  shareSourcePrefix: 原文：
+  shareCopied: 已复制
+  shareCopiedStatus: 标题和链接已复制，可以粘贴分享。
+  shareManual: 请手动复制已选中的内容：电脑按 ⌘C 或 Ctrl+C，手机可长按文字复制。
+  shareFailed: 无法打开系统分享，请复制链接。
+en:
+  lang: ""
+  tocLabel: Table of contents
+  tocHeading: Contents
+  tocSummary: Table of Contents
+  references: References
+  viewsLabel: Article views
+  viewsSuffix: views
+  shareTrigger: Share…
+  shareTriggerLabel: Share this article
+  shareTitle: Share this article
+  shareClose: Close the share dialog
+  shareDescription: Copy the title and link, then paste them wherever you want to share.
+  sharePreviewNote: "Local preview: the link points to the published address and works once the post is live."
+  shareTextLabel: Text to share
+  shareCopy: Copy title and link
+  shareNative: More apps
+  shareSourcePrefix: ""
+  shareCopied: Copied
+  shareCopiedStatus: Title and link copied. Paste them anywhere to share.
+  shareManual: "Copy the selected text manually: press ⌘C or Ctrl+C, or long-press the text on a phone."
+  shareFailed: Could not open the system share sheet. Please copy the link instead.

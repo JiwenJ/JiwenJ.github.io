@@ -3,6 +3,7 @@
 {{- $title := .Title }}
 {{- $dialogID := printf "article-share-%s" (md5 .RelPermalink) }}
 {{- $linkSharing := or (not (.Param "ShareButtons")) (in (.Param "ShareButtons") "native") }}
+{{- $ui := partial "article_ui.html" . }}
 
 {{- $.Scratch.Set "tags" ""}}
 
@@ -20,8 +21,8 @@
     {{- if $linkSharing }}
     <li>
         <button type="button" class="share-chinese-trigger" data-share-dialog="{{ $dialogID }}"
-            aria-label="分享文章链接" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="分享文章链接" hidden>
-            <span class="share-platform-label">分享…</span>
+            aria-label="{{ $ui.shareTriggerLabel }}" aria-haspopup="dialog" aria-controls="{{ $dialogID }}" title="{{ $ui.shareTriggerLabel }}" hidden>
+            <span class="share-platform-label">{{ $ui.shareTrigger }}</span>
         </button>
     </li>
     {{- end }}
@@ -107,20 +108,23 @@
 
 {{- if $linkSharing }}
 <dialog id="{{ $dialogID }}" class="article-share-dialog" aria-labelledby="{{ $dialogID }}-title" aria-describedby="{{ $dialogID }}-description"
-    data-share-title="{{ $title }}" data-share-url="{{ $pageurl }}">
+    data-share-title="{{ $title }}" data-share-url="{{ $pageurl }}"
+    data-share-source-prefix="{{ $ui.shareSourcePrefix }}" data-share-copied="{{ $ui.shareCopied }}"
+    data-share-copied-status="{{ $ui.shareCopiedStatus }}" data-share-manual="{{ $ui.shareManual }}"
+    data-share-failed="{{ $ui.shareFailed }}">
     <div class="article-share-panel">
         <header>
-            <h2 id="{{ $dialogID }}-title">分享这篇文章</h2>
-            <button type="button" class="article-share-close" aria-label="关闭分享窗口">×</button>
+            <h2 id="{{ $dialogID }}-title">{{ $ui.shareTitle }}</h2>
+            <button type="button" class="article-share-close" aria-label="{{ $ui.shareClose }}">×</button>
         </header>
-        <p id="{{ $dialogID }}-description" class="article-share-description">复制文章标题和链接，粘贴到聊天或动态中分享。</p>
+        <p id="{{ $dialogID }}-description" class="article-share-description">{{ $ui.shareDescription }}</p>
         {{- if hugo.IsServer }}
-        <p class="article-share-preview-note">本地预览：分享地址指向正式网址，文章发布后可访问。</p>
+        <p class="article-share-preview-note">{{ $ui.sharePreviewNote }}</p>
         {{- end }}
-        <textarea class="article-share-text" aria-label="分享内容" rows="4" readonly></textarea>
+        <textarea class="article-share-text" aria-label="{{ $ui.shareTextLabel }}" rows="4" readonly></textarea>
         <div class="article-share-actions">
-            <button type="button" data-share-copy>复制标题和链接</button>
-            <button type="button" data-share-native hidden>更多应用</button>
+            <button type="button" data-share-copy>{{ $ui.shareCopy }}</button>
+            <button type="button" data-share-native hidden>{{ $ui.shareNative }}</button>
         </div>
         <p class="article-share-status" role="status" aria-live="polite"></p>
     </div>

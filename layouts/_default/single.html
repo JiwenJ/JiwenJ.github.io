@@ -1,14 +1,16 @@
 {{- define "main" }}
 
 {{- $hasSidebars := and (eq .Section "blog") (.Param "ShowToc") }}
+{{- /* Labels around the article follow the language the post is written in. */}}
+{{- $ui := partial "article_ui.html" . }}
 {{- if $hasSidebars }}
-<div class="article-with-references">
-  <aside class="article-toc" aria-label="文章目录">
-    <h2>目录</h2>
+<div class="article-with-references"{{ with $ui.lang }} lang="{{ . }}"{{ end }}>
+  <aside class="article-toc" aria-label="{{ $ui.tocLabel }}">
+    <h2>{{ $ui.tocHeading }}</h2>
     {{ partial "article_toc.html" . }}
   </aside>
 {{- end }}
-<article class="post-single{{ if eq .Section "blog" }} blog-post{{ end }}">
+<article class="post-single{{ if eq .Section "blog" }} blog-post{{ end }}"{{ with $ui.lang }} lang="{{ . }}"{{ end }}>
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
     <h1 class="post-title entry-hint-parent">
@@ -95,7 +97,7 @@
 {{- if $hasSidebars }}
   {{- with .Params.references }}
   <aside class="reference-sidebar" aria-labelledby="reference-sidebar-title">
-    <h2 id="reference-sidebar-title">参考文献</h2>
+    <h2 id="reference-sidebar-title">{{ $ui.references }}</h2>
     <ol>
       {{- range sort . "id" }}
       <li id="ref-side-{{ .id }}" data-reference="{{ .id }}" data-title="{{ .title }}">
