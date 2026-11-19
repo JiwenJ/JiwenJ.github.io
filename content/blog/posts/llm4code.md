@@ -39,15 +39,7 @@ ShowToc: true
 
 <hr>
 <h3 id="humaneval">HumanEval</h3>
-<p>This is an evaluation harness for the HumanEval problem solving dataset described in the paper <a href="https://arxiv.org/pdf/2107.03374.pdf" target="_blank" rel="noopener">&ldquo;Evaluating Large Language Models Trained on Code&rdquo;</a>. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in <a href="https://paperswithcode.com/sota/code-generation-on-humaneval" target="_blank" rel="noopener">PapersWithCode</a>.
-
-<figure  id="figure-an-example-the-white-space-is-the-prompt-or-input-while-the-yellow-space-is-the-model-generated-content">
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="./1.jpg" alt="example" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      An example: the white space is the prompt or input while the yellow space is the model-generated content
-    </figcaption></figure>
-</p>
+<p>This is an evaluation harness for the HumanEval problem solving dataset described in the paper <a href="https://arxiv.org/pdf/2107.03374.pdf" target="_blank" rel="noopener">&ldquo;Evaluating Large Language Models Trained on Code&rdquo;</a>. It used to measure functional correctness for synthesizing programs from docstrings. It consists of 164 original programming problems, assessing language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions. At the same time, you can find the latest models and advancements in <a href="https://paperswithcode.com/sota/code-generation-on-humaneval" target="_blank" rel="noopener">PapersWithCode</a>.</p>
 <h3 id="codellama">CodeLlama</h3>
 <p>Maybe you haven&rsquo;t excperienced CodeLlama yet, the Huggingface official group has deployed a <a href="https://huggingface.co/chat" target="_blank" rel="noopener">playground</a> for everyone where you can Preliminarily evaluate it in your target task.</p>
 <p>After you have seen its performance on your task and gain much confidence in CodeLlama, you might want to give it a shot where you can delve deeper into the paper, even deploy and finetune it. The model weights are available in <a href="https://huggingface.co/codellama" target="_blank" rel="noopener">Huggingface</a>. If you go through the <a href="https://arxiv.org/pdf/2308.12950v2.pdf" target="_blank" rel="noopener">paper</a>, you might find a really distinct model named &ldquo;<strong>unnatural CodeLlama</strong>&rdquo; whose performance is nearly the same as GPT-4 under the code scenario.</p>
