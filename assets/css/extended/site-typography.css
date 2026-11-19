@@ -124,6 +124,26 @@ code, pre, kbd, samp {
     letter-spacing: -0.035em;
 }
 
+/* The menu item of the current page is bold. Every item reserves the width of
+   its bold label (the hidden ::after copy, read from the link's title), so the
+   other items do not move when the bold passes from one item to another. */
+#menu a {
+    text-align: center;
+}
+
+#menu a::after {
+    content: attr(title);
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    font-weight: 700;
+}
+
+#menu a .active {
+    font-weight: 700;
+}
+
 .academic-home .profile-info h1.profile-name,
 .academic-home section > h2,
 .academic-home .publication-title {
