@@ -4,10 +4,6 @@ body:has(.publications-page) {
   font-family: var(--pub-serif);
 }
 
-body:has(.publications-page) #menu .active {
-  font-weight: 700;
-}
-
 .publications-page {
   padding-bottom: 40px;
   color: var(--content);
