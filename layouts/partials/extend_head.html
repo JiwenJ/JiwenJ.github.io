@@ -1,8 +1,11 @@
 <link rel="preload" href="{{ "fonts/source-serif-4/source-serif-4-latin-opsz-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="{{ "fonts/source-sans-3/SourceSans3VF-Upright.woff2" | relURL }}" as="font" type="font/woff2" crossorigin="anonymous">
 
-{{- /* Busuanzi visitor counter script */ -}}
+{{- /* Busuanzi fills in the view counter under a blog post's title; no other page shows a count. */ -}}
+{{- $engagement := site.Params.blogEngagement -}}
+{{- if and .IsPage (eq .Section "blog") $engagement.enabled (not $engagement.serverURL) }}
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+{{- end }}
 
 {{- if eq .Layout "publications" }}
   {{- with resources.Get "css/publications.css" }}
@@ -15,10 +18,13 @@
   {{- end }}
 {{- end }}
 
-{{- /* Listing cards use mathTitle/mathSummary while metadata stays plain text. */ -}}
+{{- /* MathJax is loaded only where TeX is rendered: posts with `math: true`, and lists
+       (blog, tags, publications) whose entries have a mathTitle or mathSummary. */ -}}
 {{- $mathEnabled := and .IsPage .Params.math -}}
-{{- if not .IsPage -}}
-  {{- $mathEnabled = gt (len (where site.RegularPages "Params.math" true)) 0 -}}
+{{- if in (slice "section" "term") .Kind -}}
+  {{- range .RegularPages -}}
+    {{- if or .Params.mathTitle .Params.mathSummary }}{{ $mathEnabled = true }}{{ end -}}
+  {{- end -}}
 {{- end -}}
 {{- if $mathEnabled }}
 <script>
@@ -36,6 +42,8 @@
 <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
 {{- end }}
 
+{{- /* The visitor map only appears on the home page. */ -}}
+{{- if and .IsHome site.Params.visitorMap.src }}
 <style>
   #mapmyvisitors-widget,
   .mapmyvisitors-map-control {
@@ -76,3 +84,4 @@
     font-weight: 600 !important;
   }
 </style>
+{{- end }}
