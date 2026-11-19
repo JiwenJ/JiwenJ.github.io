@@ -5,6 +5,7 @@ lastmod: "2023-07-16T21:10:00+07:00"
 author: ["Jiwen Jiang"]
 description: "I summarize some prompt techniques that facilitate the utility of LLMs."
 summary: "I summarize some prompt techniques that facilitate the utility of LLMs."
+draft: true
 tags: ["LLM", "Prompt"]
 categories: ["LLM"]
 ---
