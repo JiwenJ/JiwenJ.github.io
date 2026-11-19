@@ -1,5 +1,5 @@
 ---
-title: "Publication"
+title: "Publications"
 layout: "publications"
 build:
   render: always

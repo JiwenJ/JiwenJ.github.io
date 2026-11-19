@@ -208,7 +208,7 @@ languages:
         - name: About
           url: /
           weight: 5
-        - name: Publication
+        - name: Publications
           url: /pubs/
           weight: 8
         - name: Blog
