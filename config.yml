@@ -49,20 +49,20 @@ params:
     affiliation: "Institute of Automation, Chinese Academy of Sciences"
     email: "1546631808@qq.com"
     education:
-      - period: "2023 - 2026"
+      - period: "2023–2026"
         description: "Master, Institute of Automation, Chinese Academy of Sciences, Beijing."
-      - period: "2019 - 2023"
+      - period: "2019–2023"
         description: "Bachelor, Nanjing University, Nanjing."
     experience:
-      - period: "2025-2026"
+      - period: "2025–2026"
         description: "Li Auto, MindGPT & MindVLA"
-      - period: "2025-2026"
+      - period: "2025–2026"
         description: "Meituan, RL Infra & Algorithms"
-      - period: "2025-2026"
+      - period: "2025–2026"
         description: "AMD, LLM & MLLM Inference Acceleration"
-      - period: "2025-2026"
+      - period: "2025–2026"
         description: "SJTU, SFT & RL Algorithms, with [Prof. Ying Wen](https://yingwen.io/en/)"
-      - period: "2025-2026"
+      - period: "2025–2026"
         description: "HKUST(GZ), Pretrain & Infra, with [Prof. Lei Chen](https://facultyprofiles.hkust-gz.edu.cn/faculty-personal-page/CHEN-Lei/leichen)"
     #######################
 
@@ -117,17 +117,6 @@ params:
 
   
 
-  homeInfoParams:
-    Title: "PaperMod's Demo"
-    Content: >
-      👋 Welcome to demo page of Hugo's theme PaperMod!
-
-      - **PaperMod**  is designed to be clean and simple but fast and responsive theme with useful feature-set that enhances UX.
-
-      - Feel free to show your support by giving us a star 🌟 on GitHub and sharing with your friends and social media .
-
-      - PaperMod is based on theme [Paper](https://github.com/nanxiaobei/hugo-paper/tree/4330c8b12aa48bfdecbcad6ad66145f679a430b3).
-
   # editPost:
   #   URL: "https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content"
   #   Text: "Suggest Changes" # edit text
@@ -159,12 +148,12 @@ params:
 
 ###############################
 cascade: # prevent content/news/* and content/pubs/* from being rendered as regular pages
-  - _target:
+  - target:
       path: /news/**
     build:
       render: never
       list: local
-  - _target:
+  - target:
       path: /pubs/**
     build:
       render: never
